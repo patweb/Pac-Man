@@ -1,13 +1,18 @@
-/*
- * Dot.fx
- *
- * Created on 2008-12-21, 21:59:45
+/**
+ * Dot.java
+ * 
+ * @author Patrick Webster
  */
-package pacman;
 
 /**
+ * Dot.fx
+ *
  * @author Henry Zhang
+ * Created on 2008-12-21, 21:59:45
  */
+
+package pacman;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.BooleanProperty;
@@ -23,32 +28,34 @@ import javafx.util.Duration;
 
 public class Dot extends Parent {
 
-//  public Maze maze; // patweb
 //  public var shouldStopAnimation : Boolean = false;
-//  public boolean shouldStopAnimation;
   public BooleanProperty shouldStopAnimation;
 //  public var dotType: Integer;
   public int dotType;
+  
   // location of the dot
 //  public var x : Number ;
   public int x;
 //  public var y : Number ;
   public int y;
+  
   // radius of the dot
 //  public var r: Number =
-//  if (  dotType == MazeData.MAGIC_DOT ) 5 else 1;
+//    if (  dotType == MazeData.MAGIC_DOT ) 5 else 1;
 //  public int r;
   public IntegerProperty r;
+  
   // the dot
 //  var circle = Circle{
-// //   cache: true
+//    //cache: true
 //    centerX: x
 //    centerY: y
 //    radius: bind r
 //    fill: Color.YELLOW
-////    visible: bind visible   
+//    //visible: bind visible   
 //    } ;
   public Circle circle;
+  
   // variables for magic dot's growing/shrinking animation
 //  public var animationRadius: Number = 3;
   public int animationRadius;
@@ -98,14 +105,7 @@ public class Dot extends Parent {
   // do the animation
 //  public function doOneTick () {
   public void doOneTick() {
-//    System.out.println("calling one tick in dot with animationRadius=" + animationRadius);
 
-//    if (maze.gamePaused || maze.waitForStart) {
-//      shouldStopAnimation = true;
-//    } else {
-//      shouldStopAnimation = false;
-//    }
-    
     if (!isVisible() || shouldStopAnimation.get()) {
       return;
     }
@@ -120,37 +120,35 @@ public class Dot extends Parent {
 
 //    r = x1;
     r.set(x1);
-//    circle.setRadius(r); // patweb this works but should use binding
+//    circle.setRadius(r); // patweb: this works but should use binding
   }
 
 //  public override function create(): Node {
 //        return circle;
 //  }
-
-
-//  public Dot(Maze maze, int x, int y, int dotType) {
+  
   public Dot(int x, int y, int dotType) {
-//    this.maze = maze;
-    
+
     //shouldStopAnimation: bind gamePaused or waitForStart
-//    this.shouldStopAnimation = false;
     this.shouldStopAnimation = new SimpleBooleanProperty(false);
     this.x = x;
     this.y = y;
     this.dotType = dotType;
+
     if (dotType == MazeData.MAGIC_DOT) {
-//      this.r = 5;
       this.r = new SimpleIntegerProperty(5);
-    } else {
-//      this.r = 1;
+    }
+    else {
       this.r = new SimpleIntegerProperty(1);
     }
+
     delta = -1;
     animationRadius = 3;
-//    circle = new Circle(x, y, r, Color.YELLOW);
+    
     circle = new Circle(x, y, r.intValue(), Color.YELLOW);
-//    System.out.println("radiusProperty is " + circle.radiusProperty());
     circle.radiusProperty().bind(r);
+    
     getChildren().add(circle);
   }
+  
 }
