@@ -1,16 +1,3 @@
-/**
- * Dot.java
- * 
- * @author Patrick Webster
- */
-
-/**
- * Dot.fx
- *
- * @author Henry Zhang
- * Created on 2008-12-21, 21:59:45
- */
-
 package pacman;
 
 import javafx.animation.KeyFrame;
@@ -26,6 +13,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
+/**
+ * Dot.fx created on 2008-12-21, 21:59:45
+ * Dot.java created October 2011
+ *
+ * @author Henry Zhang
+ * @author Patrick Webster
+ */
 public class Dot extends Parent {
 
 //  public var shouldStopAnimation : Boolean = false;
@@ -129,7 +123,6 @@ public class Dot extends Parent {
   
   public Dot(int x, int y, int dotType) {
 
-    //shouldStopAnimation: bind gamePaused or waitForStart
     this.shouldStopAnimation = new SimpleBooleanProperty(false);
     this.x = x;
     this.y = y;

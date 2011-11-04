@@ -1,9 +1,3 @@
-/*
- * Maze.fx
- *
- * Created on 2008-12-20, 20:22:15
- */
-
 package pacman;
 
 //import javafx.scene.CustomNode;
@@ -33,12 +27,16 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 /**
+ * Maze.fx reated on 2008-12-20, 20:22:15
+ * {@link http://www.javafxgame.com}
+ * Maze.java created October 2011
+ *
  * @author Henry Zhang
- * http://www.javafxgame.com
+ * @author Patrick Webster
  */
 
-//public class Maze extends CustomNode {
 public class Maze extends Parent {
+//public class Maze extends CustomNode {
 
 
 //  override var onMouseClicked = function ( e:MouseEvent) {

@@ -1,70 +1,69 @@
-/*
- * Ghost.fx
- *
- * Created on 2009-1-28, 14:26:09
- */
-
 package pacman;
 
-//import java.lang.Math;
-//import javafx.scene.Parent;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-//import pacman.MoveDecision;
 
-/**
+/*
+ * Ghost.fx created on 2009-1-28, 14:26:09
+ * {@link http://www.javafxgame.com}
+ * Ghost.java created October 2011
+ * 
  * @author Henry Zhang
- * http://www.javafxgame.com
+ * @author Patrick Webster
  */
-
-//public class Ghost extends Parent, MovingObject{
 public class Ghost extends MovingObject{
+//public class Ghost extends Parent, MovingObject{
 
   public final static int TRAPPED = 10;
 
   // the pacman character
   public PacMan pacMan;
 
-//  public var hollowImage1 = Image {
+//  public var HOLLOWIMAGE1 = Image {
 //    url: "{__DIR__}images/ghosthollow2.png"
-//    }
-  public final static Image hollowImage1 = new Image(Ghost.class.getResourceAsStream("images/ghosthollow2.png"));
+//  }
+  public final static Image HOLLOWIMAGE1 = new Image(Ghost.class.getResourceAsStream("images/ghosthollow2.png"));
   
-//  public var hollowImage2 = Image {
+//  public var HOLLOWIMAGE2 = Image {
 //    url: "{__DIR__}images/ghosthollow3.png"
-//    }
-  public final static Image hollowImage2 = new Image(Ghost.class.getResourceAsStream("images/ghosthollow3.png"));
+//  }
+  public final static Image HOLLOWIMAGE2 = new Image(Ghost.class.getResourceAsStream("images/ghosthollow3.png"));
   
-//  public var hollowImage3 = Image {
+//  public var HOLLOWIMAGE3 = Image {
 //    url: "{__DIR__}images/ghosthollow1.png"
-//    }
-  public final static Image hollowImage3 = new Image(Ghost.class.getResourceAsStream("images/ghosthollow1.png"));
+//  }
+  public final static Image HOLLOWIMAGE3 = new Image(Ghost.class.getResourceAsStream("images/ghosthollow1.png"));
   
   // images for ghosts when they become hollow
-//  public var hollowImg =
-//    [ hollowImage1,
-//      hollowImage2,
-//      hollowImage1,
-//      hollowImage2 ];
-  public final static Image[] hollowImg = new Image[]{hollowImage1,
-    hollowImage2,
-    hollowImage1,
-    hollowImage2};
-    
+//  public var HOLLOWIMG =
+//    [ HOLLOWIMAGE1,
+//      HOLLOWIMAGE2,
+//      HOLLOWIMAGE1,
+//      HOLLOWIMAGE2 ];
+  public final static Image[] HOLLOWIMG = new Image[]{
+    HOLLOWIMAGE1,
+    HOLLOWIMAGE2,
+    HOLLOWIMAGE1,
+    HOLLOWIMAGE2
+  };
+
   // images for ghosts when they become hollow and flashing
-//  public var flashHollowImg =
-//    [ hollowImage1,
-//      hollowImage3,
-//      hollowImage1,
-//      hollowImage3 ];
-  public final static Image[] flashHollowImg = new Image[] {hollowImage1,
-    hollowImage3,
-    hollowImage1,
-    hollowImage3};
+//  public var FLASHHOLLOWIMG =
+//    [ HOLLOWIMAGE1,
+//      HOLLOWIMAGE3,
+//      HOLLOWIMAGE1,
+//      HOLLOWIMAGE3 ];
+  public final static Image[] FLASHHOLLOWIMG = new Image[] {
+    HOLLOWIMAGE1,
+    HOLLOWIMAGE3,
+    HOLLOWIMAGE1,
+    HOLLOWIMAGE3
+  };
 
   // time for a ghost to stay hollow
-  public final static int hollowMaxTime = 80;
+  public final static int HOLLOWMAXTIME = 80;
+  
   public int hollowCounter;
 
   // the images of animation
@@ -77,13 +76,10 @@ public class Ghost extends MovingObject{
 //        defaultImage1,
 //        defaultImage2,
 //  ];
-  public Image[] defaultImg; // = new Image[] {defaultImage1,
-//    defaultImage2,
-//    defaultImage1,
-//    defaultImage2};
-
+  public Image[] defaultImg;
+  
   // animation images
-//  public Image[] images; // = defaultImg;
+  //var images = defaultImg;
 
   // initial direction and position of a ghost, used in status reset
   public int initialLocationX;
@@ -140,17 +136,16 @@ public class Ghost extends MovingObject{
     this.pacMan = pacMan;
     this.x = x;
     this.y = y;
-//    this.x = new SimpleIntegerProperty(x);
-//    this.y = new SimpleIntegerProperty(y);
     this.xDirection = xDirection;
     this.yDirection = yDirection;
     this.trapTime = trapTime;
     
-    defaultImg = new Image[]{
+    defaultImg = new Image[] {
       defaultImage1,
       defaultImage2,
       defaultImage1,
-      defaultImage2};
+      defaultImage2
+    };
     images = defaultImg;
     changeFactor = 0.75;
     chaseFactor = 0.5;
@@ -164,57 +159,24 @@ public class Ghost extends MovingObject{
     initialLocationY = y;
     initialDirectionX = xDirection;
     initialDirectionY = yDirection;
-//    imageX = MazeData.calcGridX(x);
-//    imageY = MazeData.calcGridY(y);
     imageX = new SimpleIntegerProperty(MazeData.calcGridX(x));
     imageY = new SimpleIntegerProperty(MazeData.calcGridY(y));
     // end postinit block
-//    Group group = new Group();
-//    changeImage();
-    ghostNode = new ImageView(defaultImage1);
-
     
+    ghostNode = new ImageView(defaultImage1);
     ghostNode.xProperty().bind(imageX.add(-13));
     ghostNode.yProperty().bind(imageY.add(-13));
     ghostNode.imageProperty().bind(imageBinding);
-
     ghostNode.setCache(true);
-//    ghostNode.imageProperty().bind(images[currentImage.get()]);
-//    group.getChildren().add(ghostNode);
-//    getChildren().add(group);
     
-//    Circle circ = new Circle(imageX, imageY, 13, Color.CYAN); // patweb
-//    Circle circ = new Circle(imageX.get(), imageY.get(), 13, Color.CYAN); // patweb
-//    circ.centerXProperty().bind(imageX);
-//    circ.centerYProperty().bind(imageY);
-//
-//    getChildren().add(circ); // patweb
     getChildren().add(ghostNode);
   }
   
-//  public void changeImage() {
-//    if (ghostNode == null) {
-//      ghostNode = new ImageView(defaultImage1);
-//    }
-////    System.out.println("changing ghost image: setting (x,y) to ("+imageX+", "+imageY+")");
-////    ghostNode.setX(imageX  - 13);
-////    ghostNode.setX(imageX.get()  - 13);
-////    ghostNode.xProperty().bind(imageX - 13);
-////    ghostNode.setY(imageY  - 13);
-////    ghostNode.setY(imageY.get()  - 13);
-////    ghostNode.setImage(images[currentImage]); // TODO: bind
-//    ghostNode.setImage(images[currentImage.get()]); // TODO: bind
-////    ghostNode.setVisible(true);// patweb
-////    System.out.println("Ghost "+ghostNode.getImage().impl_getUrl()+" is at (" + ghostNode.xProperty().getValue() + ", " + ghostNode.yProperty().getValue());
-//  }
-  
   // reset the status of a ghost and place it into the cage
-//  public function resetStatus() {
   public void resetStatus() {
+//  public function resetStatus() {
     x = initialLocationX;
     y = initialLocationY;
-//    x.set(initialLocationX);
-//    y.set(initialLocationY);
 
     xDirection = initialDirectionX;
     yDirection = initialDirectionY;
@@ -223,46 +185,39 @@ public class Ghost extends MovingObject{
 
     moveCounter = 0;
     trapCounter = 0;
-//    currentImage = 0;
     currentImage.set(0);
 
-//    imageX = MazeData.calcGridX(x);
-//    imageY = MazeData.calcGridY(y);
     imageX.set(MazeData.calcGridX(x));
     imageY.set(MazeData.calcGridY(y));
-//    imageX = MazeData.calcGridX(x.get());
-//    imageY = MazeData.calcGridY(y.get());
 
     images = defaultImg;
     state = TRAPPED;
         
-//    timeline.keyFrames[0].time = 45ms;
-//    timeline.getKeyFrames().get(0).setTime(45ms); // TODO: can't change time of KeyFrame
+//    timeline.keyFrames[0].time = 45ms; // TODO: can't change time of KeyFrame
     timeline.setRate(1.0);
 
     setVisible(true);
     start();
   }
 
-//  public function changeToHollowGhost() {
   public void changeToHollowGhost() {
+//  public function changeToHollowGhost() {
     hollowCounter = 0;
     isHollow = true;
 
     // switch the animation images
-    images = hollowImg;
+    images = HOLLOWIMG;
 
-    // make it moves slower
+    // make it move slower
     timeline.stop();
 //    timeline.keyFrames[0].time = 130ms; // TODO: can't change time of KeyFrame
-//    timeline.rateProperty().set(0.35);
     timeline.setRate(0.35);
     timeline.play();
   }
 
   // decide whether to change the current direction of a ghost
-//  public function changeDirectionXtoY(mustChange: Boolean): Void {
   public void changeDirectionXtoY(boolean mustChange) {
+//  public function changeDirectionXtoY(mustChange: Boolean): Void {
 //    if ( not mustChange and Math.random() > changeFactor ) {
     if ( !mustChange && (Math.random() > changeFactor) ) {
       return;  // no change of direction
@@ -271,12 +226,12 @@ public class Ghost extends MovingObject{
     // will change to a Y direction if possible
 //    var goUp = MoveDecision {
 //      x: this.x
-//      y: this.y - 1 };
+//      y: this.y - 1
+//    };
     MoveDecision goUp = new MoveDecision();
     goUp.x = this.x;
     goUp.y = this.y - 1;
-//    goUp.x = this.x.get();
-//    goUp.y = this.y.get() - 1;
+    
 //    var goDown = MoveDecision {
 //      x: this.x
 //      y: this.y + 1
@@ -284,8 +239,6 @@ public class Ghost extends MovingObject{
     MoveDecision goDown = new MoveDecision();
     goDown.x = this.x;
     goDown.y = this.y + 1;
-//    goDown.x = this.x.get();
-//    goDown.y = this.y.get() + 1;
 
     // evaluate the moving choices to pick the best one
     goUp.evaluate(pacMan, isHollow);
@@ -305,12 +258,9 @@ public class Ghost extends MovingObject{
 //      x: this.x + xDirection
 //      y: this.y
 //    };
-    MoveDecision continueGo = new MoveDecision();
+    final MoveDecision continueGo = new MoveDecision();
     continueGo.x = this.x + xDirection;
     continueGo.y = this.y;
-//    continueGo.x = this.x.get() + xDirection;
-//    continueGo.y = this.y.get();
-
     continueGo.evaluate(pacMan, isHollow);
 
 //    if ( continueGo.score > 0 and continueGo.score > goUp.score
@@ -322,10 +272,10 @@ public class Ghost extends MovingObject{
     }
 
 //    var decision = -1; // make it goes up first, then decide if we need to change it
-    int decision = -1; // make it goes up first, then decide if we need to change it
+    int decision = -1; // make it go up first, then decide if we need to change it
     if ( goUp.score  < 0 )
       decision = 1;
-    else
+    else {
       if ( goDown.score > 0 ) {
         if ( chaseCount > 0 ) {
           if ( goDown.score > goUp.score) {
@@ -335,18 +285,20 @@ public class Ghost extends MovingObject{
         }
         else {
           // random pick
-          if ( Math.random() > 0.5 )
+          if ( Math.random() > 0.5 ) {
             decision = 1;
+          }
         }
       }
+    }
 
     yDirection = decision;
     xDirection = 0;
   }
 
   // decide whether to change the current direction of a ghost
-//  public function changeDirectionYtoX(mustChange: Boolean): Void {
   public void changeDirectionYtoX(boolean mustChange) {
+//  public function changeDirectionYtoX(mustChange: Boolean): Void {
 
     if ( !mustChange && (Math.random() > changeFactor) )
       return;  // no change of direction
@@ -359,8 +311,6 @@ public class Ghost extends MovingObject{
     MoveDecision goLeft = new MoveDecision();
     goLeft.x = this.x - 1;
     goLeft.y = this.y;
-//    goLeft.x = this.x.get() - 1;
-//    goLeft.y = this.y.get();
 
 //    var goRight = MoveDecision {
 //      x: this.x + 1
@@ -369,8 +319,6 @@ public class Ghost extends MovingObject{
     MoveDecision goRight = new MoveDecision();
     goRight.x = this.x + 1;
     goRight.y = this.y;
-//    goRight.x = this.x.get() + 1;
-//    goRight.y = this.y.get();
 
     // evaluate the moving choices to pick the best one
     goLeft.evaluate(pacMan, isHollow);
@@ -389,12 +337,9 @@ public class Ghost extends MovingObject{
 //      x: this.x
 //      y: this.y + yDirection
 //    };
-    MoveDecision continueGo = new MoveDecision();
+    final MoveDecision continueGo = new MoveDecision();
     continueGo.x = this.x;
     continueGo.y = this.y + yDirection;
-//    continueGo.x = this.x.get();
-//    continueGo.y = this.y.get() + yDirection;
-
     continueGo.evaluate(pacMan, isHollow);
 
     if ( (continueGo.score > 0) && (continueGo.score > goLeft.score)
@@ -403,11 +348,11 @@ public class Ghost extends MovingObject{
       return;
     }
 
-    // make it goes up first, then decide if we need to change it to down
+    // make it go up first, then decide if we need to change it to down
     int decision = -1;
     if ( goLeft.score  < 0 )
       decision = 1;
-    else
+    else {
       if ( goRight.score > 0 ) {
         if ( chaseCount > 0 ) {
           if ( goRight.score > goLeft.score) {
@@ -416,10 +361,12 @@ public class Ghost extends MovingObject{
           }
         }
         else { // random pick
-          if ( Math.random() > 0.5 )
+          if ( Math.random() > 0.5 ) {
             decision = 1;
+          }
         }
       }
+    }
 
     xDirection=decision;
     yDirection = 0;
@@ -433,45 +380,34 @@ public class Ghost extends MovingObject{
     if ( moveCounter > ANIMATION_STEP - 1) {
       moveCounter=0;
       x += xDirection;
-//      x.set(x.get() + xDirection);
 //      imageX= MazeData.calcGridX(x);
       imageX.set(MazeData.calcGridX(x));
-//      imageX= MazeData.calcGridX(x.get());
 
 //      var nextX = xDirection + x;
       int nextX = xDirection + x;
-//      int nextX = xDirection + x.get();
 
       if ( y == 14 && ( nextX <= 1 || nextX >= 28) ) {
-//      if ( y.get() == 14 && ( nextX <= 1 || nextX >= 28) ) {
         if ( nextX < - 1 && xDirection < 0 ) {
           x=MazeData.GRID_SIZE;
-//          x.set(MazeData.GRID_SIZE);
 //          imageX= MazeData.calcGridX(x);
           imageX.set(MazeData.calcGridX(x));
-//          imageX= MazeData.calcGridX(x.get());
         }
-        else
-          if ( nextX > 30 && xDirection > 0) {
-            x=0;
-//            x.set(0);
+        else if ( nextX > 30 && xDirection > 0) {
+          x=0;
 //            imageX= MazeData.calcGridX(x);
-            imageX.set(MazeData.calcGridX(x));
-//            imageX= MazeData.calcGridX(x.get());
-          }
+          imageX.set(MazeData.calcGridX(x));
+        }
       }
-      else
-        if (nextX < 0 || nextX > MazeData.GRID_SIZE) {
-          changeDirectionXtoY(true);
-        }
-      else
-        if ( MazeData.getData(nextX, y) == MazeData.BLOCK ) {
-//        if ( MazeData.getData(nextX, y.get()) == MazeData.BLOCK ) {
-          changeDirectionXtoY(true);
-        }
-        else {
-          changeDirectionXtoY(false);
-        }
+      else if (nextX < 0 || nextX > MazeData.GRID_SIZE) {
+        changeDirectionXtoY(true);
+      }
+      else if (MazeData.getData(nextX, y) == MazeData.BLOCK) {
+        changeDirectionXtoY(true);
+      }
+      else {
+        changeDirectionXtoY(false);
+      }
+      
     }
     else {
       imageX.set(imageX.get() + (xDirection * MOVE_SPEED));
@@ -486,19 +422,15 @@ public class Ghost extends MovingObject{
     if ( moveCounter > ANIMATION_STEP - 1) {
       moveCounter = 0;
       y += yDirection;
-//      y.set(y.get() + yDirection);
 //      imageY = MazeData.calcGridX(y);
       imageY.set(MazeData.calcGridX(y));
-//      imageY = MazeData.calcGridX(y.get());
 
       int nextY= yDirection + y;
-//      int nextY= yDirection + y.get();
       if ( nextY < 0 || nextY > MazeData.GRID_SIZE) {
         changeDirectionYtoX(true);
       }
       else {
         if ( MazeData.getData(x, nextY) == MazeData.BLOCK ) {
-//        if ( MazeData.getData(x.get(), nextY) == MazeData.BLOCK ) {
           changeDirectionYtoX(true);
         }
         else {
@@ -521,23 +453,19 @@ public class Ghost extends MovingObject{
 
       moveCounter=0;
       x += xDirection;
-//      x.set(x.get() + xDirection);
 //      imageX = MazeData.calcGridX(x);
       imageX.set(MazeData.calcGridX(x));
-//      imageX = MazeData.calcGridX(x.get());
 
       int nextX = xDirection + x;
-//      int nextX = xDirection + x.get();
 
       if ( nextX < 12 ) {
         xDirection = 0;
         yDirection = 1;
       }
-      else
-        if ( nextX > 17) {
-          xDirection = 0;
-          yDirection = -1;
-        }
+      else if ( nextX > 17) {
+        xDirection = 0;
+        yDirection = -1;
+      }
     }
     else {
 //      imageX += xDirection * MOVE_SPEED;
@@ -553,23 +481,19 @@ public class Ghost extends MovingObject{
     if ( moveCounter > ANIMATION_STEP - 1) {
       moveCounter=0;
       y += yDirection;
-//      y.set(x.get() + yDirection);
 //      imageY= MazeData.calcGridX(y) + 8;
       imageY.set(MazeData.calcGridX(y) + 8);
-//      imageY= MazeData.calcGridX(y.get()) + 8;
 
       int nextY = yDirection + y;
-//      int nextY = yDirection + y.get();
 
       if ( nextY < 13 ) {
         yDirection = 0;
         xDirection = -1;
       }
-      else
-        if ( nextY > 15) {
-          yDirection = 0;
-          xDirection = 1;
-        }
+      else if ( nextY > 15) {
+        yDirection = 0;
+        xDirection = 1;
+      }
     }
     else {
 //      imageY += yDirection * MOVE_SPEED;
@@ -625,10 +549,8 @@ public class Ghost extends MovingObject{
           trapCounter++;
 
           if ( trapCounter > trapTime && x == 14 && y == 13) {
-//          if ( (trapCounter > trapTime) && (x.get() == 14) && (y.get() == 13) ) {
             // go out of the cage
             y = 12;
-//            y.set(12);
 
             xDirection = 0;
             yDirection = -1;
@@ -643,23 +565,19 @@ public class Ghost extends MovingObject{
     
       hollowCounter++;
 
-      if ( hollowCounter == hollowMaxTime - 30 )
-        images = flashHollowImg;
-      else
-        if ( hollowCounter > hollowMaxTime ) {
-          isHollow = false;
-          images = defaultImg;
-                
-          timeline.stop();
-//          timeline.keyFrames[0].time = 45ms;
-//          timeline.getKeyFrames().get(0).getTime() = 45ms;
-          timeline.setRate(1.0);
-          timeline.play();
-        }
-    }
-//    System.out.println("changing ghost image");
-//    changeImage(); // patweb
-  }
+      if ( hollowCounter == HOLLOWMAXTIME - 30 )
+        images = FLASHHOLLOWIMG;
+      else if ( hollowCounter > HOLLOWMAXTIME ) {
+        isHollow = false;
+        images = defaultImg;
 
+        timeline.stop();
+//        timeline.keyFrames[0].time = 45ms;
+        timeline.setRate(1.0);
+        timeline.play();
+      }
+    }
+    
+  }
 
 }
