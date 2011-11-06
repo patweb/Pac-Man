@@ -28,9 +28,9 @@ import javafx.util.Duration;
 
 /**
  * Maze.fx reated on 2008-12-20, 20:22:15
- * {@link http://www.javafxgame.com}
  * Maze.java created October 2011
  *
+ * @see <a href="http://www.javafxgame.com">http://www.javafxgame.com</a>
  * @author Henry Zhang
  * @author Patrick Webster
  */

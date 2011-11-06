@@ -6,9 +6,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * Main.fx created on 2008-12-20, 12:02:26
- * {@link http://www.javafxgame.com} Main.java created October 2011
+ * Main.fx created on 2008-12-20, 12:02:26 <br>
+ * Main.java created October 2011
  *
+ * @see <a href="http://www.javafxgame.com">http://www.javafxgame.com</a>
  * @author Henry Zhang
  * @author Patrick Webster
  */

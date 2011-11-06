@@ -10,7 +10,7 @@ import javafx.scene.shape.Arc;
 import javafx.util.Duration;
 
 /**
- * DyingPacMan.fx created on 2009-02-06, 17:52:42
+ * DyingPacMan.fx created on 2009-02-06, 17:52:42 <br>
  * DyingPacMan.java created October 2011
  *
  * @author Henry Zhang
