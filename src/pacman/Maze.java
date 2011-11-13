@@ -2,11 +2,9 @@ package pacman;
 
 //import javafx.scene.CustomNode;
 //import javafx.scene.*;
+//import javafx.scene.input.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.ArcType;
-//import javafx.scene.input.*;
 import javafx.animation.Timeline;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.BooleanProperty;
@@ -20,6 +18,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -27,7 +27,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 /**
- * Maze.fx reated on 2008-12-20, 20:22:15
+ * Maze.fx created on 2008-12-20, 20:22:15 <br>
  * Maze.java created October 2011
  *
  * @see <a href="http://www.javafxgame.com">http://www.javafxgame.com</a>
@@ -44,16 +44,15 @@ public class Maze extends Parent {
 //  }
 
   // counter for ghosts eaten
-//  var ghostEatenCount : Integer;
   public int ghostEatenCount;
+//  var ghostEatenCount : Integer;
 
-//  public var gamePaused: Boolean = false;
-//  public boolean gamePaused;
   public BooleanProperty gamePaused;
+//  public var gamePaused: Boolean = false;
 
   // text to be displayed for score of eating a ghost
-//  var scoreText = [
   public static final ScoreText[] scoreText = {
+//  var scoreText = [
     new ScoreText("200", false) //{
     //      content: "200"
     //      visible: false;
@@ -79,11 +78,11 @@ public class Maze extends Parent {
   };
 
   // Pac Man Character
-//  public var pacMan : PacMan = PacMan{ maze:this x:15 y:18 } ;
   public PacMan pacMan;
+//  public var pacMan : PacMan = PacMan{ maze:this x:15 y:18 } ;
 
-//  public var ghostBlinky = Ghost {
   public Ghost ghostBlinky;
+//  public var ghostBlinky = Ghost {
 //    defaultImage1: Image {
 //      url: "{__DIR__}images/ghostred1.png"
 //    }
@@ -156,11 +155,11 @@ public class Maze extends Parent {
 //     trapTime: 30
 //   };
 
-//  public var ghosts = [ghostBlinky, ghostPinky, ghostInky, ghostClyde];
   public final Ghost[] ghosts;
+//  public var ghosts = [ghostBlinky, ghostPinky, ghostInky, ghostClyde];
 
-//  public var dyingPacMan =
   public DyingPacMan dyingPacMan;
+//  public var dyingPacMan =
 //    DyingPacMan {
 //      maze: this
 //      centerX: 0
@@ -175,12 +174,10 @@ public class Maze extends Parent {
 //   } ;
 
   // the pac man image
+  public static final Image pacmanImage = new Image(Maze.class.getResourceAsStream("images/left1.png"));
 //  var pacmanImage =Image {
 //    url: "{__DIR__}images/left1.png"
 //  }
-//  public static final Image pacmanImage = new Image("{__DIR__}images/left1.png");
-//  public static final Image pacmanImage = new Image("images/left1.png");
-  public static final Image pacmanImage = new Image(Maze.class.getResourceAsStream("images/left1.png"));
 
   // images showing how many lives remaining
   public ImageView[] livesImage; // = [
@@ -209,23 +206,20 @@ public class Maze extends Parent {
 //  ];
 
   // level of the game
-//  public var level : Integer = 1;
-//  public int level;
   public SimpleIntegerProperty level;
+//  public var level : Integer = 1;
 
-  // flag to add a life to the player if the first time scores exceed 10000
+  // flag to add a life to the player the first time score exceeds 10,000
+  public boolean addLifeFlag; // patweb: TODO: should get new life EVERY 10,000.
 //  var addLifeFlag: Boolean = true;
-  public boolean addLifeFlag;
 
   // current lives of the player
-//  var livesCount = 2;
-//  public int livesCount;
   public SimpleIntegerProperty livesCount;
+//  var livesCount = 2;
 
   // message to start a game
-//  public var waitForStart: Boolean = true;
-//  public boolean waitForStart;
   public BooleanProperty waitForStart;
+//  public var waitForStart: Boolean = true;
   
   private Group messageBox;
 //  var messageBox = Group {
@@ -257,9 +251,8 @@ public class Maze extends Parent {
 //  };
 
  // whether the last finished game is won by the player
-// var lastGameResult: Boolean = false;
-// private boolean lastGameResult;
  private BooleanProperty lastGameResult;
+// var lastGameResult: Boolean = false;
 
  // text of game winning
  private Text gameResultText;
@@ -279,10 +272,10 @@ public class Maze extends Parent {
 //     visible: false;
 //   } ;
 
-// var flashingCount: Integer = 0;
  private int flashingCount;
+// var flashingCount: Integer = 0;
  
- Text textScore; // patweb
+ private Text textScore; // patweb
  
  private Timeline flashingTimeline;
 // var flashingTimeline: Timeline =
@@ -538,45 +531,23 @@ public class Maze extends Parent {
 //    putDotVertically(13,2,4);
 //    putDotVertically(16,2,4);
 //
-////    insert pacMan into group.content;
-//    group.getChildren().add(pacMan);
+//    insert pacMan into group.content;
 //
-////    insert ghosts into group.content;
-//    group.getChildren().add(ghosts);
+//    insert ghosts into group.content;
 //
-////    insert WallBlackRectangle{ x1:-3, y1:13, x2:0, y2:15} into group.content;
-////    insert WallBlackRectangle{ x1:29, y1:13, x2:31, y2:15} into group.content;
-//    WallBlackRectangle wallBlackRectangle1 = new WallBlackRectangle(-3, 13, 0, 15);
-//    WallBlackRectangle wallBlackRectangle2 = new WallBlackRectangle(29, 13, 31, 15);
-//    group.getChildren().add(wallBlackRectangle1);
-//    group.getChildren().add(wallBlackRectangle2);
+//    insert WallBlackRectangle{ x1:-3, y1:13, x2:0, y2:15} into group.content;
+//    insert WallBlackRectangle{ x1:29, y1:13, x2:31, y2:15} into group.content;
 //
-////    insert messageBox into group.content;
-//    group.getChildren().add(messageBox);
+//    insert messageBox into group.content;
 //  }
 
   
-    public Maze() {
-//    setOnMousePressed(new EventHandler<MouseEvent>() {
-//
-//      public void handle(MouseEvent me) {
-//        requestFocus();
-//      }
-//    });
-//    setFocusTraversable(true);
+  public Maze() {
+      
     setFocused(true);
-//    requestFocus();
     
-    
-//    gamePaused = false;
     gamePaused = new SimpleBooleanProperty(false);
     
-//    scoreText = new ScoreText[]{
-//      new ScoreText("200", false),
-//      new ScoreText("400", false),
-//      new ScoreText("800", false),
-//      new ScoreText("1600", false)};
-
     pacMan = new PacMan(this, 15, 18);
     
     ghostBlinky = new Ghost(
@@ -584,20 +555,11 @@ public class Maze extends Parent {
             new Image(getClass().getResourceAsStream("images/ghostred2.png")),
             this,
             pacMan,
-            15,
-            14,
-            0,
-            -1,
-            1);
-//    ghostBlinky.defaultImage1 = new Image("{__DIR__}images/ghostred1.png");
-//    ghostBlinky.defaultImage2 = new Image("{__DIR__}images/ghostred2.png");
-//    ghostBlinky.maze = this;
-//    ghostBlinky.pacMan = pacMan;
-//    ghostBlinky.x = 17;
-//    ghostBlinky.y = 15;
-//    ghostBlinky.xDirection = 0;
-//    ghostBlinky.yDirection = -1;
-//    ghostBlinky.trapTime = 1;
+            15, // x
+            14, // y
+            0,  // x Direction
+            -1, // y Direction
+            1); // trap time
     
     ghostPinky = new Ghost(
             new Image(getClass().getResourceAsStream("images/ghostpink1.png")),
@@ -606,19 +568,10 @@ public class Maze extends Parent {
             pacMan,
             14,
             15,
-            1,
-            0,
-            5);
-//    ghostPinky.defaultImage1 = new Image("{__DIR__}images/ghostpink1.png");
-//    ghostPinky.defaultImage2 = new Image("{__DIR__}images/ghostpink2.png");
-//    ghostPinky.maze = this;
-//    ghostPinky.pacMan = pacMan;
-//    ghostPinky.x = 12;
-//    ghostPinky.y = 14;
-//    ghostPinky.xDirection = 0;
-//    ghostPinky.yDirection = 1;
-//    ghostPinky.trapTime = 10;
-    
+            1,  // x Direction
+            0,  // y Direction
+            5); // trap time
+
     ghostInky = new Ghost(
             new Image(getClass().getResourceAsStream("images/ghostcyan1.png")),
             new Image(getClass().getResourceAsStream("images/ghostcyan2.png")),
@@ -626,18 +579,9 @@ public class Maze extends Parent {
             pacMan,
             12,
             15,
-            1,
-            0,
-            20);
-//    ghostInky.defaultImage1 = new Image("{__DIR__}images/ghostcyan1.png");
-//    ghostInky.defaultImage2 = new Image("{__DIR__}images/ghostcyan2.png");
-//    ghostInky.maze = this;
-//    ghostInky.pacMan = pacMan;
-//    ghostInky.x = 13;
-//    ghostInky.y = 15;
-//    ghostInky.xDirection = 1;
-//    ghostInky.yDirection = 0;
-//    ghostInky.trapTime = 20;
+            1,   // x Direction
+            0,   // y Direction
+            20); // trap time
     
     ghostClyde = new Ghost(
             new Image(getClass().getResourceAsStream("images/ghostorange1.png")),
@@ -646,18 +590,9 @@ public class Maze extends Parent {
             pacMan,
             16,
             15,
-            1,
-            0,
-            30);
-//    ghostClyde.defaultImage1 = new Image("{__DIR__}images/ghostorange1.png");
-//    ghostClyde.defaultImage2 = new Image("{__DIR__}images/ghostorange2.png");
-//    ghostClyde.maze = this;
-//    ghostClyde.pacMan = pacMan;
-//    ghostClyde.x = 15;
-//    ghostClyde.y = 14;
-//    ghostClyde.xDirection = -1;
-//    ghostClyde.yDirection = 0;
-//    ghostClyde.trapTime = 30;
+            1,   // x Direction
+            0,   // y Direction
+            30); // trap time
 
     ghosts = new Ghost[] {ghostBlinky, ghostPinky, ghostInky, ghostClyde};
     
@@ -673,7 +608,6 @@ public class Maze extends Parent {
     dyingPacMan.setFill(Color.YELLOW);
     dyingPacMan.setVisible(false);
     
-//    livesCount = 2;
     livesCount = new SimpleIntegerProperty(2);
     
     ImageView livesImage1 = new ImageView(pacmanImage);
@@ -693,10 +627,8 @@ public class Maze extends Parent {
     livesImage3.setCache(true);
     livesImage = new ImageView[] {livesImage1, livesImage2, livesImage3};
     
-//    level = 1;
     level = new SimpleIntegerProperty(1);
     addLifeFlag = true;
-//    waitForStart = true;
     waitForStart = new SimpleBooleanProperty(true);
     
     messageBox = new Group();
@@ -727,7 +659,7 @@ public class Maze extends Parent {
             }
         };
     
-    Text textMessage = new Text(MazeData.calcGridX(6),
+    final Text textMessage = new Text(MazeData.calcGridX(6),
             MazeData.calcGridY(24),
             "   PRESS ANY KEY TO START!");
     textMessage.textProperty().bind(messageBinding);
@@ -736,10 +668,9 @@ public class Maze extends Parent {
     messageBox.getChildren().add(rectMessage);    
     messageBox.getChildren().add(textMessage);    
     
-//    lastGameResult = false;
     lastGameResult = new SimpleBooleanProperty(false);
 
-    StringBinding lastGameResultBinding = new StringBinding() {
+    final StringBinding lastGameResultBinding = new StringBinding() {
 
         {
             super.bind(lastGameResult);
@@ -767,12 +698,11 @@ public class Maze extends Parent {
     
     flashingTimeline = new Timeline();
     flashingTimeline.setCycleCount(5);
-    KeyFrame kf = new KeyFrame(Duration.seconds(0.5), new EventHandler<ActionEvent>() {
+    final KeyFrame kf = new KeyFrame(Duration.seconds(0.5), new EventHandler<ActionEvent>() {
       public void handle(ActionEvent event) {
          gameResultText.setVisible(!gameResultText.isVisible());
          if ( ++flashingCount == 5) {
            messageBox.setVisible(true);
-//           waitForStart = true;
            waitForStart.set(true);
          }
       }
@@ -781,7 +711,7 @@ public class Maze extends Parent {
 
     group = new Group();
     
-    Rectangle groupRect = new Rectangle(0, 0,
+    final Rectangle groupRect = new Rectangle(0, 0,
             MazeData.calcGridX(MazeData.GRID_SIZE + 2),
             MazeData.calcGridY(MazeData.GRID_SIZE + 3));
     groupRect.setFill(Color.BLACK);
@@ -821,7 +751,7 @@ public class Maze extends Parent {
     //cage and the gate
     group.getChildren().add(new WallRectangle(10, 12, 19, 17));
     group.getChildren().add(new WallRectangle(10.5f, 12.5f, 18.5f, 16.5f));
-    Rectangle cageRect = new Rectangle(MazeData.calcGridX(13),
+    final Rectangle cageRect = new Rectangle(MazeData.calcGridX(13),
             MazeData.calcGridY(12),
             MazeData.GRID_GAP * 3,
             MazeData.GRID_GAP / 2);
@@ -868,7 +798,7 @@ public class Maze extends Parent {
             MazeData.GRID_SIZE + 2, 
             MazeData.GRID_SIZE));
     
-    Rectangle rect2 = new Rectangle(MazeData.calcGridXFloat(-0.5f),
+    final Rectangle rect2 = new Rectangle(MazeData.calcGridXFloat(-0.5f),
             MazeData.calcGridYFloat(-0.5f),
             (MazeData.GRID_SIZE + 1) * MazeData.GRID_GAP,
             (MazeData.GRID_SIZE + 1) * MazeData.GRID_GAP);
@@ -880,7 +810,7 @@ public class Maze extends Parent {
     rect2.setCache(true);
     group.getChildren().add(rect2);
 
-    Line line1 = new Line(
+    final Line line1 = new Line(
             MazeData.calcGridXFloat(-0.5f),
             MazeData.calcGridY(13), 
             MazeData.calcGridXFloat(-0.5f), 
@@ -890,7 +820,7 @@ public class Maze extends Parent {
     line1.setCache(true);
     group.getChildren().add(line1);
 
-    Line line2 = new Line(
+    final Line line2 = new Line(
             MazeData.calcGridXFloat(MazeData.GRID_SIZE + 0.5f),
             MazeData.calcGridY(13), 
             MazeData.calcGridXFloat(MazeData.GRID_SIZE + 0.5f), 
@@ -900,7 +830,7 @@ public class Maze extends Parent {
     line2.setCache(true);
     group.getChildren().add(line2);
 
-    Line line3 = new Line(
+    final Line line3 = new Line(
             MazeData.calcGridXFloat(-0.5f),
             MazeData.calcGridY(13), 
             MazeData.calcGridX(0), 
@@ -910,7 +840,7 @@ public class Maze extends Parent {
     line3.setCache(true);
     group.getChildren().add(line3);
 
-    Line line4 = new Line(
+    final Line line4 = new Line(
             MazeData.calcGridXFloat(-0.5f),
             MazeData.calcGridY(15), 
             MazeData.calcGridX(0), 
@@ -920,7 +850,7 @@ public class Maze extends Parent {
     line4.setCache(true);
     group.getChildren().add(line4);
 
-    Line line5 = new Line(
+    final Line line5 = new Line(
             MazeData.calcGridXFloat(MazeData.GRID_SIZE + 0.5f),
             MazeData.calcGridY(13), 
             MazeData.calcGridX(MazeData.GRID_SIZE), 
@@ -930,7 +860,7 @@ public class Maze extends Parent {
     line5.setCache(true);
     group.getChildren().add(line5);
 
-    Line line6 = new Line(
+    final Line line6 = new Line(
             MazeData.calcGridXFloat(MazeData.GRID_SIZE + 0.5f),
             MazeData.calcGridY(15), 
             MazeData.calcGridX(MazeData.GRID_SIZE), 
@@ -943,7 +873,6 @@ public class Maze extends Parent {
     textScore = new Text(MazeData.calcGridX(0),
             MazeData.calcGridY(MazeData.GRID_SIZE + 2),
             "SCORES: " + pacMan.scores);
-//    textScore.textProperty().bind("SCORES: " + pacMan.scores);
     textScore.textProperty().bind(pacMan.scores.asString("SCORES: %1d  "));
     textScore.setFont(new Font(20));
     textScore.setFill(Color.YELLOW);
@@ -955,7 +884,7 @@ public class Maze extends Parent {
     group.getChildren().addAll(livesImage);
     group.getChildren().add(gameResultText);
     
-    Text textLevel = new Text(MazeData.calcGridX(22),
+    final Text textLevel = new Text(MazeData.calcGridX(22),
             MazeData.calcGridY(MazeData.GRID_SIZE + 2),
             "LEVEL: " + level);
     textLevel.textProperty().bind(level.asString("LEVEL: %1d "));
@@ -964,25 +893,12 @@ public class Maze extends Parent {
     textLevel.setCache(true);
     group.getChildren().add(textLevel);
     group.setFocusTraversable(true);// patweb
-//    group.getChildren().get(0).requestFocus();// patweb
     group.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
       @Override public void handle(KeyEvent ke) {
-//        System.out.println("Key pressed: " + ke.getCharacter());
         onKeyPressed(ke);
       }
     });
-//    group.setOnKeyReleased(new EventHandler<KeyEvent>() {
-//        @Override public void handle(KeyEvent ke) {
-////          System.out.println("Key released: " + ke.getCharacter());
-//        }
-//    });
-//    group.setOnMousePressed(new EventHandler<MouseEvent>() {
-//            public void handle(MouseEvent me) {
-////              requestFocus();
-//              System.out.println("Mouse pressed: " + me.getButton());
-//            }
-//        });
     
     
     // postinit
@@ -1032,10 +948,10 @@ public class Maze extends Parent {
     putDotVertically(13,2,4);
     putDotVertically(16,2,4);
 
-//    insert pacMan into group.content;
+    // insert pacMan into group.content;
     group.getChildren().add(pacMan);
 
-//    insert ghosts into group.content;
+    // insert ghosts into group.content;
     group.getChildren().addAll(ghosts);
 
 //    insert WallBlackRectangle{ x1:-3, y1:13, x2:0, y2:15} into group.content;
@@ -1045,41 +961,29 @@ public class Maze extends Parent {
     group.getChildren().add(wallBlackRectangle1);
     group.getChildren().add(wallBlackRectangle2);
 
-//    insert messageBox into group.content;
+    // insert messageBox into group.content;
     group.getChildren().add(messageBox);
+    
     // end postinit
+    
     getChildren().add(group);
 
-//    System.out.print("livesImage1 is at " + livesImage1.getX());
-//    System.out.println(",  " + livesImage1.getY());
-//    livesImage1.setFitHeight(100);
-//    livesImage1.setFitWidth(100);
   }
   
-  
-  
-  
-//  public override function create(): Node {
-//  public Node create() {
-//    requestFocus();
-//    return group;
-//  } // end create()
 
+  public void onKeyPressed(KeyEvent e) {
 //  public override var onKeyPressed = function ( e: KeyEvent ) : Void {
 //  @Override
-  public void onKeyPressed(KeyEvent e) {
 
-//    System.out.println("Key pressed: " + e.getText());
     // wait for the player's keyboard input to start the game
     if (waitForStart.get()) {
-//      waitForStart = false;
       waitForStart.set(false);
       startNewGame();
       return;
     }
 
-//    if ( e.code == KeyCode.VK_P ) {
     if (e.getCode() == KeyCode.P) {
+//    if ( e.code == KeyCode.VK_P ) {
       if (gamePaused.get()) {
         resumeGame();
       } else {
@@ -1093,8 +997,8 @@ public class Maze extends Parent {
       return;
     }
 
-//    if ( e.getCode() == KeyCode.VK_DOWN ) {
     if (e.getCode() == KeyCode.DOWN) {
+//    if ( e.getCode() == KeyCode.VK_DOWN ) {
       pacMan.setKeyboardBuffer(MovingObject.MOVE_DOWN);
     } else if (e.getCode() == KeyCode.UP) {
       pacMan.setKeyboardBuffer(MovingObject.MOVE_UP);
@@ -1108,9 +1012,8 @@ public class Maze extends Parent {
 
 
   // create a Dot GUI object
-//  public function createDot( x1: Number,  y1:Number, type:Integer ): Dot {
   public Dot createDot(int x1, int y1, int type) {
-//    Dot d = new Dot(this, MazeData.calcGridX(x1), MazeData.calcGridY(y1), type);
+//  public function createDot( x1: Number,  y1:Number, type:Integer ): Dot {
     Dot d = new Dot(MazeData.calcGridX(x1), MazeData.calcGridY(y1), type);
     
     if (type == MazeData.MAGIC_DOT) {
@@ -1122,9 +1025,8 @@ public class Maze extends Parent {
 //        shouldStopAnimation: bind gamePaused or waitForStart
 //      }
       d.playTimeline();
-      // patweb: 
-      d.shouldStopAnimation.bind(gamePaused.or(waitForStart));
-//      System.out.println("playing magic dot");
+      
+      d.shouldStopAnimation.bind(gamePaused.or(waitForStart)); // patweb
     }
 //    else {
 //       d = Dot {
@@ -1134,6 +1036,7 @@ public class Maze extends Parent {
 //        visible: true
 //       }
 //    }
+    
     // set the dot type in data model
     MazeData.setData(x1, y1, type);
 
@@ -1146,27 +1049,26 @@ public class Maze extends Parent {
   // put dots into the maze as a horizontal line
   public final void putDotHorizontally(int x1, int x2, int y) {
 
-//    Dot[] dots;
     Dot dot;
 //    var dots =
 //    for ( x in [ x1..x2] )
     for (int x = x1; x <= x2; x++) {
       if (MazeData.getData(x, y) == MazeData.EMPTY) {
-//      var dotType: Integer;
         int dotType;
+//      var dotType: Integer;
 
         if ((x == 28 || x == 1) && (y == 3 || y == 26)) {
           dotType = MazeData.MAGIC_DOT;
         } else {
           dotType = MazeData.NORMAL_DOT;
         }
-//        dots[x] = createDot(x, y, dotType);
+        
         dot = createDot(x, y, dotType);
+        
+        // insert dots into group
         group.getChildren().add(dot);
       }
     }
-//    insert dots into group
-//    group.getChildren().add(dots);
   }
 
   // put dots into the maze as a vertical line
@@ -1187,21 +1089,6 @@ public class Maze extends Parent {
         group.getChildren().add(dot);
       }
     }
-//    var dots =
-//    for ( y in [ y1..y2] )
-//    if ( MazeData.getData(x,y) == MazeData.EMPTY ) {
-//      var dotType: Integer;
-//
-//      if ( (x == 28 or x == 1) and (y == 3 or y == 26) )
-//        dotType = MazeData.MAGIC_DOT;
-//      else
-//        dotType = MazeData.NORMAL_DOT;
-//
-//      createDot( x, y, dotType )
-//    }
-//    else  [];
-//
-//    insert dots into group.content;
   }
 
 
@@ -1218,21 +1105,17 @@ public class Maze extends Parent {
   // determine if pacman meets a ghost
   public boolean hasMet(Ghost g) {
 
-    int distanceThreshold = 22;
+    final int distanceThreshold = 22;
 
-//    int x1 = g.imageX;
-//    int x2 = pacMan.imageX;
-    int x1 = g.imageX.get();
-    int x2 = pacMan.imageX.get();
+    final int x1 = g.imageX.get();
+    final int x2 = pacMan.imageX.get();
 
-    int diffX = Math.abs(x1-x2);
+    final int diffX = Math.abs(x1-x2);
 
     if ( diffX >= distanceThreshold ) {
       return false;
     }
 
-//    int y1 = g.imageY;
-//    int y2 = pacMan.imageY;
     int y1 = g.imageY.get();
     int y2 = pacMan.imageY.get();
     int diffY = Math.abs(y1-y2);
@@ -1242,8 +1125,9 @@ public class Maze extends Parent {
     }
 
     // calculate the distance to see if pacman touches the ghost
-    if ( diffY*diffY + diffX*diffX <= distanceThreshold*distanceThreshold )
+    if ( diffY*diffY + diffX*diffX <= distanceThreshold*distanceThreshold ) {
       return true;
+    }
 
     return false;
   }
@@ -1261,39 +1145,34 @@ public class Maze extends Parent {
 
           pacMan.stop();
 
-//          dyingPacMan.startAnimation(pacMan.imageX, pacMan.imageY);
           dyingPacMan.startAnimation(pacMan.imageX.get(), pacMan.imageY.get());
           break;
         }
   }
 
-//  public function pacManEatsGhost(g: Ghost) {
   public void pacManEatsGhost(Ghost g) {
+//  public function pacManEatsGhost(g: Ghost) {
       
     ghostEatenCount++;
 
-//    var s = 1;
     int s = 1;
-//    for ( i in [1..ghostEatenCount] ) s = s + s;
+//    var s = 1;
     for (int i = 1; i <= ghostEatenCount; i++ ) {
+//    for ( i in [1..ghostEatenCount] ) s = s + s;
       s = s + s;
     }
 
-//    pacMan.scores += s*100;
     pacMan.scores.set(pacMan.scores.get() + s*100);
-//    if ( addLifeFlag and pacMan.scores >= 10000 ) {
-//    if ( addLifeFlag && pacMan.scores >= 10000 ) {
     if ( addLifeFlag && (pacMan.scores.get() >= 10000) ) {
+//    if ( addLifeFlag and pacMan.scores >= 10000 ) {
       addLife();
     }
 
+    final ScoreText st = scoreText[ghostEatenCount-1];
 //    var st = scoreText[ghostEatenCount-1];
-    ScoreText st = scoreText[ghostEatenCount-1];
 //    st.x = g.imageX - 10;
-//    st.setX(g.imageX - 10);
     st.setX(g.imageX.get() - 10);
 //    st.y = g.imageY;
-//    st.setY(g.imageY);
     st.setY(g.imageY.get());
 
     g.stop();
@@ -1306,7 +1185,6 @@ public class Maze extends Parent {
 
   public void resumeGame() {
 
-//    if ( !gamePaused ) {
     if ( !gamePaused.get() ) {
       return;
     }
@@ -1327,18 +1205,17 @@ public class Maze extends Parent {
       dyingPacMan.start();
     }
 
-//    if ( flashingTimeline.paused ) {
     if ( flashingTimeline.getStatus() == Animation.Status.PAUSED ) {
+//    if ( flashingTimeline.paused ) {
       flashingTimeline.play();
     }
-//    gamePaused = false;
+    
     gamePaused.set(false);
 
   }
 
   public void pauseGame() {
 
-//    if ( waitForStart || gamePaused ) {
     if ( waitForStart.get() || gamePaused.get() ) {
       return;
     }
@@ -1359,11 +1236,10 @@ public class Maze extends Parent {
       dyingPacMan.pause();
     }
 
-//    if ( flashingTimepacmanline.running ) {
     if ( flashingTimeline.getStatus() == Animation.Status.RUNNING ) {
+//    if ( flashingTimepacmanline.running ) {
       flashingTimeline.pause();
     }
-//    gamePaused = true;
     gamePaused.set(true);
   }
 
@@ -1376,34 +1252,31 @@ public class Maze extends Parent {
 
     gameResultText.setVisible(false);
 
-//    if ( lastGameResult == false ) {
     if ( !lastGameResult.get() ) {
-//      level = 1;
+//    if ( lastGameResult == false ) {
       level.set(1);
       addLifeFlag = true;
-//      pacMan.scores = 0;
       pacMan.scores.set(0);
       pacMan.dotEatenCount = 0;
 
-//      livesCount = 2;
       livesCount.set(2);
     }
     else { 
-//      lastGameResult = false;
       lastGameResult.set(false);
-//      level ++;
       level.set(level.get() + 1);
+//      level ++;
     }
 
-//    for ( x in [1..MazeData.GRID_SIZE] )
     for ( int x = 1; x <= MazeData.GRID_SIZE; x++ ) {
-//      for ( y in [1..MazeData.GRID_SIZE] ) {
+//    for ( x in [1..MazeData.GRID_SIZE] )
       for ( int y=1; y<=MazeData.GRID_SIZE; y++ ) {
-//        var dot : Dot = MazeData.getDot( x, y ) as Dot ;
+//      for ( y in [1..MazeData.GRID_SIZE] ) {
         Dot dot = (Dot) MazeData.getDot( x, y );
+//        var dot : Dot = MazeData.getDot( x, y ) as Dot ;
 
-        if ( (dot != null) && !dot.isVisible() ) 
+        if ( (dot != null) && !dot.isVisible() ) {
           dot.setVisible(true);
+        }
       }
     }
     for ( Ghost g : ghosts ) {
@@ -1415,7 +1288,6 @@ public class Maze extends Parent {
   // reset status and start a new level
   public void startNewLevel() {
 
-//    lastGameResult = true;
     lastGameResult.set(true);
 
     pacMan.hide();
@@ -1433,13 +1305,12 @@ public class Maze extends Parent {
   public void startNewLife() {
 
     // reduce a life of Pac-Man
-//    if ( livesCount > 0 ) {
     if ( livesCount.get() > 0 ) {
-//      livesCount--;
+//    if ( livesCount > 0 ) {
       livesCount.set(livesCount.get() - 1);
+//      livesCount--;
     }
     else {
-//      lastGameResult = false;
       lastGameResult.set(false);
       flashingCount = 0;
       flashingTimeline.playFromStart();
@@ -1456,12 +1327,10 @@ public class Maze extends Parent {
   public void addLife() {
 
     if ( addLifeFlag ) {
-//      livesCount ++;
       livesCount.set(livesCount.get() + 1);
+//      livesCount ++;
       addLifeFlag = false;
     }
   }
-
-
 
 }

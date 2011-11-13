@@ -4,7 +4,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-/*
+/**
  * Ghost.fx created on 2009-1-28, 14:26:09 <br>
  * Ghost.java created October 2011
  * 

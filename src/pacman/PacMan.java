@@ -392,7 +392,7 @@ public class PacMan extends MovingObject {
         }
 
         // check if the player wins and should start a new level
-        if ( dotEatenCount >= MazeData.DOT_TOTAL ) {
+        if ( dotEatenCount >= MazeData.dotTotal ) {
           maze.startNewLevel();
         }
       }
@@ -421,7 +421,7 @@ public class PacMan extends MovingObject {
       return;
     }
 
-    // handle keyboard input only when pac-man is at a point of the grid
+    // handle keyboard input only when pac-man is at a point on the grid
     if ( currentImage.get() == 0 ) {
 //    if ( currentImage == 0 ) {
       handleKeyboardInput();
@@ -453,7 +453,7 @@ public class PacMan extends MovingObject {
   }
 
  /**
-  * place Pac-Man at the startup position for a new game
+  * Place Pac-Man at the startup position for a new game
   */
   public void resetStatus() {
     state = MOVING;
@@ -475,9 +475,8 @@ public class PacMan extends MovingObject {
 //    imageX = MazeData.calcGridX(x);
 //    imageY = MazeData.calcGridY(y);
 
-    setVisible(true); // patweb: Pac-Man does not show-up at start of new life.
+    setVisible(true); // patweb: Added because Pac-Man is invisible at start of new life.
     start();
   }
-
 
 }
