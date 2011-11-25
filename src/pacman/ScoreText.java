@@ -1,11 +1,3 @@
-/*
- * ScoreText.fx
- *
- * Created on 2009-2-6, 17:52:42
- *
- * text object for showing scores of eating a ghost, then disappears after 2s
- *
- */
 package pacman;
 
 import javafx.animation.KeyFrame;
@@ -19,16 +11,27 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 /**
+ * Text object for showing score for eating a ghost, then disappears after 2 seconds.
+ *
+ * ScoreText.fx created on 2009-2-6, 17:52:42 <br>
+ * ScoreText.java created October 2011
+ *
  * @author Henry Zhang
+ * @author Patrick Webster
  */
-//public class ScoreText extends Text{
 public class ScoreText extends Parent {
-//  override var font = Font { size: 11 };
+//public class ScoreText extends Text {
 
-  private final static Font font = new Font(11);
+//  override var font = Font { size: 11 };
+  private final static Font SCORE_FONT = new Font(11);
 //  override var fill = Color.YELLOW;
-  private final static Color fill = Color.YELLOW;
+  private final static Color SCORE_FILL = Color.YELLOW;
+  private final static int DISPLAY_TIME = 2;
   private final Text text;
+
+  private Timeline timeline;
+
+  private void createTimeline() {
 //  var timeline= Timeline {
 //    repeatCount: 1
 //    keyFrames: [
@@ -39,13 +42,10 @@ public class ScoreText extends Parent {
 //        }
 //      }
 //    ]
-//    };
-  private Timeline timeline;
-
-  private void createTimeline() {
+//  };
     timeline = new Timeline();
     timeline.setCycleCount(1);
-    KeyFrame kf = new KeyFrame(Duration.seconds(2), new EventHandler<ActionEvent>() {
+    KeyFrame kf = new KeyFrame(Duration.seconds(DISPLAY_TIME), new EventHandler<ActionEvent>() {
 
       public void handle(ActionEvent event) {
         setVisible(false);
@@ -69,8 +69,8 @@ public class ScoreText extends Parent {
   
   public ScoreText(String s, boolean isVisible) { //patweb
     text = new Text(s);
-    text.setFont(font);
-    text.setFill(fill);
+    text.setFont(SCORE_FONT);
+    text.setFill(SCORE_FILL);
     createTimeline();
     getChildren().add(text);
     setVisible(isVisible);
