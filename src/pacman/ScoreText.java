@@ -23,10 +23,10 @@ public class ScoreText extends Parent {
 //public class ScoreText extends Text {
 
 //  override var font = Font { size: 11 };
-  private final static Font SCORE_FONT = new Font(11);
+  private static final Font SCORE_FONT = new Font(11);
 //  override var fill = Color.YELLOW;
-  private final static Color SCORE_FILL = Color.YELLOW;
-  private final static int DISPLAY_TIME = 2;
+  private static final Color SCORE_FILL = Color.YELLOW;
+  private static final int DISPLAY_TIME = 2;
   private final Text text;
 
   private Timeline timeline;

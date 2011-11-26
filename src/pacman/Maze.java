@@ -51,7 +51,7 @@ public class Maze extends Parent {
 //  public var gamePaused: Boolean = false;
 
   // text to be displayed for score of eating a ghost
-  public static final ScoreText[] scoreText = {
+  public static final ScoreText[] SCORE_TEXT = {
 //  var scoreText = [
     new ScoreText("200", false) //{
     //      content: "200"
@@ -174,7 +174,7 @@ public class Maze extends Parent {
 //   } ;
 
   // the pac man image
-  public static final Image pacmanImage = new Image(Maze.class.getResourceAsStream("images/left1.png"));
+  public static final Image PACMAN_IMAGE = new Image(Maze.class.getResourceAsStream("images/left1.png"));
 //  var pacmanImage =Image {
 //    url: "{__DIR__}images/left1.png"
 //  }
@@ -221,7 +221,7 @@ public class Maze extends Parent {
   public BooleanProperty waitForStart;
 //  public var waitForStart: Boolean = true;
   
-  private Group messageBox;
+  private final Group messageBox;
 //  var messageBox = Group {
 //    content: [
 //      Rectangle {
@@ -251,11 +251,11 @@ public class Maze extends Parent {
 //  };
 
  // whether the last finished game is won by the player
- private BooleanProperty lastGameResult;
+ private final BooleanProperty lastGameResult;
 // var lastGameResult: Boolean = false;
 
  // text of game winning
- private Text gameResultText;
+ private final Text gameResultText;
 // var gameResultText =
 //   Text {
 ////     cache: true
@@ -275,9 +275,7 @@ public class Maze extends Parent {
  private int flashingCount;
 // var flashingCount: Integer = 0;
  
- private Text textScore; // patweb
- 
- private Timeline flashingTimeline;
+ private final Timeline flashingTimeline;
 // var flashingTimeline: Timeline =
 //   Timeline {
 //     repeatCount: 5
@@ -295,7 +293,7 @@ public class Maze extends Parent {
 //     ]
 //   };
 
-  private Group group;
+  private final Group group;
 //  var group : Group =
 //  Group {
 //    content: [
@@ -610,17 +608,17 @@ public class Maze extends Parent {
     
     livesCount = new SimpleIntegerProperty(2);
     
-    ImageView livesImage1 = new ImageView(pacmanImage);
+    ImageView livesImage1 = new ImageView(PACMAN_IMAGE);
     livesImage1.setX(MazeData.calcGridX(18));
     livesImage1.setY(MazeData.calcGridY(30));
     livesImage1.visibleProperty().bind(livesCount.greaterThan(0));
     livesImage1.setCache(true);
-    ImageView livesImage2 = new ImageView(pacmanImage);
+    ImageView livesImage2 = new ImageView(PACMAN_IMAGE);
     livesImage2.setX(MazeData.calcGridX(16));
     livesImage2.setY(MazeData.calcGridY(30));
     livesImage2.visibleProperty().bind(livesCount.greaterThan(1));
     livesImage2.setCache(true);
-    ImageView livesImage3 = new ImageView(pacmanImage);
+    ImageView livesImage3 = new ImageView(PACMAN_IMAGE);
     livesImage3.setX(MazeData.calcGridX(14));
     livesImage3.setY(MazeData.calcGridY(30));
     livesImage3.visibleProperty().bind(livesCount.greaterThan(2));
@@ -870,7 +868,7 @@ public class Maze extends Parent {
     line6.setCache(true);
     group.getChildren().add(line6);
     
-    textScore = new Text(MazeData.calcGridX(0),
+    Text textScore = new Text(MazeData.calcGridX(0),
             MazeData.calcGridY(MazeData.GRID_SIZE + 2),
             "SCORES: " + pacMan.scores);
     textScore.textProperty().bind(pacMan.scores.asString("SCORES: %1d  "));
@@ -879,7 +877,7 @@ public class Maze extends Parent {
     textScore.setCache(true);
     group.getChildren().add(textScore);
     
-    group.getChildren().addAll(scoreText);
+    group.getChildren().addAll(SCORE_TEXT);
     group.getChildren().add(dyingPacMan);
     group.getChildren().addAll(livesImage);
     group.getChildren().add(gameResultText);
@@ -1134,20 +1132,22 @@ public class Maze extends Parent {
 
   public void pacManMeetsGhosts() {
 
-    for ( Ghost g : ghosts )
-      if ( hasMet(g) )
+    for ( Ghost g : ghosts ) {
+      if ( hasMet(g) ) {
         if ( g.isHollow ) {
           pacManEatsGhost(g);
         }
         else {
-          for ( Ghost ghost : ghosts )
+          for ( Ghost ghost : ghosts ) {
             ghost.stop();
-
+          }
           pacMan.stop();
 
           dyingPacMan.startAnimation(pacMan.imageX.get(), pacMan.imageY.get());
           break;
         }
+      }
+    }
   }
 
   public void pacManEatsGhost(Ghost g) {
@@ -1168,7 +1168,7 @@ public class Maze extends Parent {
       addLife();
     }
 
-    final ScoreText st = scoreText[ghostEatenCount-1];
+    final ScoreText st = SCORE_TEXT[ghostEatenCount-1];
 //    var st = scoreText[ghostEatenCount-1];
 //    st.x = g.imageX - 10;
     st.setX(g.imageX.get() - 10);

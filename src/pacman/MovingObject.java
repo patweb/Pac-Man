@@ -30,12 +30,12 @@ public abstract class MovingObject extends Parent {
   public final static int MOVE_SPEED = MazeData.GRID_GAP / ANIMATION_STEP;
 
   public final static int MOVING = 1;
-  public final static int STOP =0;
+  public final static int STOPPED = 0;
   
-  public final static int MOVE_LEFT=0;
-  public final static int MOVE_UP=1;
-  public final static int MOVE_RIGHT=2;
-  public final static int MOVE_DOWN=3;
+  public final static int MOVE_LEFT = 0;
+  public final static int MOVE_UP = 1;
+  public final static int MOVE_RIGHT = 2;
+  public final static int MOVE_DOWN = 3;
 
   public Maze maze;
   public int state;
@@ -43,7 +43,7 @@ public abstract class MovingObject extends Parent {
 //  public int currentImage; //=0;
   public IntegerProperty currentImage; //=0;
   public Image[] images;
-  ObjectBinding imageBinding;
+  protected ObjectBinding imageBinding;
   public int moveCounter; //=0;
 
   // grid coordinates

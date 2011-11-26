@@ -42,9 +42,11 @@ public class MoveDecision {
     int distance = Math.abs( x - pacMan.x ) + Math.abs( y - pacMan.y );
 //    int distance = Math.abs( x - pacMan.x.get() ) + Math.abs( y - pacMan.y.get() );
 
-    if ( isHollow )
+    if ( isHollow ) {
       score = 500 + distance;  // mode to run away from Pac-Man
-    else
+    }
+    else {
       score = 500 - distance; // mode to chase Pac-Man
+    }
   }
 }

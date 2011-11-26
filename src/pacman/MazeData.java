@@ -7,24 +7,26 @@ package pacman;
  * @author Henry Zhang
  * @author Patrick Webster
  */
-public class MazeData {
+public final class MazeData {
 
-  public final static int GRID_SIZE = 29;
-  public final static int EMPTY = 0;
-  public final static int BLOCK = 1;
-  public final static int NORMAL_DOT = 2;
-  public final static int MAGIC_DOT = 3;
+  public static final int GRID_SIZE = 29;
+  public static final int EMPTY = 0;
+  public static final int BLOCK = 1;
+  public static final int NORMAL_DOT = 2;
+  public static final int MAGIC_DOT = 3;
 
   public static int dotTotal = 0;
 
-  private final static int MAZE_DATA[][] = new int[GRID_SIZE + 1][GRID_SIZE + 1];
+  private static final int MAZE_DATA[][] = new int[GRID_SIZE + 1][GRID_SIZE + 1];
 
-  private final static Object DOT_POINTERS[][] = new Object[GRID_SIZE + 1][GRID_SIZE + 1];
+  private static final Object DOT_POINTERS[][] = new Object[GRID_SIZE + 1][GRID_SIZE + 1];
 
-  public final static int GRID_GAP = 16;
-  public final static int GRID_STROKE = 2;
-  private final static int X_OFFSET = GRID_GAP * 2;
-  private final static int Y_OFFSET = GRID_GAP * 2;
+  public static final int GRID_GAP = 16;
+  public static final int GRID_STROKE = 2;
+  private static final int X_OFFSET = GRID_GAP * 2;
+  private static final int Y_OFFSET = GRID_GAP * 2;
+
+  private MazeData() { };
 
   private static int makeInRange(int a) {
 

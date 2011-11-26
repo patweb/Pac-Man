@@ -15,7 +15,7 @@ import javafx.scene.image.ImageView;
 public class Ghost extends MovingObject{
 //public class Ghost extends Parent, MovingObject{
 
-  public final static int TRAPPED = 10;
+  public static final int TRAPPED = 10;
 
   // the pacman character
   public PacMan pacMan;
@@ -23,17 +23,17 @@ public class Ghost extends MovingObject{
 //  public var HOLLOWIMAGE1 = Image {
 //    url: "{__DIR__}images/ghosthollow2.png"
 //  }
-  public final static Image HOLLOWIMAGE1 = new Image(Ghost.class.getResourceAsStream("images/ghosthollow2.png"));
+  public static final Image HOLLOWIMAGE1 = new Image(Ghost.class.getResourceAsStream("images/ghosthollow2.png"));
   
 //  public var HOLLOWIMAGE2 = Image {
 //    url: "{__DIR__}images/ghosthollow3.png"
 //  }
-  public final static Image HOLLOWIMAGE2 = new Image(Ghost.class.getResourceAsStream("images/ghosthollow3.png"));
+  public static final Image HOLLOWIMAGE2 = new Image(Ghost.class.getResourceAsStream("images/ghosthollow3.png"));
   
 //  public var HOLLOWIMAGE3 = Image {
 //    url: "{__DIR__}images/ghosthollow1.png"
 //  }
-  public final static Image HOLLOWIMAGE3 = new Image(Ghost.class.getResourceAsStream("images/ghosthollow1.png"));
+  public static final Image HOLLOWIMAGE3 = new Image(Ghost.class.getResourceAsStream("images/ghosthollow1.png"));
   
   // images for ghosts when they become hollow
 //  public var HOLLOWIMG =
@@ -41,7 +41,7 @@ public class Ghost extends MovingObject{
 //      HOLLOWIMAGE2,
 //      HOLLOWIMAGE1,
 //      HOLLOWIMAGE2 ];
-  public final static Image[] HOLLOWIMG = new Image[]{
+  public static final Image[] HOLLOWIMG = new Image[]{
     HOLLOWIMAGE1,
     HOLLOWIMAGE2,
     HOLLOWIMAGE1,
@@ -54,7 +54,7 @@ public class Ghost extends MovingObject{
 //      HOLLOWIMAGE3,
 //      HOLLOWIMAGE1,
 //      HOLLOWIMAGE3 ];
-  public final static Image[] FLASHHOLLOWIMG = new Image[] {
+  public static final Image[] FLASHHOLLOWIMG = new Image[] {
     HOLLOWIMAGE1,
     HOLLOWIMAGE3,
     HOLLOWIMAGE1,
@@ -62,7 +62,7 @@ public class Ghost extends MovingObject{
   };
 
   // time for a ghost to stay hollow
-  public final static int HOLLOWMAXTIME = 80;
+  public static final int HOLLOWMAXTIME = 80;
   
   public int hollowCounter;
 
@@ -245,8 +245,9 @@ public class Ghost extends MovingObject{
     goDown.evaluate(pacMan, isHollow);
 
 //    if ( goUp.score < 0 and goDown.score < 0 )
-    if ( goUp.score < 0 && goDown.score < 0 )
+    if ( goUp.score < 0 && goDown.score < 0 ) {
       return;  // no change of direction
+    }
 
 //    if ( Math.random() < chaseFactor and chaseCount == 0 )
     if ( Math.random() < chaseFactor && chaseCount == 0 ) {
@@ -273,8 +274,9 @@ public class Ghost extends MovingObject{
 
 //    var decision = -1; // make it goes up first, then decide if we need to change it
     int decision = -1; // make it go up first, then decide if we need to change it
-    if ( goUp.score  < 0 )
+    if ( goUp.score  < 0 ) {
       decision = 1;
+    }
     else {
       if ( goDown.score > 0 ) {
         if ( chaseCount > 0 ) {
@@ -300,8 +302,9 @@ public class Ghost extends MovingObject{
   public void changeDirectionYtoX(boolean mustChange) {
 //  public function changeDirectionYtoX(mustChange: Boolean): Void {
 
-    if ( !mustChange && (Math.random() > changeFactor) )
+    if ( !mustChange && (Math.random() > changeFactor) ) {
       return;  // no change of direction
+    }
 
     // will change to X directions if possible
 //    var goLeft = MoveDecision {
@@ -350,8 +353,9 @@ public class Ghost extends MovingObject{
 
     // make it go up first, then decide if we need to change it to down
     int decision = -1;
-    if ( goLeft.score  < 0 )
+    if ( goLeft.score  < 0 ) {
       decision = 1;
+    }
     else {
       if ( goRight.score > 0 ) {
         if ( chaseCount > 0 ) {
@@ -565,8 +569,9 @@ public class Ghost extends MovingObject{
     
       hollowCounter++;
 
-      if ( hollowCounter == HOLLOWMAXTIME - 30 )
+      if ( hollowCounter == HOLLOWMAXTIME - 30 ) {
         images = FLASHHOLLOWIMG;
+      }
       else if ( hollowCounter > HOLLOWMAXTIME ) {
         isHollow = false;
         images = defaultImg;

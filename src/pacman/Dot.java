@@ -98,7 +98,7 @@ public class Dot extends Parent {
 
   // do the animation
 //  public function doOneTick () {
-  public void doOneTick() {
+  public final void doOneTick() {
 
     if (!isVisible() || shouldStopAnimation.get()) {
       return;
@@ -106,7 +106,7 @@ public class Dot extends Parent {
 
     animationRadius += delta;
 //    var x = Math.abs(animationRadius) + 3;
-    int x1 = Math.abs(animationRadius) + 3;
+    final int x1 = Math.abs(animationRadius) + 3;
 
     if (x1 > 5) {
       delta = -delta;
