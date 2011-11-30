@@ -188,7 +188,7 @@ public class PacMan extends MovingObject {
       }
       else // check if the character hits a wall
       if ( MazeData.getData(nextX, y) == MazeData.BLOCK ) {
-        state = STOP;
+        state = STOPPED;
       }
     }
   }
@@ -215,7 +215,7 @@ public class PacMan extends MovingObject {
 
       // check if the character hits a wall
       if ( MazeData.getData(x, nextY) == MazeData.BLOCK ) {
-        state = STOP;
+        state = STOPPED;
       }
     }
   }

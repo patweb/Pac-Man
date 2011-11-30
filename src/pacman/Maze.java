@@ -119,7 +119,7 @@ public class Maze extends Parent {
   public BooleanProperty waitForStart;
 //  public var waitForStart: Boolean = true;
   
-  private Group messageBox;
+  private final Group messageBox;
 //  var messageBox = Group {
 //    content: [
 //      Rectangle {
@@ -149,11 +149,11 @@ public class Maze extends Parent {
 //  };
 
  // whether the last finished game is won by the player
- private BooleanProperty lastGameResult;
+ private final BooleanProperty lastGameResult;
 // var lastGameResult: Boolean = false;
 
  // text of game winning
- private Text gameResultText;
+ private final Text gameResultText;
 // var gameResultText =
 //   Text {
 ////     cache: true
@@ -173,7 +173,7 @@ public class Maze extends Parent {
  private int flashingCount;
 // var flashingCount: Integer = 0;
  
- private Timeline flashingTimeline;
+ private final Timeline flashingTimeline;
 // var flashingTimeline: Timeline =
 //   Timeline {
 //     repeatCount: 5
@@ -191,7 +191,7 @@ public class Maze extends Parent {
 //     ]
 //   };
 
-  private Group group;
+  private final Group group;
 //  var group : Group =
 //  Group {
 //    content: [
@@ -1120,20 +1120,22 @@ public class Maze extends Parent {
 
   public void pacManMeetsGhosts() {
 
-    for ( Ghost g : ghosts )
-      if ( hasMet(g) )
+    for ( Ghost g : ghosts ) {
+      if ( hasMet(g) ) {
         if ( g.isHollow ) {
           pacManEatsGhost(g);
         }
         else {
-          for ( Ghost ghost : ghosts )
+          for ( Ghost ghost : ghosts ) {
             ghost.stop();
-
+          }
           pacMan.stop();
 
           dyingPacMan.startAnimation(pacMan.imageX.get(), pacMan.imageY.get());
           break;
         }
+      }
+    }
   }
 
   public void pacManEatsGhost(Ghost g) {
