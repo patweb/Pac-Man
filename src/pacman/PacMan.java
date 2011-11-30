@@ -56,7 +56,7 @@ public class PacMan extends MovingObject {
   * GUI image of the man
   */
   public ImageView pacmanImage;
-//  var pacmanImage : ImageView = ImageView {
+//  var PACMAN_IMAGE : ImageView = ImageView {
 //    x: bind imageX - 13
 //    y: bind imageY - 13
 //    image: bind images[currentImage]

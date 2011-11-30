@@ -1,8 +1,6 @@
 package pacman;
 
 //import javafx.scene.CustomNode;
-//import javafx.scene.*;
-//import javafx.scene.input.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -44,14 +42,14 @@ public class Maze extends Parent {
 //  }
 
   // counter for ghosts eaten
-  public int ghostEatenCount;
+  private int ghostEatenCount;
 //  var ghostEatenCount : Integer;
 
   public BooleanProperty gamePaused;
 //  public var gamePaused: Boolean = false;
 
   // text to be displayed for score of eating a ghost
-  public static final ScoreText[] scoreText = {
+  private static final ScoreText[] SCORE_TEXT = {
 //  var scoreText = [
     new ScoreText("200", false) //{
     //      content: "200"
@@ -77,88 +75,14 @@ public class Maze extends Parent {
   //    }
   };
 
-  // Pac Man Character
+  // Pac-Man Character
   public PacMan pacMan;
 //  public var pacMan : PacMan = PacMan{ maze:this x:15 y:18 } ;
-
-  public Ghost ghostBlinky;
-//  public var ghostBlinky = Ghost {
-//    defaultImage1: Image {
-//      url: "{__DIR__}images/ghostred1.png"
-//    }
-//
-//    defaultImage2: Image {
-//      url: "{__DIR__}images/ghostred2.png"
-//    }
-//
-//     maze: this
-//     pacMan: pacMan
-//     x: 17
-//     y: 15
-//     xDirection: 0
-//     yDirection: -1
-//     trapTime: 1
-//    };
-
-   public Ghost ghostPinky; // =  {
-//   public var ghostPinky = Ghost {
-//     defaultImage1:Image {
-//        url: "{__DIR__}images/ghostpink1.png"
-//     }
-//
-//     defaultImage2:Image {
-//       url: "{__DIR__}images/ghostpink2.png"
-//     }
-//     
-//     maze: this
-//     pacMan: pacMan
-//     x: 12
-//     y: 14
-//     xDirection: 0 
-//     yDirection: 1
-//     trapTime: 10
-//   };
-
-   public Ghost ghostInky; // = Ghost {
-//   public var ghostInky = Ghost {
-//     defaultImage1:Image {
-//       url: "{__DIR__}images/ghostcyan1.png"
-//     }
-//     defaultImage2:Image {
-//       url: "{__DIR__}images/ghostcyan2.png"
-//     }
-//
-//     maze: this
-//     pacMan: pacMan
-//     x: 13
-//     y: 15
-//     xDirection: 1
-//     yDirection: 0
-//     trapTime: 20
-//   };
-
-   public Ghost ghostClyde; // = Ghost {
-//   public var ghostClyde = Ghost {
-//     defaultImage1:Image {
-//        url: "{__DIR__}images/ghostorange1.png"
-//     }
-//     defaultImage2:Image {
-//       url: "{__DIR__}images/ghostorange2.png"
-//     }
-//
-//     maze: this
-//     pacMan: pacMan
-//     x: 15
-//     y: 14
-//     xDirection: -1
-//     yDirection: 0
-//     trapTime: 30
-//   };
 
   public final Ghost[] ghosts;
 //  public var ghosts = [ghostBlinky, ghostPinky, ghostInky, ghostClyde];
 
-  public DyingPacMan dyingPacMan;
+  private final DyingPacMan dyingPacMan;
 //  public var dyingPacMan =
 //    DyingPacMan {
 //      maze: this
@@ -174,47 +98,21 @@ public class Maze extends Parent {
 //   } ;
 
   // the pac man image
-  public static final Image pacmanImage = new Image(Maze.class.getResourceAsStream("images/left1.png"));
-//  var pacmanImage =Image {
+  private static final Image PACMAN_IMAGE = new Image(Maze.class.getResourceAsStream("images/left1.png"));
+//  var PACMAN_IMAGE = Image {
 //    url: "{__DIR__}images/left1.png"
 //  }
 
-  // images showing how many lives remaining
-  public ImageView[] livesImage; // = [
-//  var livesImage = [
-//    ImageView {
-//      image: pacmanImage
-//      x: MazeData.calcGridX(18)
-//      y: MazeData.calcGridY(30)
-//      visible: bind livesCount > 0
-//      cache: true
-//    },
-//    ImageView {
-//      image: pacmanImage
-//      x: MazeData.calcGridX(16)
-//      y: MazeData.calcGridY(30)
-//      visible: bind livesCount > 1
-//      cache: true
-//    },
-//    ImageView {
-//      image: pacmanImage
-//      x: MazeData.calcGridX(14)
-//      y: MazeData.calcGridY(30)
-//      visible: bind livesCount > 2
-//      cache: true
-//    }
-//  ];
-
   // level of the game
-  public SimpleIntegerProperty level;
+  private final SimpleIntegerProperty level;
 //  public var level : Integer = 1;
 
   // flag to add a life to the player the first time score exceeds 10,000
-  public boolean addLifeFlag; // patweb: TODO: should get new life EVERY 10,000.
+  private boolean addLifeFlag; // patweb: TODO: should get new life EVERY 10,000.
 //  var addLifeFlag: Boolean = true;
 
   // current lives of the player
-  public SimpleIntegerProperty livesCount;
+  private final SimpleIntegerProperty livesCount;
 //  var livesCount = 2;
 
   // message to start a game
@@ -274,8 +172,6 @@ public class Maze extends Parent {
 
  private int flashingCount;
 // var flashingCount: Integer = 0;
- 
- private Text textScore; // patweb
  
  private Timeline flashingTimeline;
 // var flashingTimeline: Timeline =
@@ -549,8 +445,8 @@ public class Maze extends Parent {
     gamePaused = new SimpleBooleanProperty(false);
     
     pacMan = new PacMan(this, 15, 18);
-    
-    ghostBlinky = new Ghost(
+  
+    final Ghost ghostBlinky = new Ghost(
             new Image(getClass().getResourceAsStream("images/ghostred1.png")),
             new Image(getClass().getResourceAsStream("images/ghostred2.png")),
             this,
@@ -560,8 +456,25 @@ public class Maze extends Parent {
             0,  // x Direction
             -1, // y Direction
             1); // trap time
+//    public var ghostBlinky = Ghost {
+//    defaultImage1: Image {
+//      url: "{__DIR__}images/ghostred1.png"
+//    }
+//
+//    defaultImage2: Image {
+//      url: "{__DIR__}images/ghostred2.png"
+//    }
+//
+//     maze: this
+//     pacMan: pacMan
+//     x: 17
+//     y: 15
+//     xDirection: 0
+//     yDirection: -1
+//     trapTime: 1
+//    };
     
-    ghostPinky = new Ghost(
+    final Ghost ghostPinky = new Ghost(
             new Image(getClass().getResourceAsStream("images/ghostpink1.png")),
             new Image(getClass().getResourceAsStream("images/ghostpink2.png")),
             this,
@@ -571,8 +484,25 @@ public class Maze extends Parent {
             1,  // x Direction
             0,  // y Direction
             5); // trap time
+//   public var ghostPinky = Ghost {
+//     defaultImage1:Image {
+//        url: "{__DIR__}images/ghostpink1.png"
+//     }
+//
+//     defaultImage2:Image {
+//       url: "{__DIR__}images/ghostpink2.png"
+//     }
+//     
+//     maze: this
+//     pacMan: pacMan
+//     x: 12
+//     y: 14
+//     xDirection: 0 
+//     yDirection: 1
+//     trapTime: 10
+//   };
 
-    ghostInky = new Ghost(
+    final Ghost ghostInky = new Ghost(
             new Image(getClass().getResourceAsStream("images/ghostcyan1.png")),
             new Image(getClass().getResourceAsStream("images/ghostcyan2.png")),
             this,
@@ -582,8 +512,24 @@ public class Maze extends Parent {
             1,   // x Direction
             0,   // y Direction
             20); // trap time
+//   public var ghostInky = Ghost {
+//     defaultImage1:Image {
+//       url: "{__DIR__}images/ghostcyan1.png"
+//     }
+//     defaultImage2:Image {
+//       url: "{__DIR__}images/ghostcyan2.png"
+//     }
+//
+//     maze: this
+//     pacMan: pacMan
+//     x: 13
+//     y: 15
+//     xDirection: 1
+//     yDirection: 0
+//     trapTime: 20
+//   };
     
-    ghostClyde = new Ghost(
+    final Ghost ghostClyde = new Ghost(
             new Image(getClass().getResourceAsStream("images/ghostorange1.png")),
             new Image(getClass().getResourceAsStream("images/ghostorange2.png")),
             this,
@@ -593,6 +539,22 @@ public class Maze extends Parent {
             1,   // x Direction
             0,   // y Direction
             30); // trap time
+//   public var ghostClyde = Ghost {
+//     defaultImage1:Image {
+//        url: "{__DIR__}images/ghostorange1.png"
+//     }
+//     defaultImage2:Image {
+//       url: "{__DIR__}images/ghostorange2.png"
+//     }
+//
+//     maze: this
+//     pacMan: pacMan
+//     x: 15
+//     y: 14
+//     xDirection: -1
+//     yDirection: 0
+//     trapTime: 30
+//   };
 
     ghosts = new Ghost[] {ghostBlinky, ghostPinky, ghostInky, ghostClyde};
     
@@ -610,22 +572,46 @@ public class Maze extends Parent {
     
     livesCount = new SimpleIntegerProperty(2);
     
-    ImageView livesImage1 = new ImageView(pacmanImage);
+    // images showing how many lives remaining
+    final ImageView livesImage1 = new ImageView(PACMAN_IMAGE);
     livesImage1.setX(MazeData.calcGridX(18));
     livesImage1.setY(MazeData.calcGridY(30));
     livesImage1.visibleProperty().bind(livesCount.greaterThan(0));
     livesImage1.setCache(true);
-    ImageView livesImage2 = new ImageView(pacmanImage);
+    final ImageView livesImage2 = new ImageView(PACMAN_IMAGE);
     livesImage2.setX(MazeData.calcGridX(16));
     livesImage2.setY(MazeData.calcGridY(30));
     livesImage2.visibleProperty().bind(livesCount.greaterThan(1));
     livesImage2.setCache(true);
-    ImageView livesImage3 = new ImageView(pacmanImage);
+    final ImageView livesImage3 = new ImageView(PACMAN_IMAGE);
     livesImage3.setX(MazeData.calcGridX(14));
     livesImage3.setY(MazeData.calcGridY(30));
     livesImage3.visibleProperty().bind(livesCount.greaterThan(2));
     livesImage3.setCache(true);
-    livesImage = new ImageView[] {livesImage1, livesImage2, livesImage3};
+//  var livesImage = [
+//    ImageView {
+//      image: PACMAN_IMAGE
+//      x: MazeData.calcGridX(18)
+//      y: MazeData.calcGridY(30)
+//      visible: bind livesCount > 0
+//      cache: true
+//    },
+//    ImageView {
+//      image: PACMAN_IMAGE
+//      x: MazeData.calcGridX(16)
+//      y: MazeData.calcGridY(30)
+//      visible: bind livesCount > 1
+//      cache: true
+//    },
+//    ImageView {
+//      image: PACMAN_IMAGE
+//      x: MazeData.calcGridX(14)
+//      y: MazeData.calcGridY(30)
+//      visible: bind livesCount > 2
+//      cache: true
+//    }
+//  ];
+    final ImageView[] livesImage = new ImageView[] {livesImage1, livesImage2, livesImage3};
     
     level = new SimpleIntegerProperty(1);
     addLifeFlag = true;
@@ -870,16 +856,16 @@ public class Maze extends Parent {
     line6.setCache(true);
     group.getChildren().add(line6);
     
-    textScore = new Text(MazeData.calcGridX(0),
+    Text textScore = new Text(MazeData.calcGridX(0),
             MazeData.calcGridY(MazeData.GRID_SIZE + 2),
-            "SCORES: " + pacMan.scores);
-    textScore.textProperty().bind(pacMan.scores.asString("SCORES: %1d  "));
+            "SCORE: " + pacMan.scores);
+    textScore.textProperty().bind(pacMan.scores.asString("SCORE: %1d  "));
     textScore.setFont(new Font(20));
     textScore.setFill(Color.YELLOW);
     textScore.setCache(true);
     group.getChildren().add(textScore);
     
-    group.getChildren().addAll(scoreText);
+    group.getChildren().addAll(SCORE_TEXT);
     group.getChildren().add(dyingPacMan);
     group.getChildren().addAll(livesImage);
     group.getChildren().add(gameResultText);
@@ -1168,7 +1154,7 @@ public class Maze extends Parent {
       addLife();
     }
 
-    final ScoreText st = scoreText[ghostEatenCount-1];
+    final ScoreText st = SCORE_TEXT[ghostEatenCount-1];
 //    var st = scoreText[ghostEatenCount-1];
 //    st.x = g.imageX - 10;
     st.setX(g.imageX.get() - 10);
