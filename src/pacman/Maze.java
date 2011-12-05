@@ -618,7 +618,7 @@ public class Maze extends Parent {
     waitForStart = new SimpleBooleanProperty(true);
     
     messageBox = new Group();
-    Rectangle rectMessage = new Rectangle(MazeData.calcGridX(5),
+    final Rectangle rectMessage = new Rectangle(MazeData.calcGridX(5),
             MazeData.calcGridY(21),
             MazeData.GRID_GAP * 19,
             MazeData.GRID_GAP *5);
@@ -629,7 +629,7 @@ public class Maze extends Parent {
     rectMessage.setArcWidth(25);
     rectMessage.setArcHeight(25);
     
-    StringBinding messageBinding = new StringBinding() {
+    final StringBinding messageBinding = new StringBinding() {
 
             {
                 super.bind(gamePaused);
@@ -856,7 +856,7 @@ public class Maze extends Parent {
     line6.setCache(true);
     group.getChildren().add(line6);
     
-    Text textScore = new Text(MazeData.calcGridX(0),
+    final Text textScore = new Text(MazeData.calcGridX(0),
             MazeData.calcGridY(MazeData.GRID_SIZE + 2),
             "SCORE: " + pacMan.scores);
     textScore.textProperty().bind(pacMan.scores.asString("SCORE: %1d  "));
@@ -942,8 +942,8 @@ public class Maze extends Parent {
 
 //    insert WallBlackRectangle{ x1:-3, y1:13, x2:0, y2:15} into group.content;
 //    insert WallBlackRectangle{ x1:29, y1:13, x2:31, y2:15} into group.content;
-    WallBlackRectangle wallBlackRectangle1 = new WallBlackRectangle(-3, 13, 0, 15);
-    WallBlackRectangle wallBlackRectangle2 = new WallBlackRectangle(29, 13, 31, 15);
+    final WallBlackRectangle wallBlackRectangle1 = new WallBlackRectangle(-3, 13, 0, 15);
+    final WallBlackRectangle wallBlackRectangle2 = new WallBlackRectangle(29, 13, 31, 15);
     group.getChildren().add(wallBlackRectangle1);
     group.getChildren().add(wallBlackRectangle2);
 
@@ -998,7 +998,7 @@ public class Maze extends Parent {
 
 
   // create a Dot GUI object
-  public Dot createDot(int x1, int y1, int type) {
+  public final Dot createDot(int x1, int y1, int type) {
 //  public function createDot( x1: Number,  y1:Number, type:Integer ): Dot {
     Dot d = new Dot(MazeData.calcGridX(x1), MazeData.calcGridY(y1), type);
     
@@ -1091,12 +1091,12 @@ public class Maze extends Parent {
   // determine if pacman meets a ghost
   public boolean hasMet(Ghost g) {
 
-    final int distanceThreshold = 22;
+    int distanceThreshold = 22;
 
-    final int x1 = g.imageX.get();
-    final int x2 = pacMan.imageX.get();
+    int x1 = g.imageX.get();
+    int x2 = pacMan.imageX.get();
 
-    final int diffX = Math.abs(x1-x2);
+    int diffX = Math.abs(x1-x2);
 
     if ( diffX >= distanceThreshold ) {
       return false;
@@ -1143,20 +1143,20 @@ public class Maze extends Parent {
       
     ghostEatenCount++;
 
-    int s = 1;
+    int multiplier = 1;
 //    var s = 1;
     for (int i = 1; i <= ghostEatenCount; i++ ) {
 //    for ( i in [1..ghostEatenCount] ) s = s + s;
-      s = s + s;
+      multiplier += multiplier;
     }
 
-    pacMan.scores.set(pacMan.scores.get() + s*100);
+    pacMan.scores.set(pacMan.scores.get() + multiplier*100);
     if ( addLifeFlag && (pacMan.scores.get() >= 10000) ) {
 //    if ( addLifeFlag and pacMan.scores >= 10000 ) {
       addLife();
     }
 
-    final ScoreText st = SCORE_TEXT[ghostEatenCount-1];
+    ScoreText st = SCORE_TEXT[ghostEatenCount-1];
 //    var st = scoreText[ghostEatenCount-1];
 //    st.x = g.imageX - 10;
     st.setX(g.imageX.get() - 10);

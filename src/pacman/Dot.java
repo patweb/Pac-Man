@@ -29,15 +29,13 @@ public class Dot extends Parent {
   
   // location of the dot
 //  public var x : Number ;
-  public int x;
 //  public var y : Number ;
-  public int y;
   
   // radius of the dot
 //  public var r: Number =
 //    if (  dotType == MazeData.MAGIC_DOT ) 5 else 1;
 //  public int r;
-  public IntegerProperty r;
+  private IntegerProperty radius;
   
   // the dot
 //  var circle = Circle{
@@ -48,16 +46,45 @@ public class Dot extends Parent {
 //    fill: Color.YELLOW
 //    //visible: bind visible   
 //    } ;
-  public Circle circle;
+//  private Circle circle;
   
   // variables for magic dot's growing/shrinking animation
 //  public var animationRadius: Number = 3;
-  public int animationRadius;
+  private int animationRadius;
 //  public var delta: Number = -1;
-  public int delta;
+  private int delta;
 //  var timeline: Timeline;
-  public Timeline timeline;
+  private Timeline timeline;
 
+  
+//  public override function create(): Node {
+//        return circle;
+//  }
+
+  public Dot(int x, int y, int dotType) {
+
+    this.shouldStopAnimation = new SimpleBooleanProperty(false);
+//    this.x = x; // not used - patweb
+//    this.y = y; // not used - patewb
+    this.dotType = dotType;
+
+    if (dotType == MazeData.MAGIC_DOT) {
+      this.radius = new SimpleIntegerProperty(5);
+    }
+    else {
+      this.radius = new SimpleIntegerProperty(1);
+    }
+
+    delta = -1;
+    animationRadius = 3;
+    
+    Circle circle = new Circle(x, y, this.radius.intValue(), Color.YELLOW);
+    circle.radiusProperty().bind(this.radius);
+    
+    getChildren().add(circle);
+  }
+
+  
   // create the animation timeline for magic dot
 //  public function createTimeline(): Timeline {
 //    Timeline {
@@ -106,42 +133,15 @@ public class Dot extends Parent {
 
     animationRadius += delta;
 //    var x = Math.abs(animationRadius) + 3;
-    final int x1 = Math.abs(animationRadius) + 3;
+    int x1 = Math.abs(animationRadius) + 3;
 
     if (x1 > 5) {
       delta = -delta;
     }
 
 //    r = x1;
-    r.set(x1);
+    this.radius.set(x1);
 //    circle.setRadius(r); // patweb: this works but should use binding
   }
 
-//  public override function create(): Node {
-//        return circle;
-//  }
-  
-  public Dot(int x, int y, int dotType) {
-
-    this.shouldStopAnimation = new SimpleBooleanProperty(false);
-    this.x = x;
-    this.y = y;
-    this.dotType = dotType;
-
-    if (dotType == MazeData.MAGIC_DOT) {
-      this.r = new SimpleIntegerProperty(5);
-    }
-    else {
-      this.r = new SimpleIntegerProperty(1);
-    }
-
-    delta = -1;
-    animationRadius = 3;
-    
-    circle = new Circle(x, y, r.intValue(), Color.YELLOW);
-    circle.radiusProperty().bind(r);
-    
-    getChildren().add(circle);
-  }
-  
 }

@@ -18,12 +18,10 @@ import javafx.util.Duration;
  */
 public class DyingPacMan extends Arc {
 
-  public Maze maze;
-  public Timeline timeline;
+  private final Timeline timeline;
 
   public DyingPacMan(final Maze maze) {
 
-    this.maze = maze;
     timeline = new Timeline();
     timeline.setCycleCount(1);
     
@@ -115,4 +113,5 @@ public class DyingPacMan extends Arc {
 
     timeline.playFromStart();
   }
+  
 }
