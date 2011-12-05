@@ -1,28 +1,21 @@
-/*
- * WallBlackLine.fx
- *
- * Created on 2008-12-27, 17:52:58
- */
-
 package pacman;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 /**
+ * WallBlackLine.fx created on 2008-12-27, 17:52:58 <br>
+ * WallBlackLine.java created October 2011
+ * 
  * @author Henry Zhang
+ * @author Patrick Webster
  */
-
 public class WallBlackLine extends Line {
 
 //  public var x1: Number;
 //  public var y1: Number;
 //  public var x2: Number;
 //  public var y2: Number;
-  public int x1;
-  public int y1;
-  public int x2;
-  public int y2;
 
 //  postinit {
 //
@@ -46,10 +39,10 @@ public class WallBlackLine extends Line {
 //  } // end postinit
   
   public WallBlackLine(int x1, int y1, int x2, int y2) {
-    this.x1 = x1;
-    this.y1 = y1;
-    this.x2 = x2;
-    this.y2 = y2;
+//    this.x1 = x1;
+//    this.y1 = y1;
+//    this.x2 = x2;
+//    this.y2 = y2;
     
     // postinit
     setCache(true);
@@ -71,4 +64,5 @@ public class WallBlackLine extends Line {
     }
     // end postinit
   }
+
 }

@@ -100,4 +100,5 @@ public final class MazeData {
   public static void setDot(int x, int y, Object dot) {
     DOT_POINTERS[x][y] = dot;
   }
+
 }

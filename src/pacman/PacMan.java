@@ -17,7 +17,7 @@ import javafx.scene.image.ImageView;
 public class PacMan extends MovingObject {
 //public class PacMan extends Parent, MovingObject {
 
-  public Image defaultImage;
+//  private Image defaultImage;
 //  public var defaultImage: Image = Image {
 //    url: "{__DIR__}images/left1.png"
 //  };
@@ -35,27 +35,27 @@ public class PacMan extends MovingObject {
 //  ];
 
  /**
-  * the number of dots eaten
+  * The number of dots eaten
   */
   public int dotEatenCount;
 //  public var dotEatenCount : Integer = 0;
 
  /**
-  * scores of the game
+  * Score of the game
   */
   public SimpleIntegerProperty scores;
 //  public var scores: Integer = 0;
     
  /**
-  * angles of rotating the images
+  * Angles of rotating the images
   */ 
-  public static final double[] rotationDegree = new double[] {0, 90, 180, 270};
+  private static final double[] rotationDegree = new double[] {0, 90, 180, 270};
 //  def rotationDegree = [0, 90, 180, 270];
 
  /**
   * GUI image of the man
   */
-  public ImageView pacmanImage;
+//  private ImageView pacmanImage;
 //  var PACMAN_IMAGE : ImageView = ImageView {
 //    x: bind imageX - 13
 //    y: bind imageY - 13
@@ -71,13 +71,13 @@ public class PacMan extends MovingObject {
  /**
   * buffer to keep the keyboard input
   */
-  public int keyboardBuffer;
+  private int keyboardBuffer;
 //  var keyboardBuffer: Integer = -1;
 
  /**
-  * current direction of Pacman
+  * Current direction of PacMan
   */
-  public SimpleIntegerProperty currentDirection;
+  private final SimpleIntegerProperty currentDirection;
 //  var currentDirection: Integer = MOVE_LEFT;
 
 //  postinit {
@@ -102,7 +102,7 @@ public class PacMan extends MovingObject {
     this.x = x;
     this.y = y;
     
-    defaultImage = new Image(getClass().getResourceAsStream("images/left1.png"));
+    Image defaultImage = new Image(getClass().getResourceAsStream("images/left1.png"));
     images = new Image[]{defaultImage,
       new Image(getClass().getResourceAsStream("images/left2.png")),
       defaultImage,
@@ -113,7 +113,7 @@ public class PacMan extends MovingObject {
     scores = new SimpleIntegerProperty(0);
     currentDirection = new SimpleIntegerProperty(MOVE_LEFT);
     
-    final DoubleBinding rotationBinding = new DoubleBinding() {
+    DoubleBinding rotationBinding = new DoubleBinding() {
 
       {
         super.bind(currentDirection);
@@ -125,7 +125,7 @@ public class PacMan extends MovingObject {
       }
     };
       
-    pacmanImage = new ImageView(defaultImage);
+    ImageView pacmanImage = new ImageView(defaultImage);
 //    transforms: Rotate {
 //      angle: bind rotationDegree[currentDirection]
 //      pivotX: bind imageX
@@ -154,7 +154,7 @@ public class PacMan extends MovingObject {
  /**
   * moving horizontally
   */
-  public void moveHorizontally() {
+  private void moveHorizontally() {
 
     moveCounter++;
 
@@ -196,7 +196,7 @@ public class PacMan extends MovingObject {
  /**
   * moving vertically
   */
-  public void moveVertically() {
+  private void moveVertically() {
       
     moveCounter++;
 
@@ -221,9 +221,9 @@ public class PacMan extends MovingObject {
   }
 
  /**
-  * turn pac-man to the right
+  * Turn Pac-Man to the right
   */
-  public void moveRight() {
+  private void moveRight() {
 
     if ( currentDirection.get() == MOVE_RIGHT ) {
 //    if ( currentDirection == MOVE_RIGHT )  return;
@@ -251,9 +251,9 @@ public class PacMan extends MovingObject {
   }
 
  /**
-  * turn pac-man to the left
+  * Turn Pac-Man to the left
   */
-  public void moveLeft() {
+  private void moveLeft() {
 
     if ( currentDirection.get() == MOVE_LEFT ) {
 //    if ( currentDirection == MOVE_LEFT )   return;
@@ -281,9 +281,9 @@ public class PacMan extends MovingObject {
   }
 
  /**
-  * turn pac-man going up
+  * Turn Pac-Man up
   */
-  public void moveUp() {
+  private void moveUp() {
 
     if ( currentDirection.get() == MOVE_UP ) {
 //    if ( currentDirection == MOVE_UP )  return;
@@ -311,9 +311,9 @@ public class PacMan extends MovingObject {
   }
 
  /**
-  * turn pac-man going down
+  * Turn Pac-Man down
   */
-  public void moveDown() {
+  private void moveDown() {
 
     if ( currentDirection.get() == MOVE_DOWN ) {
 //    if ( currentDirection == MOVE_DOWN ) return;
@@ -341,7 +341,7 @@ public class PacMan extends MovingObject {
   }
 
  /**
-  * handle keyboard input
+  * Handle keyboard input
   */
   public void handleKeyboardInput() {
     
@@ -361,16 +361,13 @@ public class PacMan extends MovingObject {
     
   }
 
- /**
-  * 
-  * @param k 
-  */
+
   public void setKeyboardBuffer( int k ) {
     keyboardBuffer = k;
   }
 
  /**
-  * update scores if a dot is eaten
+  * Update score if a dot is eaten.
   */
   public void updateScores() {
     if ( y != 14 || ( x > 0 && x < MazeData.GRID_SIZE ) ) {
@@ -399,9 +396,6 @@ public class PacMan extends MovingObject {
     }
   }
 
- /**
-  * 
-  */
   public void hide() {
     setVisible(false);
     timeline.stop();
@@ -467,8 +461,8 @@ public class PacMan extends MovingObject {
 //    currentImage = 0;
     moveCounter = 0;
 
-    x=15;
-    y=18;
+    x = 15;
+    y = 18;
 
     imageX.set(MazeData.calcGridX(x));
     imageY.set(MazeData.calcGridY(y));

@@ -31,6 +31,15 @@ public class ScoreText extends Parent {
 
   private Timeline timeline;
 
+  public ScoreText(String s, boolean isVisible) { //patweb
+    text = new Text(s);
+    text.setFont(SCORE_FONT);
+    text.setFill(SCORE_FILL);
+    createTimeline();
+    getChildren().add(text);
+    setVisible(isVisible);
+  }
+
   private void createTimeline() {
 //  var timeline= Timeline {
 //    repeatCount: 1
@@ -66,13 +75,5 @@ public class ScoreText extends Parent {
   public void setY (double y) {
     text.setY(y);
   }
-  
-  public ScoreText(String s, boolean isVisible) { //patweb
-    text = new Text(s);
-    text.setFont(SCORE_FONT);
-    text.setFill(SCORE_FILL);
-    createTimeline();
-    getChildren().add(text);
-    setVisible(isVisible);
-  }
+
 }

@@ -1,9 +1,3 @@
-/*
- * MovingObject.fx
- *
- * Created on 2009-1-1, 11:40:49
- */
-
 package pacman;
 
 import javafx.animation.Animation;
@@ -19,38 +13,41 @@ import javafx.scene.image.Image;
 import javafx.util.Duration;
 
 /**
+ * MovingObject.fx created on 2009-1-1, 11:40:49 <br>
+ * MovingObject.java created October 2011
+ * 
  * @author Henry Zhang
+ * @author Patrick Webster
  */
-
-//public mixin class MovingObject {
 public abstract class MovingObject extends Parent {
+//public mixin class MovingObject {
 
   // animation frames total and movement distance
-  public final static int ANIMATION_STEP = 4;
-  public final static int MOVE_SPEED = MazeData.GRID_GAP / ANIMATION_STEP;
+  protected static final int ANIMATION_STEP = 4;
+  protected static final int MOVE_SPEED = MazeData.GRID_GAP / ANIMATION_STEP;
 
-  public final static int MOVING = 1;
-  public final static int STOPPED = 0;
+  protected static final int MOVING = 1;
+  protected static final int STOPPED = 0;
   
-  public final static int MOVE_LEFT = 0;
-  public final static int MOVE_UP = 1;
-  public final static int MOVE_RIGHT = 2;
-  public final static int MOVE_DOWN = 3;
+  protected static final int MOVE_LEFT = 0;
+  protected static final int MOVE_UP = 1;
+  protected static final int MOVE_RIGHT = 2;
+  protected static final int MOVE_DOWN = 3;
 
-  public Maze maze;
-  public int state;
+  protected Maze maze;
+  protected int state;
 
 //  public int currentImage; //=0;
-  public IntegerProperty currentImage; //=0;
-  public Image[] images;
+  protected IntegerProperty currentImage; //=0;
+  protected Image[] images;
   protected ObjectBinding imageBinding;
-  public int moveCounter; //=0;
+  protected int moveCounter; //=0;
 
   // grid coordinates
 //  public var x: Number;
 //  public var y: Number;
-  public int x;
-  public int y;
+  protected int x;
+  protected int y;
 //  public IntegerProperty x;
 //  public IntegerProperty y;
 
@@ -60,10 +57,10 @@ public abstract class MovingObject extends Parent {
   public IntegerProperty imageX;
   public IntegerProperty imageY;
 
-  public int xDirection; // = 0;
-  public int yDirection; // = 0;
+  protected int xDirection; // = 0;
+  protected int yDirection; // = 0;
 
-  public Timeline timeline; // = createTimeline();
+  protected Timeline timeline; // = createTimeline();
 
   public MovingObject() {
 //    currentImage = 0;
@@ -87,32 +84,10 @@ public abstract class MovingObject extends Parent {
     timeline = createTimeline();
   }
   
-  public void stop() {
-    timeline.stop();
-  }
-
-  public void pause() {
-    timeline.pause();
-  }
-
-  public void start() {
-    timeline.play();
-  }
-
-  public boolean isRunning() {
-//    return timeline.running;
-//    System.out.println("isRunning() current rate is " + timeline.getCurrentRate());
-    return timeline.getStatus() == Animation.Status.RUNNING;
-  }
-
-  public boolean isPaused() {
-//    return timeline.paused;
-//    System.out.println("isPaused() current rate is " + timeline.getCurrentRate());
-    return timeline.getStatus() == Animation.Status.PAUSED;
-  }
+  public abstract void moveOneStep();
 
   // animation time line, moving the pacman
-  public Timeline createTimeline() {
+  public final Timeline createTimeline() {
     timeline = new Timeline();
     timeline.setCycleCount(Timeline.INDEFINITE);
     KeyFrame kf = new KeyFrame(Duration.millis(45), new EventHandler<ActionEvent>() {
@@ -137,6 +112,27 @@ public abstract class MovingObject extends Parent {
 //     }
     return timeline;
   }
+  
+  public void stop() {
+    timeline.stop();
+  }
 
-  public abstract void moveOneStep();
+  public void pause() {
+    timeline.pause();
+  }
+
+  public void start() {
+    timeline.play();
+  }
+
+  public boolean isRunning() {
+//    return timeline.running;
+    return timeline.getStatus() == Animation.Status.RUNNING;
+  }
+
+  public boolean isPaused() {
+//    return timeline.paused;
+    return timeline.getStatus() == Animation.Status.PAUSED;
+  }
+  
 }

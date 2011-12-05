@@ -1,15 +1,12 @@
-/*
- * MoveDecision.fx
- *
- * Created on 2009-1-28, 14:42:00
- */
-
 package pacman;
 
 /**
+ * MoveDecision.fx created on 2009-1-28, 14:42:00 <br>
+ * MoveDecision.java created October 2011
+ * 
  * @author Henry Zhang
+ * @author Patrick Webster
  */
-
 public class MoveDecision {
 
   // x and y of an intended move
@@ -29,7 +26,7 @@ public class MoveDecision {
 //    if ( x < 1 or y < 1 or y >= MazeData.GRID_SIZE or x >= MazeData.GRID_SIZE){
     if ( x < 1 || y < 1 || (y >= MazeData.GRID_SIZE) || (x >= MazeData.GRID_SIZE) ){
       score = -1;
-      return ;
+      return;
     }
 
 //    var status = MazeData.getData(x, y);
@@ -48,5 +45,7 @@ public class MoveDecision {
     else {
       score = 500 - distance; // mode to chase Pac-Man
     }
+    
   }
+  
 }
