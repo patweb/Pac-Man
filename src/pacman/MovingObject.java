@@ -91,11 +91,13 @@ public abstract class MovingObject extends Parent {
     timeline = new Timeline();
     timeline.setCycleCount(Timeline.INDEFINITE);
     KeyFrame kf = new KeyFrame(Duration.millis(45), new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-              moveOneStep();
-            }
-        }
-            );
+      
+      @Override
+      public void handle(ActionEvent event) {
+        moveOneStep();
+      }
+      
+    });
     timeline.getKeyFrames().add(kf);
     
 //    Timeline {

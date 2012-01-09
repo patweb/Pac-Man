@@ -56,6 +56,7 @@ public class ScoreText extends Parent {
     timeline.setCycleCount(1);
     KeyFrame kf = new KeyFrame(Duration.seconds(DISPLAY_TIME), new EventHandler<ActionEvent>() {
 
+      @Override
       public void handle(ActionEvent event) {
         setVisible(false);
       }

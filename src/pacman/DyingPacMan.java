@@ -24,29 +24,41 @@ public class DyingPacMan extends Arc {
 
     timeline = new Timeline();
     timeline.setCycleCount(1);
-    
-    KeyFrame kf1 = new KeyFrame(Duration.millis(600), new EventHandler<ActionEvent>() {
 
-      public void handle(ActionEvent event) {
-        maze.pacMan.setVisible(false);
+    KeyFrame kf1 =
+          new KeyFrame(Duration.millis(600),
+            new EventHandler<ActionEvent>() {
 
-        for (Ghost g : maze.ghosts) {
-          g.hide();
-        }
+              @Override
+              public void handle(ActionEvent event) {
+                maze.pacMan.setVisible(false);
 
-        setVisible(true);
-      }
-    }, new KeyValue(startAngleProperty(), 90),
-            new KeyValue(lengthProperty(), 360));
+                for (Ghost g : maze.ghosts) {
+                  g.hide();
+                }
 
-    KeyFrame kf2 = new KeyFrame(Duration.millis(1800), new EventHandler<ActionEvent>() {
+                setVisible(true);
+              }
+              
+            },
+            new KeyValue(startAngleProperty(), 90),
+            new KeyValue(lengthProperty(), 360)
+          );
 
-      public void handle(ActionEvent event) {
-        setVisible(false);
-        maze.startNewLife();
-      }
-    }, new KeyValue(startAngleProperty(), 270),
-            new KeyValue(lengthProperty(), 0));
+    KeyFrame kf2 =
+          new KeyFrame(Duration.millis(1800),
+            new EventHandler<ActionEvent>() {
+
+              @Override
+              public void handle(ActionEvent event) {
+                setVisible(false);
+                maze.startNewLife();
+              }
+              
+            },
+            new KeyValue(startAngleProperty(), 270),
+            new KeyValue(lengthProperty(), 0)
+          );
 
 
 

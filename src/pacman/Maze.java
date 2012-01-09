@@ -685,6 +685,8 @@ public class Maze extends Parent {
     flashingTimeline = new Timeline();
     flashingTimeline.setCycleCount(5);
     final KeyFrame kf = new KeyFrame(Duration.seconds(0.5), new EventHandler<ActionEvent>() {
+      
+      @Override
       public void handle(ActionEvent event) {
          gameResultText.setVisible(!gameResultText.isVisible());
          if ( ++flashingCount == 5) {
@@ -692,6 +694,7 @@ public class Maze extends Parent {
            waitForStart.set(true);
          }
       }
+      
     });
     flashingTimeline.getKeyFrames().add(kf);
 

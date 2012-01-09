@@ -105,6 +105,7 @@ public class Dot extends Parent {
     timeline.setCycleCount(Timeline.INDEFINITE);
     KeyFrame kf = new KeyFrame(Duration.seconds(0.25), new EventHandler<ActionEvent>() {
 
+      @Override
       public void handle(ActionEvent event) {
         doOneTick();
       }
