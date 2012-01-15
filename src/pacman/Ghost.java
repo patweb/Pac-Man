@@ -7,12 +7,12 @@ import javafx.scene.image.ImageView;
 /**
  * Ghost.fx created on 2009-1-28, 14:26:09 <br>
  * Ghost.java created October 2011
- * 
+ *
  * @see <a href="http://www.javafxgame.com">http://www.javafxgame.com</a>
  * @author Henry Zhang
  * @author Patrick Webster
  */
-public class Ghost extends MovingObject{
+public class Ghost extends MovingObject {
 //public class Ghost extends Parent, MovingObject{
 
   private static final int TRAPPED = 10;
@@ -24,17 +24,17 @@ public class Ghost extends MovingObject{
 //    url: "{__DIR__}images/ghosthollow2.png"
 //  }
   private static final Image HOLLOW_IMAGE1 = new Image(Ghost.class.getResourceAsStream("images/ghosthollow2.png"));
-  
+
 //  public var HOLLOW_IMAGE2 = Image {
 //    url: "{__DIR__}images/ghosthollow3.png"
 //  }
   private static final Image HOLLOW_IMAGE2 = new Image(Ghost.class.getResourceAsStream("images/ghosthollow3.png"));
-  
+
 //  public var HOLLOW_IMAGE3 = Image {
 //    url: "{__DIR__}images/ghosthollow1.png"
 //  }
   private static final Image HOLLOW_IMAGE3 = new Image(Ghost.class.getResourceAsStream("images/ghosthollow1.png"));
-  
+
   // images for ghosts when they become hollow
 //  public var HOLLOW_IMG =
 //    [ HOLLOW_IMAGE1,
@@ -63,7 +63,7 @@ public class Ghost extends MovingObject{
 
   // time for a ghost to stay hollow
   private static final int HOLLOW_MAX_TIME = 80;
-  
+
   private int hollowCounter;
 
   // the images of animation
@@ -77,7 +77,7 @@ public class Ghost extends MovingObject{
 //        defaultImage2,
 //  ];
   private final Image[] defaultImg;
-  
+
   // animation images
   //var images = defaultImg;
 
@@ -93,8 +93,8 @@ public class Ghost extends MovingObject{
 
   // variables to determine if a ghost should chase pacman,
   // and the probability
-  private final double changeFactor; // = 0.75;
-  private final double chaseFactor; // = 0.5;
+  private static final double CHANGE_FACTOR = 0.75;
+  private static final double CHASE_FACTOR = 0.5;
   private int chaseCount; // = 0;
 
   // the flag is set if a ghost becomes hollow
@@ -129,7 +129,7 @@ public class Ghost extends MovingObject{
           int xDirection,
           int yDirection,
           int trapTime) {
-    
+
 //    this.defaultImage1 = defaultImage1;
 //    this.defaultImage2 = defaultImage2;
     this.maze = maze;
@@ -139,7 +139,7 @@ public class Ghost extends MovingObject{
     this.xDirection = xDirection;
     this.yDirection = yDirection;
     this.trapTime = trapTime;
-    
+
     defaultImg = new Image[] {
       defaultImage1,
       defaultImage2,
@@ -147,8 +147,6 @@ public class Ghost extends MovingObject{
       defaultImage2
     };
     images = defaultImg;
-    changeFactor = 0.75;
-    chaseFactor = 0.5;
     chaseCount = 0;
     isHollow = false;
     
@@ -162,16 +160,16 @@ public class Ghost extends MovingObject{
     imageX = new SimpleIntegerProperty(MazeData.calcGridX(x));
     imageY = new SimpleIntegerProperty(MazeData.calcGridY(y));
     // end postinit block
-    
+
     ImageView ghostNode = new ImageView(defaultImage1);
     ghostNode.xProperty().bind(imageX.add(-13));
     ghostNode.yProperty().bind(imageY.add(-13));
     ghostNode.imageProperty().bind(imageBinding);
     ghostNode.setCache(true);
-    
+
     getChildren().add(ghostNode);
   }
-  
+
   // reset the status of a ghost and place it into the cage
   public void resetStatus() {
 //  public function resetStatus() {
@@ -192,8 +190,8 @@ public class Ghost extends MovingObject{
 
     images = defaultImg;
     state = TRAPPED;
-        
-//    timeline.keyFrames[0].time = 45ms; // TODO: can't change time of KeyFrame
+
+//    timeline.keyFrames[0].time = 45ms; // Can't change time of KeyFrame
     timeline.setRate(1.0);
 
     setVisible(true);
@@ -210,7 +208,7 @@ public class Ghost extends MovingObject{
 
     // make it move slower
     timeline.stop();
-//    timeline.keyFrames[0].time = 130ms; // TODO: can't change time of KeyFrame
+//    timeline.keyFrames[0].time = 130ms; // Can't change time of KeyFrame
     timeline.setRate(0.35);
     timeline.play();
   }
@@ -219,7 +217,7 @@ public class Ghost extends MovingObject{
   private void changeDirectionXtoY(boolean mustChange) {
 //  public function changeDirectionXtoY(mustChange: Boolean): Void {
 //    if ( not mustChange and Math.random() > changeFactor ) {
-    if ( !mustChange && (Math.random() > changeFactor) ) {
+    if ( !mustChange && (Math.random() > CHANGE_FACTOR) ) {
       return;  // no change of direction
     }
 
@@ -231,7 +229,7 @@ public class Ghost extends MovingObject{
     MoveDecision goUp = new MoveDecision();
     goUp.x = this.x;
     goUp.y = this.y - 1;
-    
+
 //    var goDown = MoveDecision {
 //      x: this.x
 //      y: this.y + 1
@@ -250,7 +248,7 @@ public class Ghost extends MovingObject{
     }
 
 //    if ( Math.random() < chaseFactor and chaseCount == 0 )
-    if ( Math.random() < chaseFactor && chaseCount == 0 ) {
+    if ( Math.random() < CHASE_FACTOR && chaseCount == 0 ) {
 //      chaseCount += (Math.random() * 10 + 3) as Integer;
       chaseCount += (int) (Math.random() * 10 + 3);
     }
@@ -267,7 +265,7 @@ public class Ghost extends MovingObject{
 //    if ( continueGo.score > 0 and continueGo.score > goUp.score
 //         and continueGo.score > goDown.score and chaseCount>0) {
     if ( (continueGo.score > 0) && (continueGo.score > goUp.score)
-         && (continueGo.score > goDown.score) && (chaseCount>0) ) {
+         && (continueGo.score > goDown.score) && (chaseCount > 0) ) {
       chaseCount--;
       return;
     }
@@ -302,7 +300,7 @@ public class Ghost extends MovingObject{
   private void changeDirectionYtoX(boolean mustChange) {
 //  public function changeDirectionYtoX(mustChange: Boolean): Void {
 
-    if ( !mustChange && (Math.random() > changeFactor) ) {
+    if ( !mustChange && (Math.random() > CHANGE_FACTOR) ) {
       return;  // no change of direction
     }
 
@@ -331,7 +329,7 @@ public class Ghost extends MovingObject{
       return;  // no change of direction
     }
 
-    if ( (Math.random() < chaseFactor) && (chaseCount == 0) ) {
+    if ( (Math.random() < CHASE_FACTOR) && (chaseCount == 0) ) {
 //      chaseCount += (Math.random() * 10 + 3) as Integer;
       chaseCount += (int) (Math.random() * 10 + 3);
     }
@@ -346,8 +344,8 @@ public class Ghost extends MovingObject{
     continueGo.evaluate(pacMan, isHollow);
 
     if ( (continueGo.score > 0) && (continueGo.score > goLeft.score)
-         && (continueGo.score > goRight.score) && (chaseCount>0) ) {
-      chaseCount --;
+         && (continueGo.score > goRight.score) && (chaseCount > 0) ) {
+      chaseCount--;
       return;
     }
 
@@ -372,7 +370,7 @@ public class Ghost extends MovingObject{
       }
     }
 
-    xDirection=decision;
+    xDirection = decision;
     yDirection = 0;
   }
 
@@ -381,8 +379,8 @@ public class Ghost extends MovingObject{
 
     moveCounter++;
 
-    if ( moveCounter > ANIMATION_STEP - 1) {
-      moveCounter=0;
+    if (moveCounter > ANIMATION_STEP - 1) {
+      moveCounter = 0;
       x += xDirection;
 //      imageX= MazeData.calcGridX(x);
       imageX.set(MazeData.calcGridX(x));
@@ -392,12 +390,12 @@ public class Ghost extends MovingObject{
 
       if ( y == 14 && ( nextX <= 1 || nextX >= 28) ) {
         if ( nextX < - 1 && xDirection < 0 ) {
-          x=MazeData.GRID_SIZE;
+          x = MazeData.GRID_SIZE;
 //          imageX= MazeData.calcGridX(x);
           imageX.set(MazeData.calcGridX(x));
         }
-        else if ( nextX > 30 && xDirection > 0) {
-          x=0;
+        else if (nextX > 30 && xDirection > 0) {
+          x = 0;
 //            imageX= MazeData.calcGridX(x);
           imageX.set(MazeData.calcGridX(x));
         }
@@ -411,7 +409,7 @@ public class Ghost extends MovingObject{
       else {
         changeDirectionXtoY(false);
       }
-      
+
     }
     else {
       imageX.set(imageX.get() + (xDirection * MOVE_SPEED));
@@ -420,17 +418,17 @@ public class Ghost extends MovingObject{
 
   // move the ghost vertically
   private void moveVertically() {
-      
+
     moveCounter++;
 
-    if ( moveCounter > ANIMATION_STEP - 1) {
+    if (moveCounter > ANIMATION_STEP - 1) {
       moveCounter = 0;
       y += yDirection;
 //      imageY = MazeData.calcGridX(y);
       imageY.set(MazeData.calcGridX(y));
 
-      int nextY= yDirection + y;
-      if ( nextY < 0 || nextY > MazeData.GRID_SIZE) {
+      int nextY = yDirection + y;
+      if (nextY < 0 || nextY > MazeData.GRID_SIZE) {
         changeDirectionYtoX(true);
       }
       else {
@@ -450,23 +448,23 @@ public class Ghost extends MovingObject{
 
   // move the ghost horizontally in the cage
   private void moveHorizontallyInCage() {
-    
+
     moveCounter++;
 
-    if ( moveCounter > ANIMATION_STEP - 1) {
+    if (moveCounter > ANIMATION_STEP - 1) {
 
-      moveCounter=0;
+      moveCounter = 0;
       x += xDirection;
 //      imageX = MazeData.calcGridX(x);
       imageX.set(MazeData.calcGridX(x));
 
       int nextX = xDirection + x;
 
-      if ( nextX < 12 ) {
+      if (nextX < 12) {
         xDirection = 0;
         yDirection = 1;
       }
-      else if ( nextX > 17) {
+      else if (nextX > 17) {
         xDirection = 0;
         yDirection = -1;
       }
@@ -482,19 +480,19 @@ public class Ghost extends MovingObject{
 
     moveCounter++;
 
-    if ( moveCounter > ANIMATION_STEP - 1) {
-      moveCounter=0;
+    if (moveCounter > ANIMATION_STEP - 1) {
+      moveCounter = 0;
       y += yDirection;
 //      imageY= MazeData.calcGridX(y) + 8;
       imageY.set(MazeData.calcGridX(y) + 8);
 
       int nextY = yDirection + y;
 
-      if ( nextY < 13 ) {
+      if (nextY < 13) {
         yDirection = 0;
         xDirection = -1;
       }
-      else if ( nextY > 15) {
+      else if (nextY > 15) {
         yDirection = 0;
         xDirection = 1;
       }
@@ -552,7 +550,7 @@ public class Ghost extends MovingObject{
         if ( state == TRAPPED ) { 
           trapCounter++;
 
-          if ( trapCounter > trapTime && x == 14 && y == 13) {
+          if (trapCounter > trapTime && x == 14 && y == 13) {
             // go out of the cage
             y = 12;
 
@@ -565,7 +563,7 @@ public class Ghost extends MovingObject{
     }
 
     // check to see if need to switch back to a normal status
-    if ( isHollow ) {
+    if (isHollow) {
     
       hollowCounter++;
 
@@ -582,7 +580,7 @@ public class Ghost extends MovingObject{
         timeline.play();
       }
     }
-    
+
   }
 
 }
