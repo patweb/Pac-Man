@@ -30,7 +30,7 @@ public class Dot extends Parent {
   // location of the dot
 //  public var x : Number ;
 //  public var y : Number ;
-  
+
   // radius of the dot
 //  public var r: Number =
 //    if (  dotType == MazeData.MAGIC_DOT ) 5 else 1;
@@ -44,10 +44,10 @@ public class Dot extends Parent {
 //    centerY: y
 //    radius: bind r
 //    fill: Color.YELLOW
-//    //visible: bind visible   
+//    //visible: bind visible
 //    } ;
 //  private Circle circle;
-  
+
   // variables for magic dot's growing/shrinking animation
 //  public var animationRadius: Number = 3;
   private int animationRadius;
@@ -56,7 +56,7 @@ public class Dot extends Parent {
 //  var timeline: Timeline;
   private Timeline timeline;
 
-  
+
 //  public override function create(): Node {
 //        return circle;
 //  }
@@ -77,14 +77,14 @@ public class Dot extends Parent {
 
     delta = -1;
     animationRadius = 3;
-    
+
     Circle circle = new Circle(x, y, this.radius.intValue(), Color.YELLOW);
     circle.radiusProperty().bind(this.radius);
-    
+
     getChildren().add(circle);
   }
 
-  
+
   // create the animation timeline for magic dot
 //  public function createTimeline(): Timeline {
 //    Timeline {

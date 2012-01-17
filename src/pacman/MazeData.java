@@ -17,15 +17,18 @@ public final class MazeData {
 
   public static int dotTotal = 0;
 
-  private static final int MAZE_DATA[][] = new int[GRID_SIZE + 1][GRID_SIZE + 1];
+  private static final int[][] MAZE_DATA = new int[GRID_SIZE + 1][GRID_SIZE + 1];
 
-  private static final Object DOT_POINTERS[][] = new Object[GRID_SIZE + 1][GRID_SIZE + 1];
+  private static final Object[][] DOT_POINTERS = new Object[GRID_SIZE + 1][GRID_SIZE + 1];
 
   public static final int GRID_GAP = 16;
   public static final int GRID_STROKE = 2;
   private static final int X_OFFSET = GRID_GAP * 2;
   private static final int Y_OFFSET = GRID_GAP * 2;
 
+  /**
+   * Private constructor to prevent instantiation.
+   */
   private MazeData() { };
 
   private static int makeInRange(int a) {
@@ -39,7 +42,7 @@ public final class MazeData {
 
     return a;
   }
-    
+
 
   // set the grid of maze data to be BLOCK
   public static void setBlockMazeData(int x1, int y1, int x2, int y2) {
@@ -64,7 +67,7 @@ public final class MazeData {
 //  public static double calcGridX(double x) {
     return GRID_GAP * x + X_OFFSET;
   }
-  
+
   // float version
   public static float calcGridXFloat(final float x) {
     return GRID_GAP * x + X_OFFSET;
@@ -74,7 +77,7 @@ public final class MazeData {
 //  public static double calcGridY(double y) {
     return GRID_GAP * y + Y_OFFSET;
   }
-  
+
   // float version
   public static float calcGridYFloat(final float y) {
 //  public static double calcGridY(double y) {

@@ -97,7 +97,7 @@ public class Maze extends Parent {
 //      visible: false
 //   } ;
 
-  // the pac man image
+  // the Pac-Man image
   private static final Image PACMAN_IMAGE = new Image(Maze.class.getResourceAsStream("images/left1.png"));
 //  var PACMAN_IMAGE = Image {
 //    url: "{__DIR__}images/left1.png"
@@ -108,7 +108,7 @@ public class Maze extends Parent {
 //  public var level : Integer = 1;
 
   // flag to add a life to the player the first time score exceeds 10,000
-  private boolean addLifeFlag; // patweb: TODO: should get new life EVERY 10,000.
+  private boolean addLifeFlag;
 //  var addLifeFlag: Boolean = true;
 
   // current lives of the player
@@ -118,7 +118,7 @@ public class Maze extends Parent {
   // message to start a game
   public BooleanProperty waitForStart;
 //  public var waitForStart: Boolean = true;
-  
+
   private final Group messageBox;
 //  var messageBox = Group {
 //    content: [
@@ -129,7 +129,7 @@ public class Maze extends Parent {
 //        height: MazeData.GRID_GAP *5
 //        stroke: Color.RED
 //        strokeWidth: 5
-//     
+//
 //        fill: Color.CYAN
 //        opacity: 0.75
 //        arcWidth: 25
@@ -172,7 +172,7 @@ public class Maze extends Parent {
 
  private int flashingCount;
 // var flashingCount: Integer = 0;
- 
+
  private final Timeline flashingTimeline;
 // var flashingTimeline: Timeline =
 //   Timeline {
@@ -356,9 +356,9 @@ public class Maze extends Parent {
 //        font: Font {
 //              size: 20
 //              }
-//        x: MazeData.calcGridX(0), 
+//        x: MazeData.calcGridX(0),
 //        y: MazeData.calcGridY(MazeData.GRID_SIZE + 2)
-//        content: bind "SCORES: {pacMan.scores} "
+//        content: bind "SCORES: {pacMan.score} "
 //        fill: Color.YELLOW
 //        cache: true
 //      },
@@ -366,7 +366,7 @@ public class Maze extends Parent {
 //      dyingPacMan,
 //      livesImage,
 //      gameResultText,
-//      Text { 
+//      Text {
 //        font: Font { size: 20
 //                    }
 //        x: MazeData.calcGridX(22)
@@ -437,15 +437,15 @@ public class Maze extends Parent {
 //    insert messageBox into group.content;
 //  }
 
-  
+
   public Maze() {
-      
+
     setFocused(true);
-    
+
     gamePaused = new SimpleBooleanProperty(false);
-    
+
     pacMan = new PacMan(this, 15, 18);
-  
+
     final Ghost ghostBlinky = new Ghost(
             new Image(getClass().getResourceAsStream("images/ghostred1.png")),
             new Image(getClass().getResourceAsStream("images/ghostred2.png")),
@@ -473,7 +473,7 @@ public class Maze extends Parent {
 //     yDirection: -1
 //     trapTime: 1
 //    };
-    
+
     final Ghost ghostPinky = new Ghost(
             new Image(getClass().getResourceAsStream("images/ghostpink1.png")),
             new Image(getClass().getResourceAsStream("images/ghostpink2.png")),
@@ -492,12 +492,12 @@ public class Maze extends Parent {
 //     defaultImage2:Image {
 //       url: "{__DIR__}images/ghostpink2.png"
 //     }
-//     
+//
 //     maze: this
 //     pacMan: pacMan
 //     x: 12
 //     y: 14
-//     xDirection: 0 
+//     xDirection: 0
 //     yDirection: 1
 //     trapTime: 10
 //   };
@@ -528,7 +528,7 @@ public class Maze extends Parent {
 //     yDirection: 0
 //     trapTime: 20
 //   };
-    
+
     final Ghost ghostClyde = new Ghost(
             new Image(getClass().getResourceAsStream("images/ghostorange1.png")),
             new Image(getClass().getResourceAsStream("images/ghostorange2.png")),
@@ -557,7 +557,7 @@ public class Maze extends Parent {
 //   };
 
     ghosts = new Ghost[] {ghostBlinky, ghostPinky, ghostInky, ghostClyde};
-    
+
     dyingPacMan = new DyingPacMan(this);
 //    dyingPacMan.maze = this;
     dyingPacMan.setCenterX(0);
@@ -569,9 +569,9 @@ public class Maze extends Parent {
     dyingPacMan.setType(ArcType.ROUND);
     dyingPacMan.setFill(Color.YELLOW);
     dyingPacMan.setVisible(false);
-    
+
     livesCount = new SimpleIntegerProperty(2);
-    
+
     // images showing how many lives remaining
     final ImageView livesImage1 = new ImageView(PACMAN_IMAGE);
     livesImage1.setX(MazeData.calcGridX(18));
@@ -612,11 +612,11 @@ public class Maze extends Parent {
 //    }
 //  ];
     final ImageView[] livesImage = new ImageView[] {livesImage1, livesImage2, livesImage3};
-    
+
     level = new SimpleIntegerProperty(1);
     addLifeFlag = true;
     waitForStart = new SimpleBooleanProperty(true);
-    
+
     messageBox = new Group();
     final Rectangle rectMessage = new Rectangle(MazeData.calcGridX(5),
             MazeData.calcGridY(21),
@@ -628,7 +628,7 @@ public class Maze extends Parent {
     rectMessage.setOpacity(0.75);
     rectMessage.setArcWidth(25);
     rectMessage.setArcHeight(25);
-    
+
     final StringBinding messageBinding = new StringBinding() {
 
             {
@@ -644,16 +644,16 @@ public class Maze extends Parent {
                 }
             }
         };
-    
+
     final Text textMessage = new Text(MazeData.calcGridX(6),
             MazeData.calcGridY(24),
             "   PRESS ANY KEY TO START!");
     textMessage.textProperty().bind(messageBinding);
     textMessage.setFont(new Font(18));
     textMessage.setFill(Color.RED);
-    messageBox.getChildren().add(rectMessage);    
-    messageBox.getChildren().add(textMessage);    
-    
+    messageBox.getChildren().add(rectMessage);
+    messageBox.getChildren().add(textMessage);
+
     lastGameResult = new SimpleBooleanProperty(false);
 
     final StringBinding lastGameResultBinding = new StringBinding() {
@@ -673,70 +673,70 @@ public class Maze extends Parent {
     };
 
     gameResultText = new Text(MazeData.calcGridX(11),
-            MazeData.calcGridY(11)+8,
+            MazeData.calcGridY(11) + 8,
             " YOU WIN ");
     gameResultText.textProperty().bind(lastGameResultBinding);
     gameResultText.setFont(new Font(20));
     gameResultText.setFill(Color.RED);
     gameResultText.setVisible(false);
-        
+
     flashingCount = 0;
-    
+
     flashingTimeline = new Timeline();
     flashingTimeline.setCycleCount(5);
     final KeyFrame kf = new KeyFrame(Duration.seconds(0.5), new EventHandler<ActionEvent>() {
-      
+
       @Override
       public void handle(ActionEvent event) {
          gameResultText.setVisible(!gameResultText.isVisible());
-         if ( ++flashingCount == 5) {
+         if (++flashingCount == 5) {
            messageBox.setVisible(true);
            waitForStart.set(true);
          }
       }
-      
+
     });
     flashingTimeline.getKeyFrames().add(kf);
 
     group = new Group();
-    
+
     final Rectangle groupRect = new Rectangle(0, 0,
             MazeData.calcGridX(MazeData.GRID_SIZE + 2),
             MazeData.calcGridY(MazeData.GRID_SIZE + 3));
     groupRect.setFill(Color.BLACK);
     groupRect.setCache(true);
     group.getChildren().add(groupRect);
-    
+
     group.getChildren().add(new WallRectangle(0, 0, MazeData.GRID_SIZE, MazeData.GRID_SIZE));
-    
+
     group.getChildren().add(new WallRectangle(14, -0.5f, 15, 4));
     group.getChildren().add(new WallBlackRectangle(13.8f, -1, 15.3f, 0));
-    
+
     group.getChildren().add(new WallRectangle(2, 2, 5, 4));
     group.getChildren().add(new WallRectangle(7, 2, 12, 4));
     group.getChildren().add(new WallRectangle(17, 2, 22, 4));
     group.getChildren().add(new WallRectangle(24, 2, 27, 4));
     group.getChildren().add(new WallRectangle(2, 6, 5, 7));
-    
+
     group.getChildren().add(new WallRectangle(14, 6.2f, 15, 10));
     group.getChildren().add(new WallRectangle(10, 6, 19, 7));
     group.getChildren().add(new WallBlackLine(14, 7, 15, 7));
-    
+
     group.getChildren().add(new WallRectangle(7.5f, 9, 12, 10));
     group.getChildren().add(new WallRectangle(7, 6, 8, 13));
     group.getChildren().add(new WallBlackLine(8, 9, 8, 10));
-    
+
     group.getChildren().add(new WallRectangle(17, 9, 21.5f, 10));
     group.getChildren().add(new WallRectangle(21, 6, 22, 13));
     group.getChildren().add(new WallBlackLine(21, 9, 21, 10));
-    
+
     group.getChildren().add(new WallRectangle(24, 6, 27, 7));
-    
+
     group.getChildren().add(new WallRectangle(-1, 9, 5, 13));
     group.getChildren().add(new WallRectangle(24, 9, MazeData.GRID_SIZE + 1, 13));
     group.getChildren().add(new WallBlackLine(0, 13, 0, 15));
     group.getChildren().add(new WallBlackLine(MazeData.GRID_SIZE, 13, MazeData.GRID_SIZE, 15));
-    
+
     //cage and the gate
     group.getChildren().add(new WallRectangle(10, 12, 19, 17));
     group.getChildren().add(new WallRectangle(10.5f, 12.5f, 18.5f, 16.5f));
@@ -748,15 +748,15 @@ public class Maze extends Parent {
     cageRect.setFill(Color.GREY);
     cageRect.setCache(true);
     group.getChildren().add(cageRect);
-    
+
     group.getChildren().add(new WallRectangle(7.5f, 19, 12, 20));
     group.getChildren().add(new WallRectangle(7, 15, 8, 23));
     group.getChildren().add(new WallBlackLine(8, 19, 8, 20));
-    
+
     group.getChildren().add(new WallRectangle(17, 19, 21.5f, 20));
     group.getChildren().add(new WallRectangle(21, 15, 22, 23));
     group.getChildren().add(new WallBlackLine(21, 19, 21, 20));
-    
+
     group.getChildren().add(new WallRectangle(14, 19, 15, 27));
     group.getChildren().add(new WallRectangle(10, 22, 19, 23));
     group.getChildren().add(new WallBlackLine(14, 22, 15, 22));
@@ -782,11 +782,11 @@ public class Maze extends Parent {
     
     group.getChildren().add(new WallBlackRectangle(-2, 8, 0, MazeData.GRID_SIZE));
     group.getChildren().add(new WallBlackRectangle(
-            MazeData.GRID_SIZE, 
-            8, 
-            MazeData.GRID_SIZE + 2, 
+            MazeData.GRID_SIZE,
+            8,
+            MazeData.GRID_SIZE + 2,
             MazeData.GRID_SIZE));
-    
+
     final Rectangle rect2 = new Rectangle(MazeData.calcGridXFloat(-0.5f),
             MazeData.calcGridYFloat(-0.5f),
             (MazeData.GRID_SIZE + 1) * MazeData.GRID_GAP,
@@ -811,8 +811,8 @@ public class Maze extends Parent {
 
     final Line line2 = new Line(
             MazeData.calcGridXFloat(MazeData.GRID_SIZE + 0.5f),
-            MazeData.calcGridY(13), 
-            MazeData.calcGridXFloat(MazeData.GRID_SIZE + 0.5f), 
+            MazeData.calcGridY(13),
+            MazeData.calcGridXFloat(MazeData.GRID_SIZE + 0.5f),
             MazeData.calcGridY(15));
     line2.setStroke(Color.BLACK);
     line2.setStrokeWidth(MazeData.GRID_STROKE + 1);
@@ -821,8 +821,8 @@ public class Maze extends Parent {
 
     final Line line3 = new Line(
             MazeData.calcGridXFloat(-0.5f),
-            MazeData.calcGridY(13), 
-            MazeData.calcGridX(0), 
+            MazeData.calcGridY(13),
+            MazeData.calcGridX(0),
             MazeData.calcGridY(13));
     line3.setStroke(Color.BLUE);
     line3.setStrokeWidth(MazeData.GRID_STROKE);
@@ -831,8 +831,8 @@ public class Maze extends Parent {
 
     final Line line4 = new Line(
             MazeData.calcGridXFloat(-0.5f),
-            MazeData.calcGridY(15), 
-            MazeData.calcGridX(0), 
+            MazeData.calcGridY(15),
+            MazeData.calcGridX(0),
             MazeData.calcGridY(15));
     line4.setStroke(Color.BLUE);
     line4.setStrokeWidth(MazeData.GRID_STROKE);
@@ -841,8 +841,8 @@ public class Maze extends Parent {
 
     final Line line5 = new Line(
             MazeData.calcGridXFloat(MazeData.GRID_SIZE + 0.5f),
-            MazeData.calcGridY(13), 
-            MazeData.calcGridX(MazeData.GRID_SIZE), 
+            MazeData.calcGridY(13),
+            MazeData.calcGridX(MazeData.GRID_SIZE),
             MazeData.calcGridY(13));
     line5.setStroke(Color.BLUE);
     line5.setStrokeWidth(MazeData.GRID_STROKE);
@@ -851,28 +851,28 @@ public class Maze extends Parent {
 
     final Line line6 = new Line(
             MazeData.calcGridXFloat(MazeData.GRID_SIZE + 0.5f),
-            MazeData.calcGridY(15), 
-            MazeData.calcGridX(MazeData.GRID_SIZE), 
+            MazeData.calcGridY(15),
+            MazeData.calcGridX(MazeData.GRID_SIZE),
             MazeData.calcGridY(15));
     line6.setStroke(Color.BLUE);
     line6.setStrokeWidth(MazeData.GRID_STROKE);
     line6.setCache(true);
     group.getChildren().add(line6);
-    
+
     final Text textScore = new Text(MazeData.calcGridX(0),
             MazeData.calcGridY(MazeData.GRID_SIZE + 2),
-            "SCORE: " + pacMan.scores);
-    textScore.textProperty().bind(pacMan.scores.asString("SCORE: %1d  "));
+            "SCORE: " + pacMan.score);
+    textScore.textProperty().bind(pacMan.score.asString("SCORE: %1d  "));
     textScore.setFont(new Font(20));
     textScore.setFill(Color.YELLOW);
     textScore.setCache(true);
     group.getChildren().add(textScore);
-    
+
     group.getChildren().addAll(SCORE_TEXT);
     group.getChildren().add(dyingPacMan);
     group.getChildren().addAll(livesImage);
     group.getChildren().add(gameResultText);
-    
+
     final Text textLevel = new Text(MazeData.calcGridX(22),
             MazeData.calcGridY(MazeData.GRID_SIZE + 2),
             "LEVEL: " + level);
@@ -881,15 +881,15 @@ public class Maze extends Parent {
     textLevel.setFill(Color.YELLOW);
     textLevel.setCache(true);
     group.getChildren().add(textLevel);
-    group.setFocusTraversable(true);// patweb
+    group.setFocusTraversable(true); // patweb
     group.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
       @Override public void handle(KeyEvent ke) {
         onKeyPressed(ke);
       }
     });
-    
-    
+
+
     // postinit
     putDotHorizontally(2,13,1);
     putDotHorizontally(16,27,1);
@@ -952,13 +952,13 @@ public class Maze extends Parent {
 
     // insert messageBox into group.content;
     group.getChildren().add(messageBox);
-    
+
     // end postinit
-    
+
     getChildren().add(group);
 
   }
-  
+
 
   public void onKeyPressed(KeyEvent e) {
 //  public override var onKeyPressed = function ( e: KeyEvent ) : Void {
@@ -996,7 +996,7 @@ public class Maze extends Parent {
     } else if (e.getCode() == KeyCode.LEFT) {
       pacMan.setKeyboardBuffer(MovingObject.MOVE_LEFT);
     }
-    
+
   }
 
 
@@ -1004,7 +1004,7 @@ public class Maze extends Parent {
   public final Dot createDot(int x1, int y1, int type) {
 //  public function createDot( x1: Number,  y1:Number, type:Integer ): Dot {
     Dot d = new Dot(MazeData.calcGridX(x1), MazeData.calcGridY(y1), type);
-    
+
     if (type == MazeData.MAGIC_DOT) {
 //      d = Dot {
 //        x: MazeData.calcGridX(x1)
@@ -1014,7 +1014,7 @@ public class Maze extends Parent {
 //        shouldStopAnimation: bind gamePaused or waitForStart
 //      }
       d.playTimeline();
-      
+
       d.shouldStopAnimation.bind(gamePaused.or(waitForStart)); // patweb
     }
 //    else {
@@ -1025,7 +1025,7 @@ public class Maze extends Parent {
 //        visible: true
 //       }
 //    }
-    
+
     // set the dot type in data model
     MazeData.setData(x1, y1, type);
 
@@ -1051,9 +1051,9 @@ public class Maze extends Parent {
         } else {
           dotType = MazeData.NORMAL_DOT;
         }
-        
+
         dot = createDot(x, y, dotType);
-        
+
         // insert dots into group
         group.getChildren().add(dot);
       }
@@ -1064,7 +1064,7 @@ public class Maze extends Parent {
   public final void putDotVertically(int x, int y1, int y2) {
     Dot dot;
     for (int y = y1; y <= y2; y++) {
-      if ( MazeData.getData(x,y) == MazeData.EMPTY ) {
+      if (MazeData.getData(x, y) == MazeData.EMPTY) {
         int dotType;
 
         if ( (x == 28 || x == 1) && (y == 3 || y == 26) ) {
@@ -1074,7 +1074,7 @@ public class Maze extends Parent {
           dotType = MazeData.NORMAL_DOT;
         }
 
-        dot = createDot( x, y, dotType );
+        dot = createDot(x, y, dotType);
         group.getChildren().add(dot);
       }
     }
@@ -1082,10 +1082,10 @@ public class Maze extends Parent {
 
 
   public void makeGhostsHollow() {
- 
+
     ghostEatenCount = 0;
 
-    for ( Ghost g : ghosts ) {
+    for (Ghost g : ghosts) {
       g.changeToHollowGhost();
     }
   }
@@ -1099,22 +1099,22 @@ public class Maze extends Parent {
     int x1 = g.imageX.get();
     int x2 = pacMan.imageX.get();
 
-    int diffX = Math.abs(x1-x2);
+    int diffX = Math.abs(x1 - x2);
 
-    if ( diffX >= distanceThreshold ) {
+    if (diffX >= distanceThreshold) {
       return false;
     }
 
     int y1 = g.imageY.get();
     int y2 = pacMan.imageY.get();
-    int diffY = Math.abs(y1-y2);
+    int diffY = Math.abs(y1 - y2);
 
-    if ( diffY >= distanceThreshold ) {
+    if (diffY >= distanceThreshold) {
       return false;
     }
 
     // calculate the distance to see if pacman touches the ghost
-    if ( diffY*diffY + diffX*diffX <= distanceThreshold*distanceThreshold ) {
+    if (diffY * diffY + diffX * diffX <= distanceThreshold * distanceThreshold) {
       return true;
     }
 
@@ -1123,13 +1123,13 @@ public class Maze extends Parent {
 
   public void pacManMeetsGhosts() {
 
-    for ( Ghost g : ghosts ) {
-      if ( hasMet(g) ) {
-        if ( g.isHollow ) {
+    for (Ghost g : ghosts) {
+      if (hasMet(g)) {
+        if (g.isHollow) {
           pacManEatsGhost(g);
         }
         else {
-          for ( Ghost ghost : ghosts ) {
+          for (Ghost ghost : ghosts) {
             ghost.stop();
           }
           pacMan.stop();
@@ -1143,23 +1143,23 @@ public class Maze extends Parent {
 
   public void pacManEatsGhost(Ghost g) {
 //  public function pacManEatsGhost(g: Ghost) {
-      
+
     ghostEatenCount++;
 
     int multiplier = 1;
 //    var s = 1;
-    for (int i = 1; i <= ghostEatenCount; i++ ) {
+    for (int i = 1; i <= ghostEatenCount; i++) {
 //    for ( i in [1..ghostEatenCount] ) s = s + s;
       multiplier += multiplier;
     }
 
-    pacMan.scores.set(pacMan.scores.get() + multiplier*100);
-    if ( addLifeFlag && (pacMan.scores.get() >= 10000) ) {
-//    if ( addLifeFlag and pacMan.scores >= 10000 ) {
+    pacMan.score.set(pacMan.score.get() + multiplier * 100);
+    if ( addLifeFlag && (pacMan.score.get() >= 10000) ) {
+//    if ( addLifeFlag and pacMan.score >= 10000 ) {
       addLife();
     }
 
-    ScoreText st = SCORE_TEXT[ghostEatenCount-1];
+    ScoreText st = SCORE_TEXT[ghostEatenCount - 1];
 //    var st = scoreText[ghostEatenCount-1];
 //    st.x = g.imageX - 10;
     st.setX(g.imageX.get() - 10);
@@ -1171,36 +1171,36 @@ public class Maze extends Parent {
     g.trapCounter = -10;
 
     st.showText();
-  
+
   }
 
   public void resumeGame() {
 
-    if ( !gamePaused.get() ) {
+    if (!gamePaused.get()) {
       return;
     }
 
     messageBox.setVisible(false);
 
-    for ( Ghost g : ghosts ) {
-      if ( g.isPaused() ) {
+    for (Ghost g : ghosts) {
+      if (g.isPaused()) {
         g.start();
       }
     }
 
-    if ( pacMan.isPaused()) {
+    if (pacMan.isPaused()) {
       pacMan.start();
     }
 
-    if ( dyingPacMan.isPaused() ) {
+    if (dyingPacMan.isPaused()) {
       dyingPacMan.start();
     }
 
-    if ( flashingTimeline.getStatus() == Animation.Status.PAUSED ) {
+    if (flashingTimeline.getStatus() == Animation.Status.PAUSED) {
 //    if ( flashingTimeline.paused ) {
       flashingTimeline.play();
     }
-    
+
     gamePaused.set(false);
 
   }
@@ -1210,24 +1210,24 @@ public class Maze extends Parent {
     if ( waitForStart.get() || gamePaused.get() ) {
       return;
     }
-    
+
     messageBox.setVisible(true);
 
-    for ( Ghost g : ghosts ) {
-      if ( g.isRunning() ) {
+    for (Ghost g : ghosts) {
+      if (g.isRunning()) {
         g.pause();
       }
     }
 
-    if ( pacMan.isRunning() ) {
+    if (pacMan.isRunning()) {
       pacMan.pause();
     }
 
-    if ( dyingPacMan.isRunning() ) {
+    if (dyingPacMan.isRunning()) {
       dyingPacMan.pause();
     }
 
-    if ( flashingTimeline.getStatus() == Animation.Status.RUNNING ) {
+    if (flashingTimeline.getStatus() == Animation.Status.RUNNING) {
 //    if ( flashingTimepacmanline.running ) {
       flashingTimeline.pause();
     }
@@ -1243,26 +1243,26 @@ public class Maze extends Parent {
 
     gameResultText.setVisible(false);
 
-    if ( !lastGameResult.get() ) {
+    if (!lastGameResult.get()) {
 //    if ( lastGameResult == false ) {
       level.set(1);
       addLifeFlag = true;
-      pacMan.scores.set(0);
+      pacMan.score.set(0);
       pacMan.dotEatenCount = 0;
 
       livesCount.set(2);
     }
-    else { 
+    else {
       lastGameResult.set(false);
       level.set(level.get() + 1);
 //      level ++;
     }
 
-    for ( int x = 1; x <= MazeData.GRID_SIZE; x++ ) {
+    for (int x = 1; x <= MazeData.GRID_SIZE; x++) {
 //    for ( x in [1..MazeData.GRID_SIZE] )
-      for ( int y=1; y<=MazeData.GRID_SIZE; y++ ) {
+      for (int y = 1; y <= MazeData.GRID_SIZE; y++) {
 //      for ( y in [1..MazeData.GRID_SIZE] ) {
-        Dot dot = (Dot) MazeData.getDot( x, y );
+        Dot dot = (Dot) MazeData.getDot(x, y);
 //        var dot : Dot = MazeData.getDot( x, y ) as Dot ;
 
         if ( (dot != null) && !dot.isVisible() ) {
@@ -1270,7 +1270,7 @@ public class Maze extends Parent {
         }
       }
     }
-    for ( Ghost g : ghosts ) {
+    for (Ghost g : ghosts) {
       g.resetStatus();
     }
 
@@ -1284,7 +1284,7 @@ public class Maze extends Parent {
     pacMan.hide();
     pacMan.dotEatenCount = 0;
 
-    for ( Ghost g : ghosts ) {
+    for (Ghost g : ghosts) {
       g.hide();
     }
 
@@ -1296,7 +1296,7 @@ public class Maze extends Parent {
   public void startNewLife() {
 
     // reduce a life of Pac-Man
-    if ( livesCount.get() > 0 ) {
+    if (livesCount.get() > 0) {
 //    if ( livesCount > 0 ) {
       livesCount.set(livesCount.get() - 1);
 //      livesCount--;
@@ -1310,14 +1310,14 @@ public class Maze extends Parent {
 
     pacMan.resetStatus();
 
-    for ( Ghost g : ghosts ) {
+    for (Ghost g : ghosts) {
       g.resetStatus();
     }
   }
 
   public void addLife() {
 
-    if ( addLifeFlag ) {
+    if (addLifeFlag) {
       livesCount.set(livesCount.get() + 1);
 //      livesCount ++;
       addLifeFlag = false;

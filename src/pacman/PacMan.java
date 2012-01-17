@@ -15,7 +15,7 @@ import javafx.scene.image.ImageView;
  * @author Patrick Webster
  */
 public class PacMan extends MovingObject {
-//public class PacMan extends Parent, MovingObject {
+//public class PacMan extends CustomNode, MovingObject {
 
 //  private Image defaultImage;
 //  public var defaultImage: Image = Image {
@@ -35,27 +35,74 @@ public class PacMan extends MovingObject {
 //  ];
 
  /**
-  * The number of dots eaten
+  * The number of dots eaten.
   */
   public int dotEatenCount;
 //  public var dotEatenCount : Integer = 0;
 
  /**
-  * Score of the game
+  * Score of the game.
   */
-  public SimpleIntegerProperty scores;
+  public SimpleIntegerProperty score;
 //  public var scores: Integer = 0;
-    
+
  /**
-  * Angles of rotating the images
-  */ 
-  private static final double[] rotationDegree = new double[] {0, 90, 180, 270};
+  * Angles of rotating the images.
+  */
+  private static final double[] ROTATION_DEGREE = new double[] {0, 90, 180, 270};
 //  def rotationDegree = [0, 90, 180, 270];
 
  /**
-  * GUI image of the man
+  * Buffer to keep the keyboard input.
   */
-//  private ImageView pacmanImage;
+  private int keyboardBuffer;
+//  var keyboardBuffer: Integer = -1;
+
+ /**
+  * Current direction of Pac-Man.
+  */
+  private final SimpleIntegerProperty currentDirection;
+//  var currentDirection: Integer = MOVE_LEFT;
+
+ /**
+  * Constructor.
+  *
+  * @param maze
+  * @param x
+  * @param y
+  */
+  public PacMan(Maze maze, int x, int y) {
+
+    this.maze = maze;
+    this.x = x;
+    this.y = y;
+
+    Image defaultImage = new Image(getClass().getResourceAsStream("images/left1.png"));
+    images = new Image[] {defaultImage,
+      new Image(getClass().getResourceAsStream("images/left2.png")),
+      defaultImage,
+      new Image(getClass().getResourceAsStream("images/round.png"))
+    };
+
+    dotEatenCount = 0;
+    score = new SimpleIntegerProperty(0);
+    currentDirection = new SimpleIntegerProperty(MOVE_LEFT);
+
+//  postinit {
+//    imageX = MazeData.calcGridX(x);
+//    imageY = MazeData.calcGridX(y);
+//
+//    xDirection = -1;
+//    yDirection = 0;
+//
+//  }
+    imageX = new SimpleIntegerProperty(MazeData.calcGridX(x));
+    imageY = new SimpleIntegerProperty(MazeData.calcGridX(y));
+
+    xDirection = -1;
+    yDirection = 0;
+
+  // GUI image of the man
 //  var PACMAN_IMAGE : ImageView = ImageView {
 //    x: bind imageX - 13
 //    y: bind imageY - 13
@@ -67,52 +114,11 @@ public class PacMan extends MovingObject {
 //      pivotY: bind imageY
 //      }
 //   }
-
- /**
-  * buffer to keep the keyboard input
-  */
-  private int keyboardBuffer;
-//  var keyboardBuffer: Integer = -1;
-
- /**
-  * Current direction of PacMan
-  */
-  private final SimpleIntegerProperty currentDirection;
-//  var currentDirection: Integer = MOVE_LEFT;
-
-//  postinit {
-//    imageX = MazeData.calcGridX(x);
-//    imageY = MazeData.calcGridX(y);
-//    
-//    xDirection = -1;
-//    yDirection = 0;
-//
-//  }
-  
- /**
-  * Constructor
-  * 
-  * @param maze
-  * @param x
-  * @param y 
-  */
-  public PacMan(Maze maze, int x, int y) {
-    
-    this.maze = maze;
-    this.x = x;
-    this.y = y;
-    
-    Image defaultImage = new Image(getClass().getResourceAsStream("images/left1.png"));
-    images = new Image[]{defaultImage,
-      new Image(getClass().getResourceAsStream("images/left2.png")),
-      defaultImage,
-      new Image(getClass().getResourceAsStream("images/round.png"))
-    };
-    
-    dotEatenCount = 0;
-    scores = new SimpleIntegerProperty(0);
-    currentDirection = new SimpleIntegerProperty(MOVE_LEFT);
-    
+    ImageView pacmanImage = new ImageView(defaultImage);
+    pacmanImage.xProperty().bind(imageX.add(-13));
+    pacmanImage.yProperty().bind(imageY.add(-13));
+    pacmanImage.imageProperty().bind(imageBinding);
+//    pacmanImage.setCache(true);
     DoubleBinding rotationBinding = new DoubleBinding() {
 
       {
@@ -121,51 +127,31 @@ public class PacMan extends MovingObject {
 
       @Override
       protected double computeValue() {
-        return rotationDegree[currentDirection.get()];
+        return ROTATION_DEGREE[currentDirection.get()];
       }
     };
-      
-    ImageView pacmanImage = new ImageView(defaultImage);
-//    transforms: Rotate {
-//      angle: bind rotationDegree[currentDirection]
-//      pivotX: bind imageX
-//      pivotY: bind imageY
-//      }
-//    }
     pacmanImage.rotateProperty().bind(rotationBinding);
-    pacmanImage.imageProperty().bind(imageBinding);
+
     keyboardBuffer = -1;
-    
-    // begin postinit
-    imageX = new SimpleIntegerProperty(MazeData.calcGridX(x));
-    imageY = new SimpleIntegerProperty(MazeData.calcGridX(y));
-    
-    xDirection = -1;
-    yDirection = 0;
-    // end postinit
-    
-    pacmanImage.xProperty().bind(imageX.add(-13));
-    pacmanImage.yProperty().bind(imageY.add(-13));
-    pacmanImage.setCache(true);
 
     getChildren().add(pacmanImage); // patweb
   }
-  
+
  /**
-  * moving horizontally
+  * moving horizontally.
   */
   private void moveHorizontally() {
 
     moveCounter++;
 
-    if ( moveCounter < ANIMATION_STEP ) {
+    if (moveCounter < ANIMATION_STEP) {
       imageX.set(imageX.get() + (xDirection * MOVE_SPEED));
 //      imageX += xDirection * MOVE_SPEED;
     }
     else {
       moveCounter = 0;
       x += xDirection;
-      
+
       imageX.set(MazeData.calcGridX(x));
 //      imageX = MazeData.calcGridX(x);
 
@@ -187,20 +173,20 @@ public class PacMan extends MovingObject {
         }
       }
       else // check if the character hits a wall
-      if ( MazeData.getData(nextX, y) == MazeData.BLOCK ) {
+      if (MazeData.getData(nextX, y) == MazeData.BLOCK) {
         state = STOPPED;
       }
     }
   }
 
  /**
-  * moving vertically
+  * moving vertically.
   */
   private void moveVertically() {
-      
+
     moveCounter++;
 
-    if ( moveCounter < ANIMATION_STEP ) {
+    if (moveCounter < ANIMATION_STEP) {
       imageY.set(imageY.get() + (yDirection * MOVE_SPEED));
 //      imageY += yDirection * MOVE_SPEED;
     }
@@ -214,29 +200,29 @@ public class PacMan extends MovingObject {
       int nextY = yDirection + y;
 
       // check if the character hits a wall
-      if ( MazeData.getData(x, nextY) == MazeData.BLOCK ) {
+      if (MazeData.getData(x, nextY) == MazeData.BLOCK) {
         state = STOPPED;
       }
     }
   }
 
  /**
-  * Turn Pac-Man to the right
+  * Turn Pac-Man to the right.
   */
   private void moveRight() {
 
-    if ( currentDirection.get() == MOVE_RIGHT ) {
+    if (currentDirection.get() == MOVE_RIGHT) {
 //    if ( currentDirection == MOVE_RIGHT )  return;
         return;
     }
 
     int nextX = x + 1;
 
-    if ( nextX >= MazeData.GRID_SIZE) {
+    if (nextX >= MazeData.GRID_SIZE) {
       return;
     }
 
-    if ( MazeData.getData(nextX, y) == MazeData.BLOCK ) {
+    if (MazeData.getData(nextX, y) == MazeData.BLOCK) {
       return;
     }
 
@@ -251,22 +237,22 @@ public class PacMan extends MovingObject {
   }
 
  /**
-  * Turn Pac-Man to the left
+  * Turn Pac-Man to the left.
   */
   private void moveLeft() {
 
-    if ( currentDirection.get() == MOVE_LEFT ) {
+    if (currentDirection.get() == MOVE_LEFT) {
 //    if ( currentDirection == MOVE_LEFT )   return;
         return;
     }
 
     int nextX = x - 1;
 
-    if ( nextX <= 1) {
+    if (nextX <= 1) {
       return;
     }
 
-    if ( MazeData.getData(nextX, y) == MazeData.BLOCK ) {
+    if (MazeData.getData(nextX, y) == MazeData.BLOCK) {
       return;
     }
 
@@ -281,22 +267,22 @@ public class PacMan extends MovingObject {
   }
 
  /**
-  * Turn Pac-Man up
+  * Turn Pac-Man up.
   */
   private void moveUp() {
 
-    if ( currentDirection.get() == MOVE_UP ) {
+    if (currentDirection.get() == MOVE_UP) {
 //    if ( currentDirection == MOVE_UP )  return;
       return;
     }
 
     int nextY = y - 1;
 
-    if ( nextY <= 1) {
+    if (nextY <= 1) {
       return;
     }
 
-    if ( MazeData.getData(x,nextY) == MazeData.BLOCK ) {
+    if (MazeData.getData(x,nextY) == MazeData.BLOCK) {
       return;
     }
 
@@ -311,22 +297,22 @@ public class PacMan extends MovingObject {
   }
 
  /**
-  * Turn Pac-Man down
+  * Turn Pac-Man down.
   */
   private void moveDown() {
 
-    if ( currentDirection.get() == MOVE_DOWN ) {
+    if (currentDirection.get() == MOVE_DOWN) {
 //    if ( currentDirection == MOVE_DOWN ) return;
         return;
     }
 
     int nextY = y + 1;
 
-    if ( nextY >= MazeData.GRID_SIZE ) {
+    if (nextY >= MazeData.GRID_SIZE) {
       return;
     }
 
-    if ( MazeData.getData(x,nextY) == MazeData.BLOCK ) {
+    if (MazeData.getData(x, nextY) == MazeData.BLOCK) {
       return;
     }
 
@@ -341,10 +327,10 @@ public class PacMan extends MovingObject {
   }
 
  /**
-  * Handle keyboard input
+  * Handle keyboard input.
   */
-  public void handleKeyboardInput() {
-    
+  private void handleKeyboardInput() {
+
     if (keyboardBuffer < 0) {
       return;
     }
@@ -358,38 +344,38 @@ public class PacMan extends MovingObject {
     } else if (keyboardBuffer == MOVE_DOWN) {
       moveDown();
     }
-    
+
   }
 
 
-  public void setKeyboardBuffer( int k ) {
+  public void setKeyboardBuffer(int k) {
     keyboardBuffer = k;
   }
 
  /**
   * Update score if a dot is eaten.
   */
-  public void updateScores() {
+  private void updateScore() {
     if ( y != 14 || ( x > 0 && x < MazeData.GRID_SIZE ) ) {
-      Dot dot = (Dot) MazeData.getDot( x, y );
+      Dot dot = (Dot) MazeData.getDot(x, y);
 
       if ( dot != null && dot.isVisible() ) {
-        scores.set(scores.get() + 10);
-//        scores += 10;
+        score.set(score.get() + 10);
+//        score += 10;
         dot.setVisible(false);
-        dotEatenCount ++;
+        dotEatenCount++;
 
-        if ( scores.get() >= 10000 ) {
-//        if ( scores >= 10000 ) {
+        if (score.get() >= 10000) {
+//        if ( score >= 10000 ) {
           maze.addLife();
         }
 
-        if ( dot.dotType == MazeData.MAGIC_DOT ) {
+        if (dot.dotType == MazeData.MAGIC_DOT) {
           maze.makeGhostsHollow();
         }
 
         // check if the player wins and should start a new level
-        if ( dotEatenCount >= MazeData.dotTotal ) {
+        if (dotEatenCount >= MazeData.dotTotal) {
           maze.startNewLevel();
         }
       }
@@ -402,36 +388,39 @@ public class PacMan extends MovingObject {
   }
 
  /**
-  * handle animation of one tick
+  * Handle animation of one tick.
   */
   @Override
   public void moveOneStep() {
 //  public override function moveOneStep() {
-    if ( maze.gamePaused.get() ) {
+    if (maze.gamePaused.get()) {
+
 //      if ( timeline.paused == false ) {
-      if ( timeline.getStatus() != Animation.Status.PAUSED ) {
+      if (timeline.getStatus() != Animation.Status.PAUSED) {
         timeline.pause();
       }
+
       return;
     }
 
-    // handle keyboard input only when pac-man is at a point on the grid
-    if ( currentImage.get() == 0 ) {
+    // handle keyboard input only when Pac-Man is at a point on the grid
+    if (currentImage.get() == 0) {
 //    if ( currentImage == 0 ) {
       handleKeyboardInput();
     }
 
-    if ( state == MOVING ) {
-      if ( xDirection != 0 ) {
+    if (state == MOVING) {
+
+      if (xDirection != 0) {
         moveHorizontally();
       }
 
-      if ( yDirection != 0 ) {
+      if (yDirection != 0) {
         moveVertically();
       }
 
       // switch to the image of the next frame
-      if ( currentImage.get() < ANIMATION_STEP - 1  ) {
+      if (currentImage.get() < ANIMATION_STEP - 1) {
 //      if ( currentImage < ANIMATION_STEP - 1  ) {
         currentImage.set(currentImage.get() + 1);
 //        currentImage++;
@@ -439,15 +428,16 @@ public class PacMan extends MovingObject {
       else {
         currentImage.set(0);
 //        currentImage=0;
-        updateScores();
+        updateScore();
       }
+
     }
 
-    maze.pacManMeetsGhosts();    
+    maze.pacManMeetsGhosts();
   }
 
  /**
-  * Place Pac-Man at the startup position for a new game
+  * Place Pac-Man at the startup position for a new game.
   */
   public void resetStatus() {
     state = MOVING;

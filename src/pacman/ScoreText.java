@@ -11,7 +11,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 /**
- * Text object for showing score for eating a ghost, then disappears after 2 seconds.
+ * Text object for showing score for eating a ghost; disappears after 2 seconds.
  *
  * ScoreText.fx created on 2009-2-6, 17:52:42 <br>
  * ScoreText.java created October 2011

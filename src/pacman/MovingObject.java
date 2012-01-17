@@ -37,69 +37,57 @@ public abstract class MovingObject extends Parent {
   protected Maze maze;
   protected int state;
 
-//  public int currentImage; //=0;
-  protected IntegerProperty currentImage; //=0;
+//  public var currentImage=0;
+  protected IntegerProperty currentImage;
   protected Image[] images;
   protected ObjectBinding imageBinding;
-  protected int moveCounter; //=0;
+//  public var moveCounter: Integer=0;
+  protected int moveCounter;
 
   // grid coordinates
 //  public var x: Number;
 //  public var y: Number;
   protected int x;
   protected int y;
-//  public IntegerProperty x;
-//  public IntegerProperty y;
 
   // graphical coordinates
-//  public int imageX;
-//  public int imageY;
+//  public var imageX: Number ;
+//  public var imageY: Number ;
   public IntegerProperty imageX;
   public IntegerProperty imageY;
 
-  protected int xDirection; // = 0;
-  protected int yDirection; // = 0;
+//  public var xDirection: Number = 0;
+//  public var yDirection: Number = 0;
+  protected int xDirection;
+  protected int yDirection;
 
-  protected Timeline timeline; // = createTimeline();
+//  public var timeline: Timeline =  createTimeline();
+  protected Timeline timeline;
 
   public MovingObject() {
-//    currentImage = 0;
     currentImage = new SimpleIntegerProperty(0);
 
-      imageBinding = new ObjectBinding() {
+    imageBinding = new ObjectBinding() {
 
-          {
-              super.bind(currentImage);
-          }
+      {
+        super.bind(currentImage);
+      }
 
-          @Override
-          protected Image computeValue() {
-              return images[currentImage.get()];
-          }
-      };
+      @Override
+      protected Image computeValue() {
+        return images[currentImage.get()];
+      }
+    };
 
     moveCounter = 0;
     xDirection = 0;
     yDirection = 0;
     timeline = createTimeline();
   }
-  
+
   public abstract void moveOneStep();
 
   // animation time line, moving the pacman
-  public final Timeline createTimeline() {
-    timeline = new Timeline();
-    timeline.setCycleCount(Timeline.INDEFINITE);
-    KeyFrame kf = new KeyFrame(Duration.millis(45), new EventHandler<ActionEvent>() {
-      
-      @Override
-      public void handle(ActionEvent event) {
-        moveOneStep();
-      }
-      
-    });
-    timeline.getKeyFrames().add(kf);
-    
 //    Timeline {
 //     // interpolate: false
 //      repeatCount: Timeline.INDEFINITE
@@ -112,9 +100,22 @@ public abstract class MovingObject extends Parent {
 //        }
 //      ]
 //     }
+  private Timeline createTimeline() {
+    timeline = new Timeline();
+    timeline.setCycleCount(Timeline.INDEFINITE);
+    KeyFrame kf = new KeyFrame(Duration.millis(45), new EventHandler<ActionEvent>() {
+      
+      @Override
+      public void handle(ActionEvent event) {
+        moveOneStep();
+      }
+
+    });
+    timeline.getKeyFrames().add(kf);
+
     return timeline;
   }
-  
+
   public void stop() {
     timeline.stop();
   }
@@ -136,5 +137,5 @@ public abstract class MovingObject extends Parent {
 //    return timeline.paused;
     return timeline.getStatus() == Animation.Status.PAUSED;
   }
-  
+
 }

@@ -41,7 +41,7 @@ public class Ghost extends MovingObject {
 //      HOLLOW_IMAGE2,
 //      HOLLOW_IMAGE1,
 //      HOLLOW_IMAGE2 ];
-  private static final Image[] HOLLOW_IMG = new Image[]{
+  private static final Image[] HOLLOW_IMG = new Image[] {
     HOLLOW_IMAGE1,
     HOLLOW_IMAGE2,
     HOLLOW_IMAGE1,
@@ -149,9 +149,9 @@ public class Ghost extends MovingObject {
     images = defaultImg;
     chaseCount = 0;
     isHollow = false;
-    
+
     trapCounter = 0;
-    
+
     // postinit block
     initialLocationX = x;
     initialLocationY = y;
@@ -218,7 +218,7 @@ public class Ghost extends MovingObject {
 //  public function changeDirectionXtoY(mustChange: Boolean): Void {
 //    if ( not mustChange and Math.random() > changeFactor ) {
     if ( !mustChange && (Math.random() > CHANGE_FACTOR) ) {
-      return;  // no change of direction
+      return; // no change of direction
     }
 
     // will change to a Y direction if possible
@@ -244,7 +244,7 @@ public class Ghost extends MovingObject {
 
 //    if ( goUp.score < 0 and goDown.score < 0 )
     if ( goUp.score < 0 && goDown.score < 0 ) {
-      return;  // no change of direction
+      return; // no change of direction
     }
 
 //    if ( Math.random() < chaseFactor and chaseCount == 0 )
@@ -272,20 +272,20 @@ public class Ghost extends MovingObject {
 
 //    var decision = -1; // make it goes up first, then decide if we need to change it
     int decision = -1; // make it go up first, then decide if we need to change it
-    if ( goUp.score  < 0 ) {
+    if (goUp.score  < 0) {
       decision = 1;
     }
     else {
-      if ( goDown.score > 0 ) {
-        if ( chaseCount > 0 ) {
-          if ( goDown.score > goUp.score) {
+      if (goDown.score > 0) {
+        if (chaseCount > 0) {
+          if (goDown.score > goUp.score) {
             decision = 1;
-            chaseCount-- ;
+            chaseCount--;
           }
         }
         else {
           // random pick
-          if ( Math.random() > 0.5 ) {
+          if (Math.random() > 0.5) {
             decision = 1;
           }
         }
@@ -301,7 +301,7 @@ public class Ghost extends MovingObject {
 //  public function changeDirectionYtoX(mustChange: Boolean): Void {
 
     if ( !mustChange && (Math.random() > CHANGE_FACTOR) ) {
-      return;  // no change of direction
+      return; // no change of direction
     }
 
     // will change to X directions if possible
@@ -326,7 +326,7 @@ public class Ghost extends MovingObject {
     goRight.evaluate(pacMan, isHollow);
 
     if ( (goLeft.score < 0) && (goRight.score < 0) ) {
-      return;  // no change of direction
+      return; // no change of direction
     }
 
     if ( (Math.random() < CHASE_FACTOR) && (chaseCount == 0) ) {
@@ -351,19 +351,19 @@ public class Ghost extends MovingObject {
 
     // make it go up first, then decide if we need to change it to down
     int decision = -1;
-    if ( goLeft.score  < 0 ) {
+    if (goLeft.score  < 0) {
       decision = 1;
     }
     else {
-      if ( goRight.score > 0 ) {
-        if ( chaseCount > 0 ) {
-          if ( goRight.score > goLeft.score) {
+      if (goRight.score > 0) {
+        if (chaseCount > 0) {
+          if (goRight.score > goLeft.score) {
             decision = 1;
             chaseCount--;
           }
         }
         else { // random pick
-          if ( Math.random() > 0.5 ) {
+          if (Math.random() > 0.5) {
             decision = 1;
           }
         }
@@ -432,7 +432,7 @@ public class Ghost extends MovingObject {
         changeDirectionYtoX(true);
       }
       else {
-        if ( MazeData.getData(x, nextY) == MazeData.BLOCK ) {
+        if (MazeData.getData(x, nextY) == MazeData.BLOCK) {
           changeDirectionYtoX(true);
         }
         else {
@@ -511,17 +511,17 @@ public class Ghost extends MovingObject {
   // move one tick
   @Override
   public void moveOneStep() {
-    if ( maze.gamePaused.get() ) {
+    if (maze.gamePaused.get()) {
 //      if ( timeline.paused ==  false ) {
-      if ( !isPaused() ) {
+      if (!isPaused()) {
         timeline.pause();
       }
       return;
     }
 
     if ( state == MOVING || state == TRAPPED ) {
-      if ( xDirection != 0 ) {
-        if ( state == MOVING ) {
+      if (xDirection != 0) {
+        if (state == MOVING) {
           moveHorizontally();
         }
         else {
@@ -529,8 +529,8 @@ public class Ghost extends MovingObject {
         }
       }
       else {
-        if ( yDirection != 0 ) {
-          if ( state == MOVING ) {
+        if (yDirection != 0) {
+          if (state == MOVING) {
             moveVertically();
           }
           else {
@@ -547,7 +547,7 @@ public class Ghost extends MovingObject {
       else {
 //        currentImage=0;
         currentImage.set(0);
-        if ( state == TRAPPED ) { 
+        if (state == TRAPPED) {
           trapCounter++;
 
           if (trapCounter > trapTime && x == 14 && y == 13) {
@@ -564,13 +564,13 @@ public class Ghost extends MovingObject {
 
     // check to see if need to switch back to a normal status
     if (isHollow) {
-    
+
       hollowCounter++;
 
-      if ( hollowCounter == HOLLOW_MAX_TIME - 30 ) {
+      if (hollowCounter == HOLLOW_MAX_TIME - 30) {
         images = FLASH_HOLLOW_IMG;
       }
-      else if ( hollowCounter > HOLLOW_MAX_TIME ) {
+      else if (hollowCounter > HOLLOW_MAX_TIME) {
         isHollow = false;
         images = defaultImg;
 

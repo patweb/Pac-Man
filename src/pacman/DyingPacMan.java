@@ -39,7 +39,7 @@ public class DyingPacMan extends Arc {
 
                 setVisible(true);
               }
-              
+
             },
             new KeyValue(startAngleProperty(), 90),
             new KeyValue(lengthProperty(), 360)
@@ -54,7 +54,7 @@ public class DyingPacMan extends Arc {
                 setVisible(false);
                 maze.startNewLife();
               }
-              
+
             },
             new KeyValue(startAngleProperty(), 270),
             new KeyValue(lengthProperty(), 0)
@@ -68,20 +68,20 @@ public class DyingPacMan extends Arc {
 //  var timeline = Timeline {
 //    repeatCount: 1
 //    keyFrames: [
-//    
+//
 //      KeyFrame {
 //        time: 600ms
 //        action: function() {
 //          // hide the pacMan character and ghosts before the animation
 //          maze.pacMan.visible = false;
-//          
+//
 //          for ( g in maze.ghosts ) {
 //            g.hide();
 //          }
 //
 //          visible = true;
 //        }
-//        values: [ startAngle => 90, length=>360 ];  
+//        values: [ startAngle => 90, length=>360 ];
 //      },
 //
 //      KeyFrame {
@@ -95,7 +95,7 @@ public class DyingPacMan extends Arc {
 //      },
 //    ]
 //  }
-  
+
   public void pause() {
     timeline.pause();
   }
@@ -125,5 +125,5 @@ public class DyingPacMan extends Arc {
 
     timeline.playFromStart();
   }
-  
+
 }
