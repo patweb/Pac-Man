@@ -69,11 +69,11 @@ public class ScoreText extends Parent {
     timeline.playFromStart();
   }
 
-  public void setX (double x) {
+  public void setX(int x) {
     text.setX(x);
   }
 
-  public void setY (double y) {
+  public void setY(int y) {
     text.setY(y);
   }
 

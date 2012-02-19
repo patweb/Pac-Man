@@ -1,7 +1,7 @@
 package pacman;
 
 import javafx.animation.Animation;
-import javafx.beans.binding.DoubleBinding;
+import javafx.beans.binding.IntegerBinding;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -49,7 +49,7 @@ public class PacMan extends MovingObject {
  /**
   * Angles of rotating the images.
   */
-  private static final double[] ROTATION_DEGREE = new double[] {0, 90, 180, 270};
+  private static final int[] ROTATION_DEGREE = new int[] {0, 90, 180, 270};
 //  def rotationDegree = [0, 90, 180, 270];
 
  /**
@@ -119,14 +119,14 @@ public class PacMan extends MovingObject {
     pacmanImage.yProperty().bind(imageY.add(-13));
     pacmanImage.imageProperty().bind(imageBinding);
 //    pacmanImage.setCache(true);
-    DoubleBinding rotationBinding = new DoubleBinding() {
+    IntegerBinding rotationBinding = new IntegerBinding() {
 
       {
         super.bind(currentDirection);
       }
 
       @Override
-      protected double computeValue() {
+      protected int computeValue() {
         return ROTATION_DEGREE[currentDirection.get()];
       }
     };

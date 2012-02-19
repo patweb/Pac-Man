@@ -16,7 +16,7 @@ public class MoveDecision {
   public int y;
 
 //  public var score: Number;
-  public double score;
+  public int score;
 
   // evaluate if the move is valid,
   // if it is invalid, returns -1;
@@ -24,7 +24,7 @@ public class MoveDecision {
 //  public function evaluate( pacMan: PacMan, isHollow: Boolean ): Void {
   public void evaluate(PacMan pacMan, boolean isHollow) {
 //    if ( x < 1 or y < 1 or y >= MazeData.GRID_SIZE or x >= MazeData.GRID_SIZE){
-    if ( x < 1 || y < 1 || (y >= MazeData.GRID_SIZE) || (x >= MazeData.GRID_SIZE) ){
+    if (x < 1 || y < 1 || (y >= MazeData.GRID_SIZE) || (x >= MazeData.GRID_SIZE)) {
       score = -1;
       return;
     }
