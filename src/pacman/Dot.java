@@ -26,7 +26,7 @@ public class Dot extends Parent {
   public BooleanProperty shouldStopAnimation;
 //  public var dotType: Integer;
   public int dotType;
-  
+
   // location of the dot
 //  public var x : Number ;
 //  public var y : Number ;
@@ -36,7 +36,7 @@ public class Dot extends Parent {
 //    if (  dotType == MazeData.MAGIC_DOT ) 5 else 1;
 //  public int r;
   private IntegerProperty radius;
-  
+
   // the dot
 //  var circle = Circle{
 //    //cache: true

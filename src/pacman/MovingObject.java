@@ -15,7 +15,7 @@ import javafx.util.Duration;
 /**
  * MovingObject.fx created on 2009-1-1, 11:40:49 <br>
  * MovingObject.java created October 2011
- * 
+ *
  * @author Henry Zhang
  * @author Patrick Webster
  */
@@ -28,7 +28,7 @@ public abstract class MovingObject extends Parent {
 
   protected static final int MOVING = 1;
   protected static final int STOPPED = 0;
-  
+
   protected static final int MOVE_LEFT = 0;
   protected static final int MOVE_UP = 1;
   protected static final int MOVE_RIGHT = 2;
@@ -104,7 +104,7 @@ public abstract class MovingObject extends Parent {
     timeline = new Timeline();
     timeline.setCycleCount(Timeline.INDEFINITE);
     KeyFrame kf = new KeyFrame(Duration.millis(45), new EventHandler<ActionEvent>() {
-      
+
       @Override
       public void handle(ActionEvent event) {
         moveOneStep();

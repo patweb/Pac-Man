@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 /**
  * PacMan.fx created on 2009-1-1, 11:50:58 <br>
  * PacMan.java created October 2011
- * 
+ *
  * @see <a href="http://www.javafxgame.com">http://www.javafxgame.com</a>
  * @author Henry Zhang
  * @author Patrick Webster
@@ -159,7 +159,7 @@ public class PacMan extends MovingObject {
       int nextX = xDirection + x;
 
       if ( (y == 14) && ( nextX <= 1 || nextX >= 28) ) {
-        if ( (nextX < - 1) && (xDirection < 0) ) {
+        if ( (nextX < -1) && (xDirection < 0) ) {
           x = MazeData.GRID_SIZE;
           imageX.set(MazeData.calcGridX(x));
 //          imageX = MazeData.calcGridX(x);
@@ -445,7 +445,7 @@ public class PacMan extends MovingObject {
 //    currentDirection = MOVE_LEFT;
     xDirection = -1;
     yDirection = 0;
-    
+
     keyboardBuffer = -1;
     currentImage.set(0);
 //    currentImage = 0;

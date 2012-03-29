@@ -621,7 +621,7 @@ public class Maze extends Parent {
     final Rectangle rectMessage = new Rectangle(MazeData.calcGridX(5),
             MazeData.calcGridY(21),
             MazeData.GRID_GAP * 19,
-            MazeData.GRID_GAP *5);
+            MazeData.GRID_GAP * 5);
     rectMessage.setStroke(Color.RED);
     rectMessage.setStrokeWidth(5);
     rectMessage.setFill(Color.CYAN);
@@ -801,8 +801,8 @@ public class Maze extends Parent {
 
     final Line line1 = new Line(
             MazeData.calcGridXFloat(-0.5f),
-            MazeData.calcGridY(13), 
-            MazeData.calcGridXFloat(-0.5f), 
+            MazeData.calcGridY(13),
+            MazeData.calcGridXFloat(-0.5f),
             MazeData.calcGridY(15));
     line1.setStroke(Color.BLACK);
     line1.setStrokeWidth(MazeData.GRID_STROKE + 1);
