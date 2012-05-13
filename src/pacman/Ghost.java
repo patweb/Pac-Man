@@ -389,7 +389,7 @@ public class Ghost extends MovingObject {
       int nextX = xDirection + x;
 
       if ( y == 14 && ( nextX <= 1 || nextX >= 28) ) {
-        if ( nextX < - 1 && xDirection < 0 ) {
+        if ( nextX < -1 && xDirection < 0 ) {
           x = MazeData.GRID_SIZE;
 //          imageX= MazeData.calcGridX(x);
           imageX.set(MazeData.calcGridX(x));
