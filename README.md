@@ -9,7 +9,7 @@ How to Build
 + Install [Java FX 2.1][getjavafx] or higher.
 + Download the GitHub project [zip file][projectzip].
 + In Netbeans, select `Open Project...` and choose the unzipped GitHub project folder containing `nbproject` folder.
-+ Select your Java FX 2 platform from `Project Properties` -> `Libraries` -> `Java Platform`<br>(My platform is named "JDK 1.6-FX_2.1-Enabled").
++ Select your Java FX 2 platform from `Project Properties` -> `Libraries` -> `Java Platform`<br>(My platform is named "JDK 1.7-JFX 2.2.0").
 + Clean and Run
 
 Resources
