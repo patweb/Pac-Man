@@ -375,7 +375,7 @@ public class PacMan extends MovingObject {
         }
 
         // check if the player wins and should start a new level
-        if (dotEatenCount >= MazeData.dotTotal) {
+        if (dotEatenCount >= MazeData.getDotTotal()) {
           maze.startNewLevel();
         }
       }

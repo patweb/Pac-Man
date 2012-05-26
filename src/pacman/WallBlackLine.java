@@ -17,16 +17,26 @@ public class WallBlackLine extends Line {
 //  public var x2: Number;
 //  public var y2: Number;
 
-  public WallBlackLine(int x1, int y1, int x2, int y2) {
-
-//  postinit {
-//    cache = true;
-    setCache(true);
-
+  public WallBlackLine(float x1, float y1, float x2, float y2) {
+    init(x1, y1, x2, y2);
+    
 //    strokeWidth = MazeData.GRID_STROKE + 1;
     setStrokeWidth(MazeData.GRID_STROKE + 1);
 //    stroke = Color.BLACK;
     setStroke(Color.BLACK);
+  }
+
+  public WallBlackLine(Color lineColor, float x1, float y1, float x2, float y2) {
+    init(x1, y1, x2, y2);
+    
+    setStrokeWidth(MazeData.GRID_STROKE);
+    setStroke(lineColor);
+  }
+
+  private void init(float x1, float y1, float x2, float y2) {
+//  postinit {
+//    cache = true;
+    setCache(true);
 
 //    if ( x1 == x2 ) { // vertically line
 //      startX = MazeData.calcGridX(x1);
@@ -41,18 +51,18 @@ public class WallBlackLine extends Line {
 //      endY = MazeData.calcGridY(y2);
 //    }
     if (x1 == x2) { // vertical line
-      setStartX(MazeData.calcGridX(x1));
-      setStartY(MazeData.calcGridY(y1) + MazeData.GRID_STROKE);
-      setEndX(MazeData.calcGridX(x2));
-      setEndY(MazeData.calcGridY(y2) - MazeData.GRID_STROKE);
+      setStartX(MazeData.calcGridXFloat(x1));
+      setStartY(MazeData.calcGridYFloat(y1) + MazeData.GRID_STROKE);
+      setEndX(MazeData.calcGridXFloat(x2));
+      setEndY(MazeData.calcGridYFloat(y2) - MazeData.GRID_STROKE);
     }
     else { // horizontal line
-      setStartX(MazeData.calcGridX(x1) + MazeData.GRID_STROKE);
-      setStartY(MazeData.calcGridY(y1));
-      setEndX(MazeData.calcGridX(x2) - MazeData.GRID_STROKE);
-      setEndY(MazeData.calcGridY(y2));
+      setStartX(MazeData.calcGridXFloat(x1) + MazeData.GRID_STROKE);
+      setStartY(MazeData.calcGridYFloat(y1));
+      setEndX(MazeData.calcGridXFloat(x2) - MazeData.GRID_STROKE);
+      setEndY(MazeData.calcGridYFloat(y2));
     }
 //  } // end postinit
   }
-
+  
 }

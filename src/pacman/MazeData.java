@@ -9,22 +9,20 @@ package pacman;
  */
 public final class MazeData {
 
-  public static final int GRID_SIZE = 29;
-  public static final int EMPTY = 0;
   public static final int BLOCK = 1;
-  public static final int NORMAL_DOT = 2;
+  public static final int EMPTY = 0;
+  public static final int GRID_GAP = 16;
+  public static final int GRID_SIZE = 29;
+  public static final int GRID_STROKE = 2;
   public static final int MAGIC_DOT = 3;
-
-  public static int dotTotal = 0;
-
-  private static final int[][] MAZE_DATA = new int[GRID_SIZE + 1][GRID_SIZE + 1];
+  public static final int NORMAL_DOT = 2;
 
   private static final Object[][] DOT_POINTERS = new Object[GRID_SIZE + 1][GRID_SIZE + 1];
-
-  public static final int GRID_GAP = 16;
-  public static final int GRID_STROKE = 2;
+  private static final int[][] MAZE_DATA = new int[GRID_SIZE + 1][GRID_SIZE + 1];
   private static final int X_OFFSET = GRID_GAP * 2;
   private static final int Y_OFFSET = GRID_GAP * 2;
+
+  private static int dotTotal = 0;
 
   /**
    * Private constructor to prevent instantiation.
@@ -68,7 +66,7 @@ public final class MazeData {
     return GRID_GAP * x + X_OFFSET;
   }
 
-  // float version
+  // calcGridX float version
   public static float calcGridXFloat(final float x) {
     return GRID_GAP * x + X_OFFSET;
   }
@@ -78,7 +76,7 @@ public final class MazeData {
     return GRID_GAP * y + Y_OFFSET;
   }
 
-  // float version
+  // calcGridY float version
   public static float calcGridYFloat(final float y) {
 //  public static double calcGridY(double y) {
     return GRID_GAP * y + Y_OFFSET;
@@ -102,6 +100,32 @@ public final class MazeData {
 
   public static void setDot(int x, int y, Object dot) {
     DOT_POINTERS[x][y] = dot;
+  }
+
+  public static int getDotTotal() {
+    return dotTotal;
+  }
+
+  public static void printData() {
+    for (int i = 0; i <= GRID_SIZE; i++) {
+      for (int j = 0; j <= GRID_SIZE; j++) {
+        System.out.print(MAZE_DATA[j][i] + " ");
+      }
+      System.out.println("");
+    }
+  }
+
+  public static void printDots() {
+    for (int i = 0; i <= GRID_SIZE; i++) {
+      for (int j = 0; j <= GRID_SIZE; j++) {
+        if (null != DOT_POINTERS[j][i]) {
+          System.out.print(((Dot) DOT_POINTERS[j][i]).dotType + " ");
+        } else {
+          System.out.print("  ");
+        }
+      }
+      System.out.println("");
+    }
   }
 
 }

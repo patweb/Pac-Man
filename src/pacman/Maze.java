@@ -18,7 +18,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -36,6 +35,7 @@ import javafx.util.Duration;
 public class Maze extends Parent {
 //public class Maze extends CustomNode {
 
+  public static final boolean DEBUG = false;
 
 //  override var onMouseClicked = function ( e:MouseEvent) {
 //    requestFocus();
@@ -700,42 +700,43 @@ public class Maze extends Parent {
 
     group = new Group();
 
-    final Rectangle groupRect = new Rectangle(0, 0,
+    // Make big black rectangle to cover entire background
+    final Rectangle blackBackground = new Rectangle(0, 0,
             MazeData.calcGridX(MazeData.GRID_SIZE + 2),
             MazeData.calcGridY(MazeData.GRID_SIZE + 3));
-    groupRect.setFill(Color.BLACK);
-    groupRect.setCache(true);
-    group.getChildren().add(groupRect);
+    blackBackground.setFill(Color.BLACK);
+    blackBackground.setCache(true);
+    group.getChildren().add(blackBackground);
 
+    // Inner border of outside wall
     group.getChildren().add(new WallRectangle(0, 0, MazeData.GRID_SIZE, MazeData.GRID_SIZE));
 
+    // Top middle vertical wall
     group.getChildren().add(new WallRectangle(14, -0.5f, 15, 4));
     group.getChildren().add(new WallBlackRectangle(13.8f, -1, 15.3f, 0));
 
-    group.getChildren().add(new WallRectangle(2, 2, 5, 4));
-    group.getChildren().add(new WallRectangle(7, 2, 12, 4));
-    group.getChildren().add(new WallRectangle(17, 2, 22, 4));
-    group.getChildren().add(new WallRectangle(24, 2, 27, 4));
-    group.getChildren().add(new WallRectangle(2, 6, 5, 7));
+    group.getChildren().add(new WallRectangle(2, 2, 5, 4)); // upper-left rectangle
+    group.getChildren().add(new WallRectangle(7, 2, 12, 4)); // upper 2nd-from-left rectangle
+    group.getChildren().add(new WallRectangle(17, 2, 22, 4)); // upper 2nd-from-right rectangle
+    group.getChildren().add(new WallRectangle(24, 2, 27, 4)); // upper-right rectangle
+    group.getChildren().add(new WallRectangle(2, 6, 5, 7)); // left-side 2nd from top rectangle
 
+    // middle top T
     group.getChildren().add(new WallRectangle(14, 6.2f, 15, 10));
     group.getChildren().add(new WallRectangle(10, 6, 19, 7));
     group.getChildren().add(new WallBlackLine(14, 7, 15, 7));
 
+    // Upper-left sideways T
     group.getChildren().add(new WallRectangle(7.5f, 9, 12, 10));
     group.getChildren().add(new WallRectangle(7, 6, 8, 13));
     group.getChildren().add(new WallBlackLine(8, 9, 8, 10));
 
+    // Upper-right sideways T
     group.getChildren().add(new WallRectangle(17, 9, 21.5f, 10));
     group.getChildren().add(new WallRectangle(21, 6, 22, 13));
     group.getChildren().add(new WallBlackLine(21, 9, 21, 10));
 
-    group.getChildren().add(new WallRectangle(24, 6, 27, 7));
-
-    group.getChildren().add(new WallRectangle(-1, 9, 5, 13));
-    group.getChildren().add(new WallRectangle(24, 9, MazeData.GRID_SIZE + 1, 13));
-    group.getChildren().add(new WallBlackLine(0, 13, 0, 15));
-    group.getChildren().add(new WallBlackLine(MazeData.GRID_SIZE, 13, MazeData.GRID_SIZE, 15));
+    group.getChildren().add(new WallRectangle(24, 6, 27, 7)); // right-side 2nd from top rectangle
 
     //cage and the gate
     group.getChildren().add(new WallRectangle(10, 12, 19, 17));
@@ -749,115 +750,81 @@ public class Maze extends Parent {
     cageRect.setCache(true);
     group.getChildren().add(cageRect);
 
+    // Lower-left sideways T
     group.getChildren().add(new WallRectangle(7.5f, 19, 12, 20));
     group.getChildren().add(new WallRectangle(7, 15, 8, 23));
     group.getChildren().add(new WallBlackLine(8, 19, 8, 20));
 
+    // Lower-right sideways T
     group.getChildren().add(new WallRectangle(17, 19, 21.5f, 20));
     group.getChildren().add(new WallRectangle(21, 15, 22, 23));
     group.getChildren().add(new WallBlackLine(21, 19, 21, 20));
 
+    // middle bottom T
     group.getChildren().add(new WallRectangle(14, 19, 15, 27));
     group.getChildren().add(new WallRectangle(10, 22, 19, 23));
     group.getChildren().add(new WallBlackLine(14, 22, 15, 22));
     group.getChildren().add(new WallBlackLine(14, 23, 15, 23));
 
-    group.getChildren().add(new WallRectangle(2, 25, 5, 27));
-    group.getChildren().add(new WallRectangle(17, 25, 22, 27));
+    group.getChildren().add(new WallRectangle(2, 25, 5, 27)); // lower-left rectangle
+    group.getChildren().add(new WallRectangle(7, 25, 12, 27)); // lower 2nd-from-left rectangle
+    group.getChildren().add(new WallRectangle(17, 25, 22, 27)); // lower 2nd-from-right rectangle
+    group.getChildren().add(new WallRectangle(24, 25, 27, 27)); // lower right rectangle
 
-    group.getChildren().add(new WallRectangle(7, 25, 12, 27));
-    group.getChildren().add(new WallRectangle(24, 25, 27, 27));
-
-    group.getChildren().add(new WallRectangle(-1, 15, 5, 17));
+    // left L
     group.getChildren().add(new WallRectangle(4, 19, 5, 23));
     group.getChildren().add(new WallRectangle(2, 19, 4.5f, 20));
     group.getChildren().add(new WallBlackRectangle(4, 19.05f, 5, 20.2f));
-    group.getChildren().add(new WallRectangle(-1, 22, 2, 23));
 
-    group.getChildren().add(new WallRectangle(24, 15, MazeData.GRID_SIZE + 1, 17));
+    group.getChildren().add(new WallRectangle(-1, 22, 2, 23)); // left horizontal wall
+
+    // right L
     group.getChildren().add(new WallRectangle(24, 19, 25, 23));
     group.getChildren().add(new WallRectangle(24.5f, 19, 27, 20));
     group.getChildren().add(new WallBlackRectangle(24, 19.05f, 25, 20.2f));
-    group.getChildren().add(new WallRectangle(27, 22, MazeData.GRID_SIZE + 1, 23));
-    
-    group.getChildren().add(new WallBlackRectangle(-2, 8, 0, MazeData.GRID_SIZE));
-    group.getChildren().add(new WallBlackRectangle(
-            MazeData.GRID_SIZE,
-            8,
-            MazeData.GRID_SIZE + 2,
-            MazeData.GRID_SIZE));
 
-    final Rectangle rect2 = new Rectangle(MazeData.calcGridXFloat(-0.5f),
+    group.getChildren().add(new WallRectangle(27, 22, MazeData.GRID_SIZE + 1, 23)); // right horizontal wall
+
+    // Outer border of outside wall
+    final Rectangle outerWall = new Rectangle(MazeData.calcGridXFloat(-0.5f),
             MazeData.calcGridYFloat(-0.5f),
             (MazeData.GRID_SIZE + 1) * MazeData.GRID_GAP,
             (MazeData.GRID_SIZE + 1) * MazeData.GRID_GAP);
-    rect2.setStrokeWidth(MazeData.GRID_STROKE);
-    rect2.setStroke(Color.BLUE);
-    rect2.setFill(null);
-    rect2.setArcWidth(12);
-    rect2.setArcHeight(12);
-    rect2.setCache(true);
-    group.getChildren().add(rect2);
+    outerWall.setStrokeWidth(MazeData.GRID_STROKE);
+    outerWall.setStroke(Color.BLUE);
+    outerWall.setFill(null);
+    outerWall.setArcWidth(12);
+    outerWall.setArcHeight(12);
+    outerWall.setCache(true);
+    group.getChildren().add(outerWall);
 
-    final Line line1 = new Line(
-            MazeData.calcGridXFloat(-0.5f),
-            MazeData.calcGridY(13),
-            MazeData.calcGridXFloat(-0.5f),
-            MazeData.calcGridY(15));
-    line1.setStroke(Color.BLACK);
-    line1.setStrokeWidth(MazeData.GRID_STROKE + 1);
-    line1.setCache(true);
-    group.getChildren().add(line1);
+    group.getChildren().add(new WallRectangle(-1, 9, 5, 13)); // outer wall above left side door
+    group.getChildren().add(new WallRectangle(-1, 9.5f, 4.5f, 12.5f)); // inner wall above left side door
+    group.getChildren().add(new WallRectangle(-1, 15, 5, 17)); // outer wall below left side wall
+    group.getChildren().add(new WallRectangle(-1, 15.5f, 4.5f, 16.5f)); // inner wall below left side door wall
 
-    final Line line2 = new Line(
-            MazeData.calcGridXFloat(MazeData.GRID_SIZE + 0.5f),
-            MazeData.calcGridY(13),
-            MazeData.calcGridXFloat(MazeData.GRID_SIZE + 0.5f),
-            MazeData.calcGridY(15));
-    line2.setStroke(Color.BLACK);
-    line2.setStrokeWidth(MazeData.GRID_STROKE + 1);
-    line2.setCache(true);
-    group.getChildren().add(line2);
+    group.getChildren().add(new WallRectangle(MazeData.GRID_SIZE - 5, 9, MazeData.GRID_SIZE + 1, 13)); // outer wall above right side door
+    group.getChildren().add(new WallRectangle(MazeData.GRID_SIZE - 4.5f, 9.5f, MazeData.GRID_SIZE + 1, 12.5f)); // inner wall above right side door
+    group.getChildren().add(new WallRectangle(MazeData.GRID_SIZE - 5, 15, MazeData.GRID_SIZE + 1, 17)); // outer wall below right side wall
+    group.getChildren().add(new WallRectangle(MazeData.GRID_SIZE - 4.5f, 15.5f, MazeData.GRID_SIZE + 1, 16.5f)); // inner wall below right side door wall
 
-    final Line line3 = new Line(
-            MazeData.calcGridXFloat(-0.5f),
-            MazeData.calcGridY(13),
-            MazeData.calcGridX(0),
-            MazeData.calcGridY(13));
-    line3.setStroke(Color.BLUE);
-    line3.setStrokeWidth(MazeData.GRID_STROKE);
-    line3.setCache(true);
-    group.getChildren().add(line3);
+    group.getChildren().add(new WallBlackRectangle(-2, 8, -0.5f, MazeData.GRID_SIZE)); // black-out left garbage outside the wall
+    group.getChildren().add(new WallBlackRectangle(-0.5f, 8, 0, 9.5f)); // black-out horizontal line inside outer-left wall above side door
+    group.getChildren().add(new WallBlackRectangle(-0.5f, 16.5f, 0, MazeData.GRID_SIZE)); // black-out horizontal lines inside outer-left wall below side door
 
-    final Line line4 = new Line(
-            MazeData.calcGridXFloat(-0.5f),
-            MazeData.calcGridY(15),
-            MazeData.calcGridX(0),
-            MazeData.calcGridY(15));
-    line4.setStroke(Color.BLUE);
-    line4.setStrokeWidth(MazeData.GRID_STROKE);
-    line4.setCache(true);
-    group.getChildren().add(line4);
+    group.getChildren().add(new WallBlackRectangle(MazeData.GRID_SIZE + 0.5f, 8, MazeData.GRID_SIZE + 2, MazeData.GRID_SIZE)); // black-out garbage on right side of outside wall
+    group.getChildren().add(new WallBlackRectangle(MazeData.GRID_SIZE, 8, MazeData.GRID_SIZE + 0.5f, 9.5f)); // black-out horizontal line inside outer-right wall above side door
+    group.getChildren().add(new WallBlackRectangle(MazeData.GRID_SIZE, 16.5f, MazeData.GRID_SIZE + 0.5f, MazeData.GRID_SIZE)); // black-out horizontal lines inside outer-right wall below side door
 
-    final Line line5 = new Line(
-            MazeData.calcGridXFloat(MazeData.GRID_SIZE + 0.5f),
-            MazeData.calcGridY(13),
-            MazeData.calcGridX(MazeData.GRID_SIZE),
-            MazeData.calcGridY(13));
-    line5.setStroke(Color.BLUE);
-    line5.setStrokeWidth(MazeData.GRID_STROKE);
-    line5.setCache(true);
-    group.getChildren().add(line5);
+     // black-out outer walls inside both side doors
+    group.getChildren().add(new WallBlackRectangle(-1, 13, 1, 15)); // left
+    group.getChildren().add(new WallBlackRectangle(MazeData.GRID_SIZE - 1, 13, MazeData.GRID_SIZE + 1, 15)); // right
 
-    final Line line6 = new Line(
-            MazeData.calcGridXFloat(MazeData.GRID_SIZE + 0.5f),
-            MazeData.calcGridY(15),
-            MazeData.calcGridX(MazeData.GRID_SIZE),
-            MazeData.calcGridY(15));
-    line6.setStroke(Color.BLUE);
-    line6.setStrokeWidth(MazeData.GRID_STROKE);
-    line6.setCache(true);
-    group.getChildren().add(line6);
+    // Add back 4 blue wall segments that were deleted
+    group.getChildren().add(new WallBlackLine(Color.BLUE, -0.5f, 9, -0.5f, 9.5f));
+    group.getChildren().add(new WallBlackLine(Color.BLUE, -0.5f, 16.5f, -0.5f, 17));
+    group.getChildren().add(new WallBlackLine(Color.BLUE, MazeData.GRID_SIZE + 0.5f, 9, MazeData.GRID_SIZE + 0.5f, 9.5f));
+    group.getChildren().add(new WallBlackLine(Color.BLUE, MazeData.GRID_SIZE + 0.5f, 16.5f, MazeData.GRID_SIZE + 0.5f, 17));
 
     final Text textScore = new Text(MazeData.calcGridX(0),
             MazeData.calcGridY(MazeData.GRID_SIZE + 2),
@@ -943,12 +910,11 @@ public class Maze extends Parent {
     // insert ghosts into group.content;
     group.getChildren().addAll(ghosts);
 
+    // Black-out side door exit points so moving objects disappear at maze borders
 //    insert WallBlackRectangle{ x1:-3, y1:13, x2:0, y2:15} into group.content;
 //    insert WallBlackRectangle{ x1:29, y1:13, x2:31, y2:15} into group.content;
-    final WallBlackRectangle wallBlackRectangle1 = new WallBlackRectangle(-3, 13, 0, 15);
-    final WallBlackRectangle wallBlackRectangle2 = new WallBlackRectangle(29, 13, 31, 15);
-    group.getChildren().add(wallBlackRectangle1);
-    group.getChildren().add(wallBlackRectangle2);
+    group.getChildren().add(new WallBlackRectangle(-2, 13, -0.5f, 15));
+    group.getChildren().add(new WallBlackRectangle(29.5f, 13, 31, 15));
 
     // insert messageBox into group.content;
     group.getChildren().add(messageBox);
@@ -957,6 +923,10 @@ public class Maze extends Parent {
 
     getChildren().add(group);
 
+    if (DEBUG) {
+      MazeData.printData();
+      MazeData.printDots();
+    }
   }
 
 
