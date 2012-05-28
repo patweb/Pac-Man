@@ -575,17 +575,17 @@ public class Maze extends Parent {
     // images showing how many lives remaining
     final ImageView livesImage1 = new ImageView(PACMAN_IMAGE);
     livesImage1.setX(MazeData.calcGridX(18));
-    livesImage1.setY(MazeData.calcGridY(MazeData.GRID_SIZE_Y + 1));
+    livesImage1.setY(MazeData.calcGridYFloat(MazeData.GRID_SIZE_Y + 0.8f));
     livesImage1.visibleProperty().bind(livesCount.greaterThan(0));
     livesImage1.setCache(true);
     final ImageView livesImage2 = new ImageView(PACMAN_IMAGE);
     livesImage2.setX(MazeData.calcGridX(16));
-    livesImage2.setY(MazeData.calcGridY(MazeData.GRID_SIZE_Y + 1));
+    livesImage2.setY(MazeData.calcGridYFloat(MazeData.GRID_SIZE_Y + 0.8f));
     livesImage2.visibleProperty().bind(livesCount.greaterThan(1));
     livesImage2.setCache(true);
     final ImageView livesImage3 = new ImageView(PACMAN_IMAGE);
     livesImage3.setX(MazeData.calcGridX(14));
-    livesImage3.setY(MazeData.calcGridY(MazeData.GRID_SIZE_Y + 1));
+    livesImage3.setY(MazeData.calcGridYFloat(MazeData.GRID_SIZE_Y + 0.8f));
     livesImage3.visibleProperty().bind(livesCount.greaterThan(2));
     livesImage3.setCache(true);
 //  var livesImage = [
