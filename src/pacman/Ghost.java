@@ -390,7 +390,7 @@ public class Ghost extends MovingObject {
 
       if ( y == 14 && ( nextX <= 1 || nextX >= 28) ) {
         if ( nextX < -1 && xDirection < 0 ) {
-          x = MazeData.GRID_SIZE;
+          x = MazeData.GRID_SIZE_X;
 //          imageX= MazeData.calcGridX(x);
           imageX.set(MazeData.calcGridX(x));
         }
@@ -400,7 +400,7 @@ public class Ghost extends MovingObject {
           imageX.set(MazeData.calcGridX(x));
         }
       }
-      else if (nextX < 0 || nextX > MazeData.GRID_SIZE) {
+      else if (nextX < 0 || nextX > MazeData.GRID_SIZE_X) {
         changeDirectionXtoY(true);
       }
       else if (MazeData.getData(nextX, y) == MazeData.BLOCK) {
@@ -428,7 +428,7 @@ public class Ghost extends MovingObject {
       imageY.set(MazeData.calcGridX(y));
 
       int nextY = yDirection + y;
-      if (nextY < 0 || nextY > MazeData.GRID_SIZE) {
+      if (nextY < 0 || nextY > MazeData.GRID_SIZE_Y) {
         changeDirectionYtoX(true);
       }
       else {

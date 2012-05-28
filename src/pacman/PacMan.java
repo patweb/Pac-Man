@@ -160,7 +160,7 @@ public class PacMan extends MovingObject {
 
       if ( (y == 14) && ( nextX <= 1 || nextX >= 28) ) {
         if ( (nextX < -1) && (xDirection < 0) ) {
-          x = MazeData.GRID_SIZE;
+          x = MazeData.GRID_SIZE_X;
           imageX.set(MazeData.calcGridX(x));
 //          imageX = MazeData.calcGridX(x);
         }
@@ -218,7 +218,7 @@ public class PacMan extends MovingObject {
 
     int nextX = x + 1;
 
-    if (nextX >= MazeData.GRID_SIZE) {
+    if (nextX >= MazeData.GRID_SIZE_X) {
       return;
     }
 
@@ -308,7 +308,7 @@ public class PacMan extends MovingObject {
 
     int nextY = y + 1;
 
-    if (nextY >= MazeData.GRID_SIZE) {
+    if (nextY >= MazeData.GRID_SIZE_Y) {
       return;
     }
 
@@ -356,7 +356,7 @@ public class PacMan extends MovingObject {
   * Update score if a dot is eaten.
   */
   private void updateScore() {
-    if ( y != 14 || ( x > 0 && x < MazeData.GRID_SIZE ) ) {
+    if ( y != 14 || ( x > 0 && x < MazeData.GRID_SIZE_X ) ) {
       Dot dot = (Dot) MazeData.getDot(x, y);
 
       if ( dot != null && dot.isVisible() ) {
@@ -452,7 +452,7 @@ public class PacMan extends MovingObject {
     moveCounter = 0;
 
     x = 15;
-    y = 18;
+    y = 24;
 
     imageX.set(MazeData.calcGridX(x));
     imageY.set(MazeData.calcGridY(y));

@@ -444,7 +444,7 @@ public class Maze extends Parent {
 
     gamePaused = new SimpleBooleanProperty(false);
 
-    pacMan = new PacMan(this, 15, 18);
+    pacMan = new PacMan(this, 15, 24);
 
     final Ghost ghostBlinky = new Ghost(
             new Image(getClass().getResourceAsStream("images/ghostred1.png")),
@@ -575,17 +575,17 @@ public class Maze extends Parent {
     // images showing how many lives remaining
     final ImageView livesImage1 = new ImageView(PACMAN_IMAGE);
     livesImage1.setX(MazeData.calcGridX(18));
-    livesImage1.setY(MazeData.calcGridY(30));
+    livesImage1.setY(MazeData.calcGridY(MazeData.GRID_SIZE_Y + 1));
     livesImage1.visibleProperty().bind(livesCount.greaterThan(0));
     livesImage1.setCache(true);
     final ImageView livesImage2 = new ImageView(PACMAN_IMAGE);
     livesImage2.setX(MazeData.calcGridX(16));
-    livesImage2.setY(MazeData.calcGridY(30));
+    livesImage2.setY(MazeData.calcGridY(MazeData.GRID_SIZE_Y + 1));
     livesImage2.visibleProperty().bind(livesCount.greaterThan(1));
     livesImage2.setCache(true);
     final ImageView livesImage3 = new ImageView(PACMAN_IMAGE);
     livesImage3.setX(MazeData.calcGridX(14));
-    livesImage3.setY(MazeData.calcGridY(30));
+    livesImage3.setY(MazeData.calcGridY(MazeData.GRID_SIZE_Y + 1));
     livesImage3.visibleProperty().bind(livesCount.greaterThan(2));
     livesImage3.setCache(true);
 //  var livesImage = [
@@ -619,7 +619,7 @@ public class Maze extends Parent {
 
     messageBox = new Group();
     final Rectangle rectMessage = new Rectangle(MazeData.calcGridX(5),
-            MazeData.calcGridY(21),
+            MazeData.calcGridYFloat(17.5f),
             MazeData.GRID_GAP * 19,
             MazeData.GRID_GAP * 5);
     rectMessage.setStroke(Color.RED);
@@ -638,7 +638,7 @@ public class Maze extends Parent {
             @Override
             protected String computeValue() {
                 if (gamePaused.get()) {
-                    return "PRESS 'P' BUTTON TO RESUME";
+                    return " PRESS 'P' BUTTON TO RESUME";
                 } else {
                     return "   PRESS ANY KEY TO START!";
                 }
@@ -646,7 +646,7 @@ public class Maze extends Parent {
         };
 
     final Text textMessage = new Text(MazeData.calcGridX(6),
-            MazeData.calcGridY(24),
+            MazeData.calcGridYFloat(20.5f),
             "   PRESS ANY KEY TO START!");
     textMessage.textProperty().bind(messageBinding);
     textMessage.setFont(new Font(18));
@@ -702,14 +702,14 @@ public class Maze extends Parent {
 
     // Make big black rectangle to cover entire background
     final Rectangle blackBackground = new Rectangle(0, 0,
-            MazeData.calcGridX(MazeData.GRID_SIZE + 2),
-            MazeData.calcGridY(MazeData.GRID_SIZE + 3));
+            MazeData.calcGridX(MazeData.GRID_SIZE_X + 2),
+            MazeData.calcGridY(MazeData.GRID_SIZE_Y + 3));
     blackBackground.setFill(Color.BLACK);
     blackBackground.setCache(true);
     group.getChildren().add(blackBackground);
 
     // Inner border of outside wall
-    group.getChildren().add(new WallRectangle(0, 0, MazeData.GRID_SIZE, MazeData.GRID_SIZE));
+    group.getChildren().add(new WallRectangle(0, 0, MazeData.GRID_SIZE_X, MazeData.GRID_SIZE_Y));
 
     // Top middle vertical wall
     group.getChildren().add(new WallRectangle(14, -0.5f, 15, 4));
@@ -722,9 +722,9 @@ public class Maze extends Parent {
     group.getChildren().add(new WallRectangle(2, 6, 5, 7)); // left-side 2nd from top rectangle
 
     // middle top T
-    group.getChildren().add(new WallRectangle(14, 6.2f, 15, 10));
+    group.getChildren().add(new WallRectangle(14, 6, 15, 10));
     group.getChildren().add(new WallRectangle(10, 6, 19, 7));
-    group.getChildren().add(new WallBlackLine(14, 7, 15, 7));
+    group.getChildren().add(new WallBlackLine(14.05f, 7, 14.95f, 7));
 
     // Upper-left sideways T
     group.getChildren().add(new WallRectangle(7.5f, 9, 12, 10));
@@ -750,46 +750,54 @@ public class Maze extends Parent {
     cageRect.setCache(true);
     group.getChildren().add(cageRect);
 
-    // Lower-left sideways T
-    group.getChildren().add(new WallRectangle(7.5f, 19, 12, 20));
-    group.getChildren().add(new WallRectangle(7, 15, 8, 23));
-    group.getChildren().add(new WallBlackLine(8, 19, 8, 20));
+    // Vertical rectangle below left side door
+    group.getChildren().add(new WallRectangle(7, 15, 8, 20));
 
-    // Lower-right sideways T
-    group.getChildren().add(new WallRectangle(17, 19, 21.5f, 20));
-    group.getChildren().add(new WallRectangle(21, 15, 22, 23));
-    group.getChildren().add(new WallBlackLine(21, 19, 21, 20));
+    // Vertical rectangle below right side door
+    group.getChildren().add(new WallRectangle(21, 15, 22, 20));
 
-    // middle bottom T
-    group.getChildren().add(new WallRectangle(14, 19, 15, 27));
-    group.getChildren().add(new WallRectangle(10, 22, 19, 23));
-    group.getChildren().add(new WallBlackLine(14, 22, 15, 22));
-    group.getChildren().add(new WallBlackLine(14, 23, 15, 23));
-
-    group.getChildren().add(new WallRectangle(2, 25, 5, 27)); // lower-left rectangle
-    group.getChildren().add(new WallRectangle(7, 25, 12, 27)); // lower 2nd-from-left rectangle
-    group.getChildren().add(new WallRectangle(17, 25, 22, 27)); // lower 2nd-from-right rectangle
-    group.getChildren().add(new WallRectangle(24, 25, 27, 27)); // lower right rectangle
+    // middle middle T
+    group.getChildren().add(new WallRectangle(14, 19, 15, 23));
+    group.getChildren().add(new WallRectangle(10, 19, 19, 20));
+    group.getChildren().add(new WallBlackLine(14.05f, 20, 14.95f, 20));
 
     // left L
-    group.getChildren().add(new WallRectangle(4, 19, 5, 23));
-    group.getChildren().add(new WallRectangle(2, 19, 4.5f, 20));
-    group.getChildren().add(new WallBlackRectangle(4, 19.05f, 5, 20.2f));
+    group.getChildren().add(new WallRectangle(4, 22, 5, 26));
+    group.getChildren().add(new WallRectangle(2, 22, 5, 23));
+    group.getChildren().add(new WallBlackRectangle(4, 22.05f, 5, 23.2f));
 
-    group.getChildren().add(new WallRectangle(-1, 22, 2, 23)); // left horizontal wall
+    group.getChildren().add(new WallRectangle(7, 22, 12, 23)); // left lower horizontal rectangle
 
     // right L
-    group.getChildren().add(new WallRectangle(24, 19, 25, 23));
-    group.getChildren().add(new WallRectangle(24.5f, 19, 27, 20));
-    group.getChildren().add(new WallBlackRectangle(24, 19.05f, 25, 20.2f));
+    group.getChildren().add(new WallRectangle(24, 22, 25, 26));
+    group.getChildren().add(new WallRectangle(24, 22, 27, 23));
+    group.getChildren().add(new WallBlackRectangle(24, 22.05f, 25, 23.2f));
 
-    group.getChildren().add(new WallRectangle(27, 22, MazeData.GRID_SIZE + 1, 23)); // right horizontal wall
+    group.getChildren().add(new WallRectangle(17, 22, 22, 23)); // right lower horizontal rectangle
+
+    group.getChildren().add(new WallRectangle(-1, 25, 2, 26)); // left horizontal wall
+    group.getChildren().add(new WallRectangle(27, 25, MazeData.GRID_SIZE_X + 1, 26)); // right horizontal wall
+
+    // left bottom upside-down T
+    group.getChildren().add(new WallRectangle(7, 25, 8, 29));
+    group.getChildren().add(new WallRectangle(2, 28, 12, 29));
+    group.getChildren().add(new WallBlackLine(7.05f, 28, 7.95f, 28));
+
+    // lower middle T
+    group.getChildren().add(new WallRectangle(14, 25, 15, 29));
+    group.getChildren().add(new WallRectangle(10, 25, 19, 26));
+    group.getChildren().add(new WallBlackLine(14.05f, 26, 14.95f, 26));
+
+    // right bottom upside-down T
+    group.getChildren().add(new WallRectangle(21, 25, 22, 29));
+    group.getChildren().add(new WallRectangle(17, 28, 27, 29));
+    group.getChildren().add(new WallBlackLine(21.05f, 28, 21.95f, 28));
 
     // Outer border of outside wall
     final Rectangle outerWall = new Rectangle(MazeData.calcGridXFloat(-0.5f),
             MazeData.calcGridYFloat(-0.5f),
-            (MazeData.GRID_SIZE + 1) * MazeData.GRID_GAP,
-            (MazeData.GRID_SIZE + 1) * MazeData.GRID_GAP);
+            (MazeData.GRID_SIZE_X + 1) * MazeData.GRID_GAP,
+            (MazeData.GRID_SIZE_Y + 1) * MazeData.GRID_GAP);
     outerWall.setStrokeWidth(MazeData.GRID_STROKE);
     outerWall.setStroke(Color.BLUE);
     outerWall.setFill(null);
@@ -800,34 +808,34 @@ public class Maze extends Parent {
 
     group.getChildren().add(new WallRectangle(-1, 9, 5, 13)); // outer wall above left side door
     group.getChildren().add(new WallRectangle(-1, 9.5f, 4.5f, 12.5f)); // inner wall above left side door
-    group.getChildren().add(new WallRectangle(-1, 15, 5, 17)); // outer wall below left side wall
-    group.getChildren().add(new WallRectangle(-1, 15.5f, 4.5f, 16.5f)); // inner wall below left side door wall
+    group.getChildren().add(new WallRectangle(-1, 15, 5, 20)); // outer wall below left side wall
+    group.getChildren().add(new WallRectangle(-1, 15.5f, 4.5f, 19.5f)); // inner wall below left side door wall
 
-    group.getChildren().add(new WallRectangle(MazeData.GRID_SIZE - 5, 9, MazeData.GRID_SIZE + 1, 13)); // outer wall above right side door
-    group.getChildren().add(new WallRectangle(MazeData.GRID_SIZE - 4.5f, 9.5f, MazeData.GRID_SIZE + 1, 12.5f)); // inner wall above right side door
-    group.getChildren().add(new WallRectangle(MazeData.GRID_SIZE - 5, 15, MazeData.GRID_SIZE + 1, 17)); // outer wall below right side wall
-    group.getChildren().add(new WallRectangle(MazeData.GRID_SIZE - 4.5f, 15.5f, MazeData.GRID_SIZE + 1, 16.5f)); // inner wall below right side door wall
+    group.getChildren().add(new WallRectangle(MazeData.GRID_SIZE_X - 5, 9, MazeData.GRID_SIZE_X + 1, 13)); // outer wall above right side door
+    group.getChildren().add(new WallRectangle(MazeData.GRID_SIZE_X - 4.5f, 9.5f, MazeData.GRID_SIZE_X + 1, 12.5f)); // inner wall above right side door
+    group.getChildren().add(new WallRectangle(MazeData.GRID_SIZE_X - 5, 15, MazeData.GRID_SIZE_X + 1, 20)); // outer wall below right side wall
+    group.getChildren().add(new WallRectangle(MazeData.GRID_SIZE_X - 4.5f, 15.5f, MazeData.GRID_SIZE_X + 1, 19.5f)); // inner wall below right side door wall
 
-    group.getChildren().add(new WallBlackRectangle(-2, 8, -0.5f, MazeData.GRID_SIZE)); // black-out left garbage outside the wall
+    group.getChildren().add(new WallBlackRectangle(-2, 8, -0.5f, MazeData.GRID_SIZE_Y)); // black-out left garbage outside the wall
     group.getChildren().add(new WallBlackRectangle(-0.5f, 8, 0, 9.5f)); // black-out horizontal line inside outer-left wall above side door
-    group.getChildren().add(new WallBlackRectangle(-0.5f, 16.5f, 0, MazeData.GRID_SIZE)); // black-out horizontal lines inside outer-left wall below side door
+    group.getChildren().add(new WallBlackRectangle(-0.5f, 19.5f, 0, MazeData.GRID_SIZE_Y)); // black-out horizontal lines inside outer-left wall below side door
 
-    group.getChildren().add(new WallBlackRectangle(MazeData.GRID_SIZE + 0.5f, 8, MazeData.GRID_SIZE + 2, MazeData.GRID_SIZE)); // black-out garbage on right side of outside wall
-    group.getChildren().add(new WallBlackRectangle(MazeData.GRID_SIZE, 8, MazeData.GRID_SIZE + 0.5f, 9.5f)); // black-out horizontal line inside outer-right wall above side door
-    group.getChildren().add(new WallBlackRectangle(MazeData.GRID_SIZE, 16.5f, MazeData.GRID_SIZE + 0.5f, MazeData.GRID_SIZE)); // black-out horizontal lines inside outer-right wall below side door
+    group.getChildren().add(new WallBlackRectangle(MazeData.GRID_SIZE_X + 0.5f, 8, MazeData.GRID_SIZE_X + 2, MazeData.GRID_SIZE_Y)); // black-out garbage on right side of outside wall
+    group.getChildren().add(new WallBlackRectangle(MazeData.GRID_SIZE_X, 8, MazeData.GRID_SIZE_X + 0.5f, 9.5f)); // black-out horizontal line inside outer-right wall above side door
+    group.getChildren().add(new WallBlackRectangle(MazeData.GRID_SIZE_X, 19.5f, MazeData.GRID_SIZE_X + 0.5f, MazeData.GRID_SIZE_Y)); // black-out horizontal lines inside outer-right wall below side door
 
      // black-out outer walls inside both side doors
     group.getChildren().add(new WallBlackRectangle(-1, 13, 1, 15)); // left
-    group.getChildren().add(new WallBlackRectangle(MazeData.GRID_SIZE - 1, 13, MazeData.GRID_SIZE + 1, 15)); // right
+    group.getChildren().add(new WallBlackRectangle(MazeData.GRID_SIZE_X - 1, 13, MazeData.GRID_SIZE_X + 1, 15)); // right
 
     // Add back 4 blue wall segments that were deleted
     group.getChildren().add(new WallBlackLine(Color.BLUE, -0.5f, 9, -0.5f, 9.5f));
-    group.getChildren().add(new WallBlackLine(Color.BLUE, -0.5f, 16.5f, -0.5f, 17));
-    group.getChildren().add(new WallBlackLine(Color.BLUE, MazeData.GRID_SIZE + 0.5f, 9, MazeData.GRID_SIZE + 0.5f, 9.5f));
-    group.getChildren().add(new WallBlackLine(Color.BLUE, MazeData.GRID_SIZE + 0.5f, 16.5f, MazeData.GRID_SIZE + 0.5f, 17));
+    group.getChildren().add(new WallBlackLine(Color.BLUE, -0.5f, 19.5f, -0.5f, 20));
+    group.getChildren().add(new WallBlackLine(Color.BLUE, MazeData.GRID_SIZE_X + 0.5f, 9, MazeData.GRID_SIZE_X + 0.5f, 9.5f));
+    group.getChildren().add(new WallBlackLine(Color.BLUE, MazeData.GRID_SIZE_X + 0.5f, 19.5f, MazeData.GRID_SIZE_X + 0.5f, 20));
 
     final Text textScore = new Text(MazeData.calcGridX(0),
-            MazeData.calcGridY(MazeData.GRID_SIZE + 2),
+            MazeData.calcGridY(MazeData.GRID_SIZE_Y + 2),
             "SCORE: " + pacMan.score);
     textScore.textProperty().bind(pacMan.score.asString("SCORE: %1d  "));
     textScore.setFont(new Font(20));
@@ -841,7 +849,7 @@ public class Maze extends Parent {
     group.getChildren().add(gameResultText);
 
     final Text textLevel = new Text(MazeData.calcGridX(22),
-            MazeData.calcGridY(MazeData.GRID_SIZE + 2),
+            MazeData.calcGridY(MazeData.GRID_SIZE_Y + 2),
             "LEVEL: " + level);
     textLevel.textProperty().bind(level.asString("LEVEL: %1d "));
     textLevel.setFont(new Font(20));
@@ -858,51 +866,65 @@ public class Maze extends Parent {
 
 
     // postinit
-    putDotHorizontally(2,13,1);
-    putDotHorizontally(16,27,1);
+    putDotHorizontally(2,12,1);
+    putDotHorizontally(17,27,1);
+    
     putDotHorizontally(2,27,5);
-    putDotHorizontally(2,27,28);
-
-    putDotHorizontally(2,13,24);
-    putDotHorizontally(16,27,24);
 
     putDotHorizontally(2,5,8);
-    putDotHorizontally(9,13,8);
-    putDotHorizontally(16,20,8);
     putDotHorizontally(24,27,8);
 
-    putDotHorizontally(2,5,18);
-    putDotHorizontally(9,13,21);
-    putDotHorizontally(16,20,21);
-    putDotHorizontally(24,27,18);
+    putDotHorizontally(10,13,8);
+    putDotHorizontally(16,19,8);
 
-    putDotHorizontally(2,3,21);
-    putDotHorizontally(26,27,21);
+    putDotHorizontally(2,12,21);
+    putDotHorizontally(17,27,21);
+
+    putDotHorizontally(2,2,24);
+    putDotHorizontally(27,27,24);
+
+    putDotHorizontally(7,12,24);
+    putDotHorizontally(17,22,24);
+
+    putDotHorizontally(2,5,27);
+    putDotHorizontally(24,27,27);
+
+    putDotHorizontally(10,12,27);
+    putDotHorizontally(17,19,27);
+
+    putDotHorizontally(2,27,30); // bottom row
+
 
     putDotVertically(1,1,8);
-    putDotVertically(1,18,21);
-    putDotVertically(1,24,28);
-
     putDotVertically(28,1,8);
-    putDotVertically(28,18,21);
-    putDotVertically(28,24,28);
 
-    putDotVertically(6,2,27);
-    putDotVertically(23,2,27);
+    putDotVertically(1,21,24);
+    putDotVertically(28,21,24);
 
-    putDotVertically(3,22,23);
-    putDotVertically(9,22,23);
-    putDotVertically(20,22,23);
-    putDotVertically(26,22,23);
+    putDotVertically(1,27,30);
+    putDotVertically(28,27,30);
+    
+    putDotVertically(3,24,27);
+    putDotVertically(26,24,27);
 
-    putDotVertically(13,25,27);
-    putDotVertically(16,25,27);
+    putDotVertically(6,1,27);
+    putDotVertically(23,1,27);
 
-    putDotVertically(9,6,7);
-    putDotVertically(20,6,7);
+    putDotVertically(9,5,8);
+    putDotVertically(20,5,8);
 
-    putDotVertically(13,2,4);
-    putDotVertically(16,2,4);
+    putDotVertically(9,24,27);
+    putDotVertically(20,24,27);
+
+    putDotVertically(13,1,4);
+    putDotVertically(16,1,4);
+
+    putDotVertically(13,21,24);
+    putDotVertically(16,21,24);
+
+    putDotVertically(13,27,30);
+    putDotVertically(16,27,30);
+
 
     // insert pacMan into group.content;
     group.getChildren().add(pacMan);
@@ -1016,7 +1038,7 @@ public class Maze extends Parent {
         int dotType;
 //      var dotType: Integer;
 
-        if ((x == 28 || x == 1) && (y == 3 || y == 26)) {
+        if ((x == 28 || x == 1) && (y == 3 || y == 24)) {
           dotType = MazeData.MAGIC_DOT;
         } else {
           dotType = MazeData.NORMAL_DOT;
@@ -1026,6 +1048,11 @@ public class Maze extends Parent {
 
         // insert dots into group
         group.getChildren().add(dot);
+      }
+      else {
+        if (DEBUG) {
+          System.out.println("!! WARNING: Trying to place horizontal dots at occupied position (" + x + ", " + y + ")");
+        }
       }
     }
   }
@@ -1037,7 +1064,7 @@ public class Maze extends Parent {
       if (MazeData.getData(x, y) == MazeData.EMPTY) {
         int dotType;
 
-        if ( (x == 28 || x == 1) && (y == 3 || y == 26) ) {
+        if ( (x == 28 || x == 1) && (y == 3 || y == 24) ) {
           dotType = MazeData.MAGIC_DOT;
         }
         else {
@@ -1046,6 +1073,11 @@ public class Maze extends Parent {
 
         dot = createDot(x, y, dotType);
         group.getChildren().add(dot);
+      }
+      else {
+        if (DEBUG) {
+          System.out.println("!! WARNING: Trying to place vertical   dots at occupied position (" + x + ", " + y + ")");
+        }
       }
     }
   }
@@ -1228,9 +1260,9 @@ public class Maze extends Parent {
 //      level ++;
     }
 
-    for (int x = 1; x <= MazeData.GRID_SIZE; x++) {
+    for (int x = 1; x <= MazeData.GRID_SIZE_X; x++) {
 //    for ( x in [1..MazeData.GRID_SIZE] )
-      for (int y = 1; y <= MazeData.GRID_SIZE; y++) {
+      for (int y = 1; y <= MazeData.GRID_SIZE_Y; y++) {
 //      for ( y in [1..MazeData.GRID_SIZE] ) {
         Dot dot = (Dot) MazeData.getDot(x, y);
 //        var dot : Dot = MazeData.getDot( x, y ) as Dot ;

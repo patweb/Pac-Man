@@ -25,8 +25,8 @@ public class Main extends Application {
   @Override
   public void start(Stage primaryStage) {
     primaryStage.setTitle("Pac-Man by Henry Zhang www.javafxgame.com and Patrick Webster");
-    primaryStage.setWidth(MazeData.calcGridX(MazeData.GRID_SIZE + 2));
-    primaryStage.setHeight(MazeData.calcGridY(MazeData.GRID_SIZE + 5));
+    primaryStage.setWidth(MazeData.calcGridX(MazeData.GRID_SIZE_X + 2));
+    primaryStage.setHeight(MazeData.calcGridY(MazeData.GRID_SIZE_Y + 5));
 //    scene: Scene{
 //            content: [ Maze {}
 //            ]

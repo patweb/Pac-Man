@@ -24,7 +24,7 @@ public class MoveDecision {
 //  public function evaluate( pacMan: PacMan, isHollow: Boolean ): Void {
   public void evaluate(PacMan pacMan, boolean isHollow) {
 //    if ( x < 1 or y < 1 or y >= MazeData.GRID_SIZE or x >= MazeData.GRID_SIZE){
-    if (x < 1 || y < 1 || (y >= MazeData.GRID_SIZE) || (x >= MazeData.GRID_SIZE)) {
+    if (x < 1 || y < 1 || (y >= MazeData.GRID_SIZE_Y) || (x >= MazeData.GRID_SIZE_X)) {
       score = -1;
       return;
     }
